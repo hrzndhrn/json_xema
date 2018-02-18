@@ -50,7 +50,7 @@ defmodule JsonXema.AnyTest do
       %{
         schema: JsonXema.new(~s({
             "enum" : [1, 1.2, [1], "foo"]
-					}))
+      }))
       }
     end
 
