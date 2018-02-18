@@ -1,4 +1,7 @@
 # JsonXema
+[![Build Status](https://travis-ci.org/hrzndhrn/json_xema.svg?branch=master)](https://travis-ci.org/hrzndhrn/json_xema)
+[![Coverage Status](https://coveralls.io/repos/github/hrzndhrn/json_xema/badge.svg?branch=master)](https://coveralls.io/github/hrzndhrn/json_xema?branch=master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **TODO: Add description**
 
