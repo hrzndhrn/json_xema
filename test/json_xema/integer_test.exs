@@ -83,25 +83,25 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with a too small integer", %{schema: schema} do
-      expected = {:error, %{value: 1, minimum: 2, exclusive_minimum: true}}
+      expected = {:error, %{value: 1, minimum: 2, exclusiveMinimum: true}}
 
       assert validate(schema, 1) == expected
     end
 
     test "validate/2 with a minimum integer", %{schema: schema} do
-      expected = {:error, %{minimum: 2, exclusive_minimum: true, value: 2}}
+      expected = {:error, %{minimum: 2, exclusiveMinimum: true, value: 2}}
 
       assert validate(schema, 2) == expected
     end
 
     test "validate/2 with a maximum integer", %{schema: schema} do
-      expected = {:error, %{value: 4, maximum: 4, exclusive_maximum: true}}
+      expected = {:error, %{value: 4, maximum: 4, exclusiveMaximum: true}}
 
       assert validate(schema, 4) == expected
     end
 
     test "validate/2 with a too big integer", %{schema: schema} do
-      expected = {:error, %{value: 5, maximum: 4, exclusive_maximum: true}}
+      expected = {:error, %{value: 5, maximum: 4, exclusiveMaximum: true}}
 
       assert validate(schema, 5) == expected
     end
@@ -120,7 +120,7 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with an invalid integer", %{schema: schema} do
-      expected = {:error, %{value: 7, multiple_of: 2}}
+      expected = {:error, %{value: 7, multipleOf: 2}}
       assert validate(schema, 7) == expected
     end
   end

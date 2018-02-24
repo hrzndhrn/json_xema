@@ -45,7 +45,7 @@ defmodule JsonXema.ArrayTest do
     end
 
     test "validate/2 with too short list", %{schema: schema} do
-      assert validate(schema, [1]) == {:error, %{value: [1], min_items: 2}}
+      assert validate(schema, [1]) == {:error, %{value: [1], minItems: 2}}
     end
 
     test "validate/2 with proper list", %{schema: schema} do
@@ -53,7 +53,7 @@ defmodule JsonXema.ArrayTest do
     end
 
     test "validate/2 with to long list", %{schema: schema} do
-      assert validate(schema, [1, 2, 3, 4]) == {:error, %{value: [1, 2, 3, 4], max_items: 3}}
+      assert validate(schema, [1, 2, 3, 4]) == {:error, %{value: [1, 2, 3, 4], maxItems: 3}}
     end
   end
 
@@ -84,7 +84,7 @@ defmodule JsonXema.ArrayTest do
     end
 
     test "validate/2 integers with invalid list", %{integers: schema} do
-      expected = {:error, [%{at: 2, error: %{type: "integer", value: "foo"}}]}
+      expected = {:error, [{2, %{type: "integer", value: "foo"}}]}
 
       assert validate(schema, [1, 2, "foo"]) == expected
     end
@@ -101,8 +101,8 @@ defmodule JsonXema.ArrayTest do
       expected = {
         :error,
         [
-          %{at: 0, error: %{type: "string", value: 1}},
-          %{at: 1, error: %{type: "string", value: 2}}
+          {0, %{type: "string", value: 1}},
+          {1, %{type: "string", value: 2}}
         ]
       }
 
@@ -124,7 +124,7 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 with list of not unique items", %{schema: schema} do
       assert validate(schema, [1, 2, 3, 3, 4]) ==
-               {:error, %{value: [1, 2, 3, 3, 4], unique_items: true}}
+               {:error, %{value: [1, 2, 3, 3, 4], uniqueItems: true}}
     end
   end
 
@@ -152,34 +152,13 @@ defmodule JsonXema.ArrayTest do
     end
 
     test "validate/2 with invalid values", %{schema: schema} do
-      assert validate(schema, ["foo", "bar"]) ==
-               {:error,
-                [
-                  %{
-                    at: 1,
-                    error: %{type: "number", value: "bar"}
-                  }
-                ]}
+      assert validate(schema, ["foo", "bar"]) == {:error, [{1, %{type: "number", value: "bar"}}]}
 
-      assert validate(schema, ["x", 33]) ==
-               {:error,
-                [
-                  %{
-                    at: 0,
-                    error: %{value: "x", min_length: 3}
-                  }
-                ]}
+      assert validate(schema, ["x", 33]) == {:error, [{0, %{value: "x", minLength: 3}}]}
     end
 
     test "validate/2 with invalid value and additional item", %{schema: schema} do
-      assert validate(schema, ["x", 33, 7]) ==
-               {:error,
-                [
-                  %{
-                    at: 0,
-                    error: %{value: "x", min_length: 3}
-                  }
-                ]}
+      assert validate(schema, ["x", 33, 7]) == {:error, [{0, %{value: "x", minLength: 3}}]}
     end
 
     test "validate/2 with additional item", %{schema: schema} do
@@ -191,7 +170,7 @@ defmodule JsonXema.ArrayTest do
     end
   end
 
-  describe "'list' schema with tuple validation without addtional items" do
+  describe "'list' schema with tuple validation without additional items" do
     setup do
       %{
         schema: JsonXema.new(~s({
@@ -212,7 +191,7 @@ defmodule JsonXema.ArrayTest do
     end
 
     test "validate/2 with additional item", %{schema: schema} do
-      assert validate(schema, ["foo", 42, "add"]) == {:error, [%{at: 2, additional_items: false}]}
+      assert validate(schema, ["foo", 42, "add"]) == {:error, [{2, %{additionalItems: false}}]}
     end
   end
 
@@ -239,14 +218,7 @@ defmodule JsonXema.ArrayTest do
     end
 
     test "validate/2 with invalid additional item", %{schema: schema} do
-      assert validate(schema, [11, "twelve", 13]) ==
-               {:error,
-                [
-                  %{
-                    at: 2,
-                    error: %{type: "string", value: 13}
-                  }
-                ]}
+      assert validate(schema, [11, "twelve", 13]) == {:error, [{2, %{type: "string", value: 13}}]}
     end
   end
 end

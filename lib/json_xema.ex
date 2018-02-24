@@ -22,6 +22,7 @@ defmodule JsonXema do
 
   @keywords [
     :additionalItems,
+    :additionalProperties,
     :exclusiveMaximum,
     :exclusiveMinimum,
     :maxItems,
@@ -42,7 +43,12 @@ defmodule JsonXema do
   def is_valid?(schema, value), do: validate(schema, value) == :ok
 
   @spec validate(JsonXema.t() | Schema.t(), any) :: Validator.result()
-  def validate(schema, value), do: Validator.validate(schema, value)
+  def validate(schema, value) do
+    case Validator.validate(schema, value) do
+      :ok -> :ok
+      {:error, reason} -> {:error, error_to_camel_case(reason)}
+    end
+  end
 
   @spec new(String.t() | map) :: JsonXema.t()
 
@@ -119,10 +125,30 @@ defmodule JsonXema do
         {key, dep} -> {key, schema(dep)}
       end)
 
+  @spec error_to_camel_case(any) :: any
+  defp error_to_camel_case(:mixed_map), do: :mixed_map
+
+  defp error_to_camel_case(%{__struct__: _} = struct), do: struct
+
+  defp error_to_camel_case(error) when is_map(error) do
+    for {key, value} <- error, into: %{}, do: error_to_camel_case(key, value)
+  end
+
+  defp error_to_camel_case(error), do: ConvCase.to_camel_case(error)
+
+  @spec error_to_camel_case(any, any) :: any
+  defp error_to_camel_case(:properties, value),
+    do: {:properties, map_values(value, &error_to_camel_case/1)}
+
+  defp error_to_camel_case(key, value),
+    do: {ConvCase.to_camel_case(key), error_to_camel_case(value)}
+
+  @spec map_keys(map, function) :: map
   defp map_keys(map, fun)
        when is_map(map),
        do: for({k, v} <- map, into: %{}, do: {fun.(k), v})
 
+  @spec map_values(map, function) :: map
   defp map_values(map, fun)
        when is_map(map),
        do: for({k, v} <- map, into: %{}, do: {k, fun.(v)})
