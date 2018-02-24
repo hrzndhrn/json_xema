@@ -12,6 +12,7 @@ defmodule JsonXema.MixProject do
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       test_coverage: [tool: ExCoveralls],
+      source_url: "https://github.com/hrzndhrn/json_xema",
       preferred_cli_env: [
         coveralls: :test,
         "coveralls.detail": :test,
