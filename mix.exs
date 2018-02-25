@@ -39,8 +39,8 @@ defmodule JsonXema.MixProject do
     [
       {:conv_case, "~> 0.2"},
       {:jason, "~> 1.0"},
-      # {:xema, "~> 0.3.0"},
-      {:xema, path: "../xema"},
+      {:xema, "~> 0.3.0"},
+      # {:xema, path: "../xema"},
       {:credo, "~> 0.8", only: [:dev, :test]},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
