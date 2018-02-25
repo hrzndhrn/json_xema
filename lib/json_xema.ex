@@ -60,6 +60,8 @@ defmodule JsonXema do
       when is_map(map),
       do: map |> schema() |> create()
 
+  def to_xema(%JsonXema{} = jsonXema), do: Xema.create(jsonXema.content)
+
   defp schema(map),
     do:
       map
