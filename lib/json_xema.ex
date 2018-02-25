@@ -89,9 +89,12 @@ defmodule JsonXema do
       map
       |> Map.update(:additional_items, nil, &bool_or_schema/1)
       |> Map.update(:additional_properties, nil, &bool_or_schema/1)
+      |> Map.update(:all_of, nil, &schemas/1)
+      |> Map.update(:any_of, nil, &schemas/1)
       |> Map.update(:dependencies, nil, &dependencies/1)
       |> Map.update(:items, nil, &items/1)
       |> Map.update(:not, nil, &schema/1)
+      |> Map.update(:one_of, nil, &schemas/1)
       |> Map.update(:pattern_properties, nil, &schemas/1)
       |> Map.update(:properties, nil, &schemas/1)
       |> Map.update(:required, nil, &MapSet.new/1)
@@ -102,7 +105,7 @@ defmodule JsonXema do
 
   defp items(list)
        when is_list(list),
-       do: Enum.map(list, &schema/1)
+       do: schemas(list)
 
   defp bool_or_schema(map)
        when is_map(map),
@@ -118,6 +121,10 @@ defmodule JsonXema do
          map
          |> map_values(&schema/1)
          |> Enum.into(%{})
+
+  defp schemas(list)
+       when is_list(list),
+       do: Enum.map(list, &schema/1)
 
   @spec dependencies(map) :: map
   defp dependencies(map),

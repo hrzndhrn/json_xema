@@ -93,4 +93,153 @@ defmodule JsonXema.AnyTest do
       assert validate(schema, 1) == {:error, :not}
     end
   end
+
+  describe "nested keyword not:" do
+    setup do
+      %{
+        schema:
+          JsonXema.new(~s(
+            {
+              "type": "object",
+              "properties": {
+                "foo": {
+                  "not": {
+                    "type": "string",
+                    "min_length": 3
+                  }
+                }
+              }
+            }
+          ))
+      }
+    end
+
+    test "validate/2 with a valid value", %{schema: schema} do
+      assert validate(schema, %{foo: ""}) == :ok
+    end
+
+    test "validate/2 with an invalid value", %{schema: schema} do
+      assert validate(schema, %{foo: "foo"}) ==
+               {:error, %{properties: %{foo: :not}}}
+    end
+  end
+
+  describe "keyword allOf:" do
+    setup do
+      %{
+        schema:
+          JsonXema.new(~s(
+            {
+              "allOf": [
+                {"type": "integer"},
+                {"type": "integer", "minimum": 0}
+              ]
+            }
+          ))
+      }
+    end
+
+    test "type", %{schema: schema} do
+      assert schema.content.as == "any"
+    end
+
+    test "validate/2 with a valid value", %{schema: schema} do
+      assert validate(schema, 1) == :ok
+    end
+
+    test "validate/2 with an imvalid value", %{schema: schema} do
+      assert validate(schema, -1) == {:error, :allOf}
+    end
+  end
+
+  describe "keyword anyOf:" do
+    setup do
+      %{
+        schema:
+          JsonXema.new(~s(
+            {"any_of": [
+              {"type": "null"},
+              {"type": "integer", "minimum": 1}
+            ]}
+          ))
+      }
+    end
+
+    test "type", %{schema: schema} do
+      assert schema.content.as == "any"
+    end
+
+    test "validate/2 with a valid value", %{schema: schema} do
+      assert validate(schema, 1) == :ok
+      assert validate(schema, nil) == :ok
+    end
+
+    test "validate/2 with an imvalid value", %{schema: schema} do
+      assert validate(schema, "foo") == {:error, :anyOf}
+    end
+  end
+
+  describe "keyword one_of (multiple_of):" do
+    setup do
+      %{
+        schema:
+          JsonXema.new(~s(
+            {"oneOf": [
+              {
+                "type": "integer",
+                "multipleOf": 3
+              }, {
+                "type": "integer",
+                "multipleOf": 5
+              }
+            ]}
+          ))
+      }
+    end
+
+    test "type", %{schema: schema} do
+      assert schema.content.as == "any"
+    end
+
+    test "validate/2 with a valid value", %{schema: schema} do
+      assert validate(schema, 9) == :ok
+      assert validate(schema, 10) == :ok
+    end
+
+    test "validate/2 with an invalid value", %{schema: schema} do
+      assert validate(schema, 15) == {:error, :oneOf}
+      assert validate(schema, 4) == {:error, :oneOf}
+    end
+  end
+
+  describe "keyword one_of (multiple_of integer):" do
+    setup do
+      %{
+        schema:
+          JsonXema.new(~s(
+            {
+              "type": "integer",
+              "oneOf": [
+                {"multipleOf": 3},
+                {"multipleOf": 5}
+              ]
+            }
+          ))
+      }
+    end
+
+    test "type", %{schema: schema} do
+      assert schema.content.as == "integer"
+    end
+
+    test "validate/2 with a valid value", %{schema: schema} do
+      assert validate(schema, 9) == :ok
+      assert validate(schema, 10) == :ok
+    end
+
+    test "validate/2 with an invalid value", %{schema: schema} do
+      assert validate(schema, 15) == {:error, :oneOf}
+      assert validate(schema, 4) == {:error, :oneOf}
+    end
+  end
 end
