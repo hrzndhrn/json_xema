@@ -97,8 +97,7 @@ defmodule JsonXema.AnyTest do
   describe "nested keyword not:" do
     setup do
       %{
-        schema:
-          JsonXema.new(~s(
+        schema: JsonXema.new(~s(
             {
               "type": "object",
               "properties": {
@@ -119,16 +118,14 @@ defmodule JsonXema.AnyTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{foo: "foo"}) ==
-               {:error, %{properties: %{foo: :not}}}
+      assert validate(schema, %{foo: "foo"}) == {:error, %{properties: %{foo: :not}}}
     end
   end
 
   describe "keyword allOf:" do
     setup do
       %{
-        schema:
-          JsonXema.new(~s(
+        schema: JsonXema.new(~s(
             {
               "allOf": [
                 {"type": "integer"},
@@ -155,8 +152,7 @@ defmodule JsonXema.AnyTest do
   describe "keyword anyOf:" do
     setup do
       %{
-        schema:
-          JsonXema.new(~s(
+        schema: JsonXema.new(~s(
             {"any_of": [
               {"type": "null"},
               {"type": "integer", "minimum": 1}
@@ -182,8 +178,7 @@ defmodule JsonXema.AnyTest do
   describe "keyword one_of (multiple_of):" do
     setup do
       %{
-        schema:
-          JsonXema.new(~s(
+        schema: JsonXema.new(~s(
             {"oneOf": [
               {
                 "type": "integer",
@@ -215,8 +210,7 @@ defmodule JsonXema.AnyTest do
   describe "keyword one_of (multiple_of integer):" do
     setup do
       %{
-        schema:
-          JsonXema.new(~s(
+        schema: JsonXema.new(~s(
             {
               "type": "integer",
               "oneOf": [

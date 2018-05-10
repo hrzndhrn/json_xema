@@ -64,8 +64,7 @@ defmodule Xema.NumberTest do
   describe "number schema with exclusive range (draft-04):" do
     setup do
       %{
-        schema:
-          JsonXema.new(~s(
+        schema: JsonXema.new(~s(
             {
               "type": "number",
               "minimum": 2,
@@ -109,8 +108,7 @@ defmodule Xema.NumberTest do
   describe "number schema with exclusive range (draft-06):" do
     setup do
       %{
-        schema:
-          JsonXema.new(~s(
+        schema: JsonXema.new(~s(
             {
               "type": "number",
               "exclusiveMinimum": 2,

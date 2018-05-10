@@ -9,7 +9,21 @@ defmodule JsonXema do
 
   alias Jason
   alias Xema.Schema
-  alias Xema.Validator
+
+  @type format_attribute ::
+          :date_time
+          | :email
+          | :ipv4
+          | :ipv6
+          | :uri
+
+  @format_attributes [
+    :date_time,
+    :email,
+    :ipv4,
+    :ipv6,
+    :uri
+  ]
 
   @type_map %{
     "array" => :list,
@@ -19,6 +33,8 @@ defmodule JsonXema do
     "object" => :map,
     "string" => :string
   }
+
+  @types Map.keys(@type_map)
 
   @keywords [
     :additionalItems,
@@ -37,45 +53,83 @@ defmodule JsonXema do
 
   @on_load :load_atoms
   @doc false
-  def load_atoms, do: Enum.each(@keywords, &Code.ensure_loaded/1)
-
-  @spec is_valid?(JsonXema.t() | Schema.t(), any) :: boolean
-  def is_valid?(schema, value), do: validate(schema, value) == :ok
-
-  @spec validate(JsonXema.t() | Schema.t(), any) :: Validator.result()
-  def validate(schema, value) do
-    case Validator.validate(schema, value) do
-      :ok -> :ok
-      {:error, reason} -> {:error, error_to_camel_case(reason)}
-    end
+  def load_atoms do
+    Enum.each(@keywords, &Code.ensure_loaded/1)
+    Enum.each(@format_attributes, &Code.ensure_loaded/1)
   end
 
   @spec new(String.t() | map) :: JsonXema.t()
 
-  def new(string)
+  def init(string, _)
       when is_binary(string),
-      do: string |> Jason.decode!(keys: :strings) |> new()
+      do: string |> Jason.decode!(keys: :strings) |> init(nil)
 
-  def new(map)
-      when is_map(map),
-      do: map |> schema() |> create()
+  def init(value, _)
+      when is_map(value) or is_boolean(value),
+      do: schema(value)
 
-  def to_xema(%JsonXema{} = jsonXema), do: Xema.create(jsonXema.content)
+  def on_error(error), do: error_to_camel_case(error)
 
-  defp schema(map),
+  @spec to_xema(JsonXeam.t()) :: Xema.t()
+  def to_xema(%JsonXema{} = jsonXema),
     do:
-      map
-      |> map_keys(&update_keys/1)
-      |> update_type()
-      |> update()
-      |> Map.to_list()
-      |> Schema.new()
+      jsonXema.content
+      |> to_xema_convert()
+      |> Xema.new()
 
-  defp update_type(map),
+  defp to_xema_convert(%Xema.Schema{} = schema),
     do:
-      map
-      |> Map.update(:type, :any, &Map.get(@type_map, &1))
-      |> Map.put(:as, Map.get(map, :type, "any"))
+      %{schema | as: schema.type}
+      |> map_values(&to_xema_convert/1)
+
+  defp to_xema_convert(map)
+       when is_map(map),
+       do: map_values(map, &to_xema_convert/1)
+
+  defp to_xema_convert(list)
+       when is_list(list),
+       do: Enum.map(list, &to_xema_convert/1)
+
+  defp to_xema_convert(value), do: value
+
+  defp schema(bool)
+       when is_boolean(bool),
+       do: Schema.new(type: bool)
+
+  defp schema(map)
+       when is_map(map),
+       do:
+         map
+         |> map_keys(&update_keys/1)
+         |> update_type()
+         |> update()
+         |> Map.to_list()
+         |> Schema.new()
+
+  defp schema(list)
+       when is_list(list),
+       do: Schema.new(type: update_type(list))
+
+  defp update_type(map)
+       when is_map(map),
+       do:
+         map
+         |> Map.update(:type, :any, &update_type/1)
+         |> Map.put(:as, Map.get(map, :type, "any"))
+
+  defp update_type(type)
+       when is_list(type),
+       do: Enum.map(type, &get_type/1)
+
+  defp update_type(type), do: get_type(type)
+
+  defp get_type("null"), do: nil
+
+  defp get_type(type)
+       when type in @types,
+       do: Map.get(@type_map, type)
+
+  defp get_type(_), do: raise(ArgumentError)
 
   defp update_keys(key)
        when is_binary(key),
@@ -83,6 +137,10 @@ defmodule JsonXema do
          key
          |> to_snake_case()
          |> to_existing_atom()
+
+  defp update_keys(key)
+       when is_atom(key),
+       do: to_snake_case(key)
 
   defp update(map),
     do:
@@ -92,6 +150,7 @@ defmodule JsonXema do
       |> Map.update(:all_of, nil, &schemas/1)
       |> Map.update(:any_of, nil, &schemas/1)
       |> Map.update(:dependencies, nil, &dependencies/1)
+      |> Map.update(:format, nil, &to_format_attribute/1)
       |> Map.update(:items, nil, &items/1)
       |> Map.update(:not, nil, &schema/1)
       |> Map.update(:one_of, nil, &schemas/1)
@@ -131,8 +190,17 @@ defmodule JsonXema do
     do:
       Enum.into(map, %{}, fn
         {key, dep} when is_list(dep) -> {key, dep}
+        {key, dep} when is_binary(dep) -> {key, [dep]}
+        {key, dep} when is_atom(dep) -> {key, [dep]}
         {key, dep} -> {key, schema(dep)}
       end)
+
+  @spec to_format_attribute(String.t()) :: format_attribute
+  defp to_format_attribute(str),
+    do:
+      str
+      |> String.replace("-", "_")
+      |> String.to_existing_atom()
 
   @spec error_to_camel_case(any) :: any
   defp error_to_camel_case(:mixed_map), do: :mixed_map
@@ -157,7 +225,16 @@ defmodule JsonXema do
        when is_map(map),
        do: for({k, v} <- map, into: %{}, do: {fun.(k), v})
 
-  @spec map_values(map, function) :: map
+  @spec map_values(map | struct, function) :: map
+  defp map_values(%{__struct__: module} = value, fun) do
+    map =
+      value
+      |> Map.from_struct()
+      |> map_values(fun)
+
+    struct(module, map)
+  end
+
   defp map_values(map, fun)
        when is_map(map),
        do: for({k, v} <- map, into: %{}, do: {k, fun.(v)})

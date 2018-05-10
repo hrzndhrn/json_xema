@@ -51,6 +51,7 @@ defmodule JsonXema.ObjectTest do
       }
     end
 
+    @tag :only
     test "validate/2 with valid values", %{schema: schema} do
       assert validate(schema, %{foo: 2, bar: "bar"}) == :ok
       assert validate(schema, %{"foo" => 2, "bar" => "bar"}) == :ok
@@ -228,7 +229,7 @@ defmodule JsonXema.ObjectTest do
       assert validate(schema, %{missing: 44}) ==
                {:error,
                 %{
-                  "foo" => :required
+                  required: ["foo"]
                 }}
     end
   end
@@ -258,8 +259,7 @@ defmodule JsonXema.ObjectTest do
       assert validate(schema, %{b: 3, d: 8}) ==
                {:error,
                 %{
-                  "a" => :required,
-                  "c" => :required
+                  required: ["a", "c"]
                 }}
     end
   end
@@ -346,7 +346,7 @@ defmodule JsonXema.ObjectTest do
       assert validate(schema, %{a: 1, b: 2}) ==
                {:error,
                 %{
-                  "b" => %{dependency: "c"}
+                  :dependencies => %{"b" => "c"}
                 }}
     end
   end
@@ -385,7 +385,7 @@ defmodule JsonXema.ObjectTest do
       assert validate(schema, %{a: 1, b: 2}) ==
                {:error,
                 %{
-                  "b" => %{required: ["c"]}
+                  dependencies: %{"b" => %{required: ["c"]}}
                 }}
     end
   end
@@ -415,7 +415,7 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "a penny", %{schema: schema} do
-      assert validate(schema, %{penny: 1}) == {:error, %{"penny" => %{dependency: "pound"}}}
+      assert validate(schema, %{penny: 1}) == {:error, %{dependencies: %{"penny" => "pound"}}}
     end
   end
 end
