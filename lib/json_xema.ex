@@ -31,8 +31,11 @@ defmodule JsonXema do
     "integer" => :integer,
     "number" => :number,
     "object" => :map,
-    "string" => :string
+    "string" => :string,
+    "null" => nil
   }
+
+  @type_map_reverse for {key, value} <- @type_map, into: %{}, do: {value, key}
 
   @types Map.keys(@type_map)
 
@@ -77,10 +80,9 @@ defmodule JsonXema do
       |> to_xema_convert()
       |> Xema.new()
 
+  # TODO: remove to_xema_convert
   defp to_xema_convert(%Xema.Schema{} = schema),
-    do:
-      %{schema | as: schema.type}
-      |> map_values(&to_xema_convert/1)
+    do: map_values(schema, &to_xema_convert/1)
 
   defp to_xema_convert(map)
        when is_map(map),
@@ -115,7 +117,6 @@ defmodule JsonXema do
        do:
          map
          |> Map.update(:type, :any, &update_type/1)
-         |> Map.put(:as, Map.get(map, :type, "any"))
 
   defp update_type(type)
        when is_list(type),
@@ -137,10 +138,6 @@ defmodule JsonXema do
          key
          |> to_snake_case()
          |> to_existing_atom()
-
-  defp update_keys(key)
-       when is_atom(key),
-       do: to_snake_case(key)
 
   defp update(map),
     do:
@@ -207,15 +204,41 @@ defmodule JsonXema do
 
   defp error_to_camel_case(%{__struct__: _} = struct), do: struct
 
-  defp error_to_camel_case(error) when is_map(error) do
-    for {key, value} <- error, into: %{}, do: error_to_camel_case(key, value)
-  end
+  defp error_to_camel_case(error) when is_map(error),
+    do:
+      for({key, value} <- error, into: %{}, do: error_to_camel_case(key, value))
+
+  defp error_to_camel_case(error) when is_list(error),
+    do: Enum.map(error, &error_to_camel_case/1)
+
+  defp error_to_camel_case(error) when is_tuple(error),
+    do:
+      error
+      |> Tuple.to_list()
+      |> error_to_camel_case()
+      |> List.to_tuple()
 
   defp error_to_camel_case(error), do: ConvCase.to_camel_case(error)
 
   @spec error_to_camel_case(any, any) :: any
   defp error_to_camel_case(:properties, value),
     do: {:properties, map_values(value, &error_to_camel_case/1)}
+
+  defp error_to_camel_case(:format, value),
+    do: {"format", value |> to_string() |> ConvCase.to_kebab_case()}
+
+  defp error_to_camel_case(:type, value)
+       when is_boolean(value),
+       do: {:type, value}
+
+  defp error_to_camel_case(:type, value)
+       when is_list(value),
+       do:
+         {:type,
+          Enum.map(value, fn type -> Map.get(@type_map_reverse, type) end)}
+
+  defp error_to_camel_case(:type, value),
+    do: {:type, Map.get(@type_map_reverse, value)}
 
   defp error_to_camel_case(key, value),
     do: {ConvCase.to_camel_case(key), error_to_camel_case(value)}

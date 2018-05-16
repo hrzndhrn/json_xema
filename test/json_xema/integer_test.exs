@@ -10,10 +10,6 @@ defmodule JsonXema.IntegerTest do
       }
     end
 
-    test "type", %{schema: schema} do
-      assert schema.content.as == "integer"
-    end
-
     test "validate/2 with an integer", %{schema: schema} do
       assert validate(schema, 2) == :ok
     end
@@ -23,7 +19,8 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with a string", %{schema: schema} do
-      assert validate(schema, "foo") == {:error, %{type: "integer", value: "foo"}}
+      assert validate(schema, "foo") ==
+               {:error, %{type: "integer", value: "foo"}}
     end
 
     test "is_valid?/2 with a valid value", %{schema: schema} do

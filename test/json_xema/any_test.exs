@@ -8,10 +8,6 @@ defmodule JsonXema.AnyTest do
       %{schema: JsonXema.new("{}")}
     end
 
-    test "type", %{schema: schema} do
-      assert schema.content.as == "any"
-    end
-
     test "is_valid?/2 with a string", %{schema: schema} do
       assert is_valid?(schema, "foo")
     end
@@ -81,10 +77,6 @@ defmodule JsonXema.AnyTest do
       %{schema: JsonXema.new(~s({"not" : {"type" : "integer"}}))}
     end
 
-    test "type", %{schema: schema} do
-      assert schema.content.as == "any"
-    end
-
     test "validate/2 with a valid value", %{schema: schema} do
       assert validate(schema, "foo") == :ok
     end
@@ -118,7 +110,8 @@ defmodule JsonXema.AnyTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{foo: "foo"}) == {:error, %{properties: %{foo: :not}}}
+      assert validate(schema, %{foo: "foo"}) ==
+               {:error, %{properties: %{foo: :not}}}
     end
   end
 
@@ -134,10 +127,6 @@ defmodule JsonXema.AnyTest do
             }
           ))
       }
-    end
-
-    test "type", %{schema: schema} do
-      assert schema.content.as == "any"
     end
 
     test "validate/2 with a valid value", %{schema: schema} do
@@ -159,10 +148,6 @@ defmodule JsonXema.AnyTest do
             ]}
           ))
       }
-    end
-
-    test "type", %{schema: schema} do
-      assert schema.content.as == "any"
     end
 
     test "validate/2 with a valid value", %{schema: schema} do
@@ -192,10 +177,6 @@ defmodule JsonXema.AnyTest do
       }
     end
 
-    test "type", %{schema: schema} do
-      assert schema.content.as == "any"
-    end
-
     test "validate/2 with a valid value", %{schema: schema} do
       assert validate(schema, 9) == :ok
       assert validate(schema, 10) == :ok
@@ -220,10 +201,6 @@ defmodule JsonXema.AnyTest do
             }
           ))
       }
-    end
-
-    test "type", %{schema: schema} do
-      assert schema.content.as == "integer"
     end
 
     test "validate/2 with a valid value", %{schema: schema} do
