@@ -12,9 +12,8 @@ defmodule Xema.NilTest do
       assert validate(schema, nil) == :ok
     end
 
-    @tag :only
     test "validate/2 with non-nil value", %{schema: schema} do
-      expected = {:error, %{type: "null", value: 1}}
+      expected = {:error, %{type: :null, value: 1}}
 
       assert validate(schema, 1) == expected
     end

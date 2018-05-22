@@ -2,7 +2,6 @@ defmodule JsonXema.ToXema do
   use ExUnit.Case, async: true
 
   describe "to_xema/1 converts JsonXema to Xema:" do
-    @tag :only
     test "any schema" do
       schema = JsonXema.new(~s({}))
       expected = "Xema.new(:any)"

@@ -8,6 +8,7 @@ defmodule JsonXema do
   import String, only: [to_existing_atom: 1]
 
   alias Jason
+  alias Xema.Ref
   alias Xema.Schema
 
   @type format_attribute ::
@@ -59,6 +60,7 @@ defmodule JsonXema do
   def load_atoms do
     Enum.each(@keywords, &Code.ensure_loaded/1)
     Enum.each(@format_attributes, &Code.ensure_loaded/1)
+    @type_map |> Map.keys() |> Enum.each(&String.to_atom/1)
   end
 
   @spec new(String.t() | map) :: JsonXema.t()
@@ -93,6 +95,13 @@ defmodule JsonXema do
        do: Enum.map(list, &to_xema_convert/1)
 
   defp to_xema_convert(value), do: value
+
+  # defp schema(%Ref{} = ref) do
+  # IO.inspect ref
+  # ref
+  # end
+
+  # defp schema(%{"$ref" => pointer}), do: Ref.new(pointer)
 
   defp schema(bool)
        when is_boolean(bool),
@@ -132,6 +141,8 @@ defmodule JsonXema do
 
   defp get_type(_), do: raise(ArgumentError)
 
+  defp update_keys("$ref"), do: :ref
+
   defp update_keys(key)
        when is_binary(key),
        do:
@@ -146,6 +157,7 @@ defmodule JsonXema do
       |> Map.update(:additional_properties, nil, &bool_or_schema/1)
       |> Map.update(:all_of, nil, &schemas/1)
       |> Map.update(:any_of, nil, &schemas/1)
+      |> Map.update(:definitions, nil, &schemas/1)
       |> Map.update(:dependencies, nil, &dependencies/1)
       |> Map.update(:format, nil, &to_format_attribute/1)
       |> Map.update(:items, nil, &items/1)
@@ -235,10 +247,15 @@ defmodule JsonXema do
        when is_list(value),
        do:
          {:type,
-          Enum.map(value, fn type -> Map.get(@type_map_reverse, type) end)}
+          value
+          |> Enum.map(fn type ->
+            @type_map_reverse
+            |> Map.get(type)
+            |> to_existing_atom()
+          end)}
 
   defp error_to_camel_case(:type, value),
-    do: {:type, Map.get(@type_map_reverse, value)}
+    do: {:type, @type_map_reverse |> Map.get(value) |> to_existing_atom()}
 
   defp error_to_camel_case(key, value),
     do: {ConvCase.to_camel_case(key), error_to_camel_case(value)}

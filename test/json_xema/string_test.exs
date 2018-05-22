@@ -13,13 +13,13 @@ defmodule JsonXema.StringTest do
     end
 
     test "validate/2 with a number", %{schema: schema} do
-      expected = {:error, %{type: "string", value: 1}}
+      expected = {:error, %{type: :string, value: 1}}
 
       assert validate(schema, 1) == expected
     end
 
     test "validate/2 with nil", %{schema: schema} do
-      expected = {:error, %{type: "string", value: nil}}
+      expected = {:error, %{type: :string, value: nil}}
 
       assert validate(schema, nil) == expected
     end
@@ -48,7 +48,6 @@ defmodule JsonXema.StringTest do
       assert validate(schema, "foo") == :ok
     end
 
-    @tag :only
     test "validate/2 with a too short string", %{schema: schema} do
       assert validate(schema, "f") == {:error, %{minLength: 3, value: "f"}}
     end

@@ -17,7 +17,7 @@ defmodule Xema.NumberTest do
     end
 
     test "validate/2 with a string", %{schema: schema} do
-      expected = {:error, %{type: "number", value: "foo"}}
+      expected = {:error, %{type: :number, value: "foo"}}
 
       assert validate(schema, "foo") == expected
     end
