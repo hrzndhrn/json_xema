@@ -42,10 +42,10 @@ defmodule JsonXema.MixProject do
       {:jason, "~> 1.0"},
       # {:xema, "~> 0.3.0"},
       {:xema, path: "../xema"},
-      {:credo, "~> 0.8", only: [:dev, :test]},
+      {:credo, "~> 0.9", only: [:dev, :test]},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.7", only: :test},
+      {:excoveralls, "~> 0.8", only: :test},
       {:httpoison, "~> 1.0", only: :test}
     ]
   end
