@@ -111,8 +111,6 @@ defmodule JsonXema do
        when is_list(list),
        do: Schema.new(type: update_type(list))
 
-  # defp schema(%{:ref => pointer}), do: Ref.new(pointer)
-
   defp update_type(map)
        when is_map(map),
        do:
