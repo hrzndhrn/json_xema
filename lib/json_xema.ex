@@ -84,22 +84,7 @@ defmodule JsonXema do
   def to_xema(%JsonXema{} = jsonXema),
     do:
       jsonXema.content
-      |> to_xema_convert()
       |> Xema.new()
-
-  # TODO: remove to_xema_convert
-  defp to_xema_convert(%Xema.Schema{} = schema),
-    do: map_values(schema, &to_xema_convert/1)
-
-  defp to_xema_convert(map)
-       when is_map(map),
-       do: map_values(map, &to_xema_convert/1)
-
-  defp to_xema_convert(list)
-       when is_list(list),
-       do: Enum.map(list, &to_xema_convert/1)
-
-  defp to_xema_convert(value), do: value
 
   defp schema(bool)
        when is_boolean(bool),
