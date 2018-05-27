@@ -27,6 +27,7 @@ defmodule JsonXema do
   ]
 
   @type_map %{
+    "any" => :any,
     "array" => :list,
     "boolean" => :boolean,
     "integer" => :integer,
@@ -41,6 +42,7 @@ defmodule JsonXema do
   @types Map.keys(@type_map)
 
   @keywords [
+    :anyOf,
     :additionalItems,
     :additionalProperties,
     :exclusiveMaximum,
@@ -70,8 +72,11 @@ defmodule JsonXema do
       do: string |> Jason.decode!(keys: :strings) |> init(nil)
 
   def init(value, _)
-      when is_map(value) or is_boolean(value),
+      when is_boolean(value),
       do: schema(value)
+
+  def init(value, _) when is_map(value),
+    do: value |> Map.put_new("type", "any") |> schema()
 
   def on_error(error), do: error_to_camel_case(error)
 
@@ -96,16 +101,16 @@ defmodule JsonXema do
 
   defp to_xema_convert(value), do: value
 
-  # defp schema(%Ref{} = ref) do
-  # IO.inspect ref
-  # ref
-  # end
-
-  # defp schema(%{"$ref" => pointer}), do: Ref.new(pointer)
-
   defp schema(bool)
        when is_boolean(bool),
        do: Schema.new(type: bool)
+
+  defp schema(%{"$ref" => pointer} = map) do
+    case Map.keys(map) do
+      ["$ref"] -> Ref.new(pointer)
+      _ -> map |> Map.delete("$ref") |> Map.put(:ref, pointer)
+    end
+  end
 
   defp schema(map)
        when is_map(map),
@@ -120,6 +125,8 @@ defmodule JsonXema do
   defp schema(list)
        when is_list(list),
        do: Schema.new(type: update_type(list))
+
+  # defp schema(%{:ref => pointer}), do: Ref.new(pointer)
 
   defp update_type(map)
        when is_map(map),
@@ -141,7 +148,7 @@ defmodule JsonXema do
 
   defp get_type(_), do: raise(ArgumentError)
 
-  defp update_keys("$ref"), do: :ref
+  defp update_keys(key) when is_atom(key), do: key
 
   defp update_keys(key)
        when is_binary(key),

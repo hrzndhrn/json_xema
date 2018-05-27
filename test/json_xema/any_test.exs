@@ -82,7 +82,7 @@ defmodule JsonXema.AnyTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, 1) == {:error, :not}
+      assert validate(schema, 1) == {:error, %{not: :ok, value: 1}}
     end
   end
 
@@ -111,7 +111,7 @@ defmodule JsonXema.AnyTest do
 
     test "validate/2 with an invalid value", %{schema: schema} do
       assert validate(schema, %{foo: "foo"}) ==
-               {:error, %{properties: %{foo: :not}}}
+               {:error, %{properties: %{foo: %{not: :ok, value: "foo"}}}}
     end
   end
 
@@ -134,7 +134,8 @@ defmodule JsonXema.AnyTest do
     end
 
     test "validate/2 with an imvalid value", %{schema: schema} do
-      assert validate(schema, -1) == {:error, :allOf}
+      assert validate(schema, -1) ==
+               {:error, %{allOf: [%{minimum: 0}], value: -1}}
     end
   end
 
@@ -156,7 +157,9 @@ defmodule JsonXema.AnyTest do
     end
 
     test "validate/2 with an imvalid value", %{schema: schema} do
-      assert validate(schema, "foo") == {:error, :anyOf}
+      assert validate(schema, "foo") ==
+               {:error,
+                %{anyOf: [%{type: :null}, %{type: :integer}], value: "foo"}}
     end
   end
 
@@ -183,8 +186,11 @@ defmodule JsonXema.AnyTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, 15) == {:error, :oneOf}
-      assert validate(schema, 4) == {:error, :oneOf}
+      assert validate(schema, 15) == {:error, %{oneOf: [], value: 15}}
+
+      assert validate(schema, 4) ==
+               {:error,
+                %{oneOf: [%{multipleOf: 5}, %{multipleOf: 3}], value: 4}}
     end
   end
 
@@ -209,8 +215,11 @@ defmodule JsonXema.AnyTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, 15) == {:error, :oneOf}
-      assert validate(schema, 4) == {:error, :oneOf}
+      assert validate(schema, 15) == {:error, %{oneOf: [], value: 15}}
+
+      assert validate(schema, 4) ==
+               {:error,
+                %{oneOf: [%{multipleOf: 5}, %{multipleOf: 3}], value: 4}}
     end
   end
 end

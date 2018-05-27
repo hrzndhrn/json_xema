@@ -1,0 +1,6 @@
+{
+  "definitions": {
+    "int": {"type": "integer"},
+    "refToInt": {"$ref": "#/definitions/int"}
+  }
+}
