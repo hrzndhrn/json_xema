@@ -78,7 +78,7 @@ defmodule JsonXema do
   def init(value, _) when is_map(value),
     do: value |> Map.put_new("type", "any") |> schema()
 
-  def on_error(error), do: error_to_camel_case(error)
+  def on_error(error), do: map_error(error)
 
   @spec to_xema(JsonXeam.t()) :: Xema.t()
   def to_xema(%JsonXema{} = jsonXema),
@@ -203,39 +203,39 @@ defmodule JsonXema do
       |> String.replace("-", "_")
       |> String.to_existing_atom()
 
-  @spec error_to_camel_case(any) :: any
-  defp error_to_camel_case(:mixed_map), do: :mixed_map
+  @spec map_error(any) :: any
+  defp map_error(:mixed_map), do: :mixed_map
 
-  defp error_to_camel_case(%{__struct__: _} = struct), do: struct
+  defp map_error(%{__struct__: _} = struct), do: struct
 
-  defp error_to_camel_case(error) when is_map(error),
+  defp map_error(error) when is_map(error),
     do:
-      for({key, value} <- error, into: %{}, do: error_to_camel_case(key, value))
+      for({key, value} <- error, into: %{}, do: map_error(key, value))
 
-  defp error_to_camel_case(error) when is_list(error),
-    do: Enum.map(error, &error_to_camel_case/1)
+  defp map_error(error) when is_list(error),
+    do: Enum.map(error, &map_error/1)
 
-  defp error_to_camel_case(error) when is_tuple(error),
+  defp map_error(error) when is_tuple(error),
     do:
       error
       |> Tuple.to_list()
-      |> error_to_camel_case()
+      |> map_error()
       |> List.to_tuple()
 
-  defp error_to_camel_case(error), do: ConvCase.to_camel_case(error)
+  defp map_error(error), do: ConvCase.to_camel_case(error)
 
-  @spec error_to_camel_case(any, any) :: any
-  defp error_to_camel_case(:properties, value),
-    do: {:properties, map_values(value, &error_to_camel_case/1)}
+  @spec map_error(any, any) :: any
+  defp map_error(:properties, value),
+    do: {:properties, map_values(value, &map_error/1)}
 
-  defp error_to_camel_case(:format, value),
+  defp map_error(:format, value),
     do: {"format", value |> to_string() |> ConvCase.to_kebab_case()}
 
-  defp error_to_camel_case(:type, value)
+  defp map_error(:type, value)
        when is_boolean(value),
        do: {:type, value}
 
-  defp error_to_camel_case(:type, value)
+  defp map_error(:type, value)
        when is_list(value),
        do:
          {:type,
@@ -246,11 +246,11 @@ defmodule JsonXema do
             |> to_existing_atom()
           end)}
 
-  defp error_to_camel_case(:type, value),
+  defp map_error(:type, value),
     do: {:type, @type_map_reverse |> Map.get(value) |> to_existing_atom()}
 
-  defp error_to_camel_case(key, value),
-    do: {ConvCase.to_camel_case(key), error_to_camel_case(value)}
+  defp map_error(key, value),
+    do: {ConvCase.to_camel_case(key), map_error(value)}
 
   @spec map_keys(map, function) :: map
   defp map_keys(map, fun)
