@@ -8,10 +8,6 @@ defmodule Xema.NumberTest do
       %{schema: JsonXema.new(~s({"type": "number"}))}
     end
 
-    test "type", %{schema: schema} do
-      assert schema.content.as == "number"
-    end
-
     test "validate/2 with a float", %{schema: schema} do
       assert validate(schema, 2.3) == :ok
     end
@@ -21,7 +17,7 @@ defmodule Xema.NumberTest do
     end
 
     test "validate/2 with a string", %{schema: schema} do
-      expected = {:error, %{type: "number", value: "foo"}}
+      expected = {:error, %{type: :number, value: "foo"}}
 
       assert validate(schema, "foo") == expected
     end

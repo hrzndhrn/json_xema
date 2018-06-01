@@ -8,22 +8,18 @@ defmodule JsonXema.StringTest do
       %{schema: JsonXema.new(~s({"type": "string"}))}
     end
 
-    test "type", %{schema: schema} do
-      assert schema.content.as == "string"
-    end
-
     test "validate/2 with a string", %{schema: schema} do
       assert validate(schema, "foo") == :ok
     end
 
     test "validate/2 with a number", %{schema: schema} do
-      expected = {:error, %{type: "string", value: 1}}
+      expected = {:error, %{type: :string, value: 1}}
 
       assert validate(schema, 1) == expected
     end
 
     test "validate/2 with nil", %{schema: schema} do
-      expected = {:error, %{type: "string", value: nil}}
+      expected = {:error, %{type: :string, value: nil}}
 
       assert validate(schema, nil) == expected
     end
@@ -57,7 +53,8 @@ defmodule JsonXema.StringTest do
     end
 
     test "validate/2 with a too long string", %{schema: schema} do
-      assert validate(schema, "foobar") == {:error, %{maxLength: 4, value: "foobar"}}
+      assert validate(schema, "foobar") ==
+               {:error, %{maxLength: 4, value: "foobar"}}
     end
   end
 
@@ -76,7 +73,8 @@ defmodule JsonXema.StringTest do
     end
 
     test "validate/2 with a none matching string", %{schema: schema} do
-      assert validate(schema, "a to a") == {:error, %{value: "a to a", pattern: ~r/^.+match.+$/}}
+      assert validate(schema, "a to a") ==
+               {:error, %{value: "a to a", pattern: ~r/^.+match.+$/}}
     end
   end
 

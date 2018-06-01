@@ -8,6 +8,7 @@ defmodule JsonXema do
   import String, only: [to_existing_atom: 1]
 
   alias Jason
+  alias Xema.Ref
   alias Xema.Schema
 
   @type format_attribute ::
@@ -26,17 +27,22 @@ defmodule JsonXema do
   ]
 
   @type_map %{
+    "any" => :any,
     "array" => :list,
     "boolean" => :boolean,
     "integer" => :integer,
     "number" => :number,
     "object" => :map,
-    "string" => :string
+    "string" => :string,
+    "null" => nil
   }
+
+  @type_map_reverse for {key, value} <- @type_map, into: %{}, do: {value, key}
 
   @types Map.keys(@type_map)
 
   @keywords [
+    :anyOf,
     :additionalItems,
     :additionalProperties,
     :exclusiveMaximum,
@@ -56,6 +62,7 @@ defmodule JsonXema do
   def load_atoms do
     Enum.each(@keywords, &Code.ensure_loaded/1)
     Enum.each(@format_attributes, &Code.ensure_loaded/1)
+    @type_map |> Map.keys() |> Enum.each(&String.to_atom/1)
   end
 
   @spec new(String.t() | map) :: JsonXema.t()
@@ -65,42 +72,36 @@ defmodule JsonXema do
       do: string |> Jason.decode!(keys: :strings) |> init(nil)
 
   def init(value, _)
-      when is_map(value) or is_boolean(value),
+      when is_boolean(value),
       do: schema(value)
 
-  def on_error(error), do: error_to_camel_case(error)
+  def init(value, _) when is_map(value),
+    do: value |> Map.put_new("type", "any") |> schema()
+
+  def on_error(error), do: map_error(error)
 
   @spec to_xema(JsonXeam.t()) :: Xema.t()
   def to_xema(%JsonXema{} = jsonXema),
     do:
       jsonXema.content
-      |> to_xema_convert()
       |> Xema.new()
-
-  defp to_xema_convert(%Xema.Schema{} = schema),
-    do:
-      %{schema | as: schema.type}
-      |> map_values(&to_xema_convert/1)
-
-  defp to_xema_convert(map)
-       when is_map(map),
-       do: map_values(map, &to_xema_convert/1)
-
-  defp to_xema_convert(list)
-       when is_list(list),
-       do: Enum.map(list, &to_xema_convert/1)
-
-  defp to_xema_convert(value), do: value
 
   defp schema(bool)
        when is_boolean(bool),
        do: Schema.new(type: bool)
 
+  defp schema(%{"$ref" => pointer} = map) do
+    case Map.keys(map) do
+      ["$ref"] -> Ref.new(pointer)
+      _ -> map |> Map.delete("$ref") |> Map.put(:ref, pointer)
+    end
+  end
+
   defp schema(map)
        when is_map(map),
        do:
          map
-         |> map_keys(&update_keys/1)
+         |> map_keys(&update_key/1)
          |> update_type()
          |> update()
          |> Map.to_list()
@@ -115,7 +116,6 @@ defmodule JsonXema do
        do:
          map
          |> Map.update(:type, :any, &update_type/1)
-         |> Map.put(:as, Map.get(map, :type, "any"))
 
   defp update_type(type)
        when is_list(type),
@@ -131,16 +131,16 @@ defmodule JsonXema do
 
   defp get_type(_), do: raise(ArgumentError)
 
-  defp update_keys(key)
+  defp update_key(key) when is_atom(key), do: key
+
+  defp update_key("$" <> key), do: update_key(key)
+
+  defp update_key(key)
        when is_binary(key),
        do:
          key
          |> to_snake_case()
          |> to_existing_atom()
-
-  defp update_keys(key)
-       when is_atom(key),
-       do: to_snake_case(key)
 
   defp update(map),
     do:
@@ -149,6 +149,7 @@ defmodule JsonXema do
       |> Map.update(:additional_properties, nil, &bool_or_schema/1)
       |> Map.update(:all_of, nil, &schemas/1)
       |> Map.update(:any_of, nil, &schemas/1)
+      |> Map.update(:definitions, nil, &schemas/1)
       |> Map.update(:dependencies, nil, &dependencies/1)
       |> Map.update(:format, nil, &to_format_attribute/1)
       |> Map.update(:items, nil, &items/1)
@@ -202,23 +203,54 @@ defmodule JsonXema do
       |> String.replace("-", "_")
       |> String.to_existing_atom()
 
-  @spec error_to_camel_case(any) :: any
-  defp error_to_camel_case(:mixed_map), do: :mixed_map
+  @spec map_error(any) :: any
+  defp map_error(:mixed_map), do: :mixed_map
 
-  defp error_to_camel_case(%{__struct__: _} = struct), do: struct
+  defp map_error(%{__struct__: _} = struct), do: struct
 
-  defp error_to_camel_case(error) when is_map(error) do
-    for {key, value} <- error, into: %{}, do: error_to_camel_case(key, value)
-  end
+  defp map_error(error) when is_map(error),
+    do:
+      for({key, value} <- error, into: %{}, do: map_error(key, value))
 
-  defp error_to_camel_case(error), do: ConvCase.to_camel_case(error)
+  defp map_error(error) when is_list(error),
+    do: Enum.map(error, &map_error/1)
 
-  @spec error_to_camel_case(any, any) :: any
-  defp error_to_camel_case(:properties, value),
-    do: {:properties, map_values(value, &error_to_camel_case/1)}
+  defp map_error(error) when is_tuple(error),
+    do:
+      error
+      |> Tuple.to_list()
+      |> map_error()
+      |> List.to_tuple()
 
-  defp error_to_camel_case(key, value),
-    do: {ConvCase.to_camel_case(key), error_to_camel_case(value)}
+  defp map_error(error), do: ConvCase.to_camel_case(error)
+
+  @spec map_error(any, any) :: any
+  defp map_error(:properties, value),
+    do: {:properties, map_values(value, &map_error/1)}
+
+  defp map_error(:format, value),
+    do: {"format", value |> to_string() |> ConvCase.to_kebab_case()}
+
+  defp map_error(:type, value)
+       when is_boolean(value),
+       do: {:type, value}
+
+  defp map_error(:type, value)
+       when is_list(value),
+       do:
+         {:type,
+          value
+          |> Enum.map(fn type ->
+            @type_map_reverse
+            |> Map.get(type)
+            |> to_existing_atom()
+          end)}
+
+  defp map_error(:type, value),
+    do: {:type, @type_map_reverse |> Map.get(value) |> to_existing_atom()}
+
+  defp map_error(key, value),
+    do: {ConvCase.to_camel_case(key), map_error(value)}
 
   @spec map_keys(map, function) :: map
   defp map_keys(map, fun)

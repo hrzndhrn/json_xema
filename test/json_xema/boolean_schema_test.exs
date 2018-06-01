@@ -1,15 +1,11 @@
 defmodule Xema.BooleanSchemaTest do
   use ExUnit.Case, async: true
 
-  import Xema, only: [is_valid?: 2, validate: 2]
+  import JsonXema, only: [is_valid?: 2, validate: 2]
 
   describe "true schema:" do
     setup do
       %{schema: JsonXema.new("true")}
-    end
-
-    test "type", %{schema: schema} do
-      assert schema.content.as == true
     end
 
     test "is_valid?/2 returns always true", %{schema: schema} do
@@ -32,10 +28,6 @@ defmodule Xema.BooleanSchemaTest do
   describe "false schema:" do
     setup do
       %{schema: JsonXema.new("false")}
-    end
-
-    test "type", %{schema: schema} do
-      assert schema.content.as == false
     end
 
     test "is_valid?/2 returns always false", %{schema: schema} do
