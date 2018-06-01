@@ -21,5 +21,5 @@
   "ranch": {:hex, :ranch, "1.5.0", "f04166f456790fee2ac1aa05a02745cc75783c2bfb26d39faf6aefc9a3d3a58a", [:rebar3], [], "hexpm"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.1", "28a4d65b7f59893bc2c7de786dec1e1555bd742d336043fe644ae956c3497fbe", [:make, :rebar], [], "hexpm"},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.3.1", "a1f612a7b512638634a603c8f401892afbf99b8ce93a45041f8aaca99cadb85e", [:rebar3], [], "hexpm"},
-  "xema": {:hex, :xema, "0.3.0", "d27bdcfd3c3ff2f32a908ac35d8e5f01b379cf66344405e48c6b8526af90ea95", [:mix], [], "hexpm"},
+  "xema": {:hex, :xema, "0.4.0", "2bfa5d7d78e65bc74dfd2caa6c8bc8309beec5a945034646764b5d1d970e2a0d", [:mix], [], "hexpm"},
 }

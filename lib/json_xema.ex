@@ -101,7 +101,7 @@ defmodule JsonXema do
        when is_map(map),
        do:
          map
-         |> map_keys(&update_keys/1)
+         |> map_keys(&update_key/1)
          |> update_type()
          |> update()
          |> Map.to_list()
@@ -131,9 +131,11 @@ defmodule JsonXema do
 
   defp get_type(_), do: raise(ArgumentError)
 
-  defp update_keys(key) when is_atom(key), do: key
+  defp update_key(key) when is_atom(key), do: key
 
-  defp update_keys(key)
+  defp update_key("$" <> key), do: update_key(key)
+
+  defp update_key(key)
        when is_binary(key),
        do:
          key
