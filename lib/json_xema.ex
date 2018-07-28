@@ -159,9 +159,9 @@ defmodule JsonXema do
       |> Map.update(:properties, nil, &schemas/1)
       |> Map.update(:required, nil, &MapSet.new/1)
 
-  defp items(map)
-       when is_map(map),
-       do: schema(map)
+  defp items(value)
+       when is_map(value) or is_boolean(value),
+       do: schema(value)
 
   defp items(list)
        when is_list(list),
@@ -192,7 +192,6 @@ defmodule JsonXema do
       Enum.into(map, %{}, fn
         {key, dep} when is_list(dep) -> {key, dep}
         {key, dep} when is_binary(dep) -> {key, [dep]}
-        {key, dep} when is_atom(dep) -> {key, [dep]}
         {key, dep} -> {key, schema(dep)}
       end)
 
@@ -209,8 +208,7 @@ defmodule JsonXema do
   defp map_error(%{__struct__: _} = struct), do: struct
 
   defp map_error(error) when is_map(error),
-    do:
-      for({key, value} <- error, into: %{}, do: map_error(key, value))
+    do: for({key, value} <- error, into: %{}, do: map_error(key, value))
 
   defp map_error(error) when is_list(error),
     do: Enum.map(error, &map_error/1)

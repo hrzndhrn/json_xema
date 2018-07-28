@@ -60,6 +60,38 @@ defmodule JsonXema.ToXema do
 
       assert convert(schema) == expected
     end
+
+    test "unique items from string" do
+      schema = JsonXema.new(~s(
+        {"uniqueItems": true}
+      ))
+
+      expected =
+        [unique_items: true]
+        |> Xema.new()
+        |> Xema.to_string()
+
+      assert convert(schema) == expected
+    end
+
+    @tag :only
+    test "dependencies with boolean subschemas" do
+      schema = JsonXema.new(~s(
+        {
+          "dependencies": {
+            "foo": true,
+            "bar": false
+          }
+        }
+      ))
+
+      expected =
+        {:dependencies, %{"bar" => false, "foo" => true}}
+        |> Xema.new()
+        |> Xema.to_string()
+
+      assert convert(schema) == expected
+    end
   end
 
   defp convert(json_xema),

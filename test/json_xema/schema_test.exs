@@ -5,13 +5,16 @@ defmodule Xema.SchemaTest do
 
   describe "schema draft04" do
     setup do
-      IO.inspect File.cwd()
-      draft04 = File.read!("test/support/schema/draft04.json")
-      %{draft04: JsonXema.new(draft04)}
+      %{
+        draft04:
+        "test/support/schema/draft04.json"
+        |> File.read!()
+        |> JsonXema.new()
+      }
     end
 
-    test "bla" do
-      assert 1 == 1
+    test "empty object", %{draft04: schema} do
+      assert validate(schema, "{}" |> Jason.decode!()) == :ok
     end
   end
 end

@@ -44,6 +44,27 @@ defmodule Draft4.AdditionalPropertiesTest do
     end
   end
 
+  describe "non-ASCII pattern with additionalProperties" do
+    setup do
+      %{
+        schema:
+          JsonXema.new(
+            ~s( {"additionalProperties":false,"patternProperties":{"^á":{}}} )
+          )
+      }
+    end
+
+    test "matching the pattern is valid", %{schema: schema} do
+      data = %{ármányos: 2}
+      assert is_valid?(schema, data)
+    end
+
+    test "not matching the pattern is invalid", %{schema: schema} do
+      data = %{élmény: 2}
+      refute is_valid?(schema, data)
+    end
+  end
+
   describe "additionalProperties allows a schema which should validate" do
     setup do
       %{
