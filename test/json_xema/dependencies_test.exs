@@ -13,7 +13,7 @@ defmodule JsonXema.Dependencies do
         }
       ))
 
-    assert schema.content.dependencies["bar"] == %Xema.Schema{type: false}
-    assert schema.content.dependencies["foo"] == %Xema.Schema{type: true}
+    assert schema.schema.dependencies["bar"] == %Xema.Schema{type: false}
+    assert schema.schema.dependencies["foo"] == %Xema.Schema{type: true}
   end
 end

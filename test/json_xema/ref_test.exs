@@ -3,8 +3,8 @@ defmodule JsonXema.RefTest do
 
   import JsonXema, only: [validate: 2]
 
-  alias Xema.SchemaError
   alias Xema.Ref
+  alias Xema.RefError
 
   describe "schema with root pointer" do
     setup do
@@ -230,16 +230,16 @@ defmodule JsonXema.RefTest do
 
     test "validate/2 with invalid value", %{schema: schema} do
       assert validate(schema, [1, "2"]) ==
-               {:error, [{1, %{type: :integer, value: "2"}}]}
+               {:error, %{items: [{1, %{type: :integer, value: "2"}}]}}
 
       assert validate(schema, [1, 2, "3"]) ==
-               {:error, [{2, %{type: :integer, value: "3"}}]}
+               {:error, %{items: [{2, %{type: :integer, value: "3"}}]}}
     end
 
     test "validate/2 an invalid ref", %{schema: schema} do
       expected = "Reference '#/items/11' not found."
 
-      assert_raise SchemaError, expected, fn ->
+      assert_raise RefError, expected, fn ->
         validate(schema, [1, 2, 3, 4]) == {:error, [{3, {:ref, "#/items/11"}}]}
       end
     end
@@ -260,8 +260,7 @@ defmodule JsonXema.RefTest do
                 "tilda_1": {"$ref": "#/definitions/tilda~field"},
                 "tilda_2": {"$ref": "#/definitions/tilda~0field"},
                 "tilda_3": {"$ref": "#/definitions/tilda%7Efield"},
-                "percent_1": {"$ref": "#/definitions/percent%field"},
-                "percent_2": {"$ref": "#/definitions/percent%25field"},
+                "percent": {"$ref": "#/definitions/percent%25field"},
                 "slash_1": {"$ref": "#/definitions/slash~1field"},
                 "slash_2": {"$ref": "#/definitions/slash%2Ffield"}
               }
@@ -288,12 +287,8 @@ defmodule JsonXema.RefTest do
       assert validate(schema, %{tilda_3: 1}) == :ok
     end
 
-    test "validate/2 percent_1 with valid value", %{schema: schema} do
-      assert validate(schema, %{percent_1: 1}) == :ok
-    end
-
-    test "validate/2 percent_2 with valid value", %{schema: schema} do
-      assert validate(schema, %{percent_2: 1}) == :ok
+    test "validate/2 percent with valid value", %{schema: schema} do
+      assert validate(schema, %{percent: 1}) == :ok
     end
 
     test "validate/2 slash_1 with valid value", %{schema: schema} do
@@ -311,14 +306,12 @@ defmodule JsonXema.RefTest do
                tilda_3: "1",
                slash_1: "1",
                slash_2: "1",
-               percent_1: "1",
-               percent_2: "1"
+               percent: "1"
              }) ==
                {:error,
                 %{
                   properties: %{
-                    percent_1: %{type: :integer, value: "1"},
-                    percent_2: %{type: :integer, value: "1"},
+                    percent: %{type: :integer, value: "1"},
                     slash_1: %{type: :integer, value: "1"},
                     slash_2: %{type: :integer, value: "1"},
                     tilda_1: %{type: :integer, value: "1"},
@@ -358,7 +351,7 @@ defmodule JsonXema.RefTest do
     test "validate/2 with invalid ref", %{schema: schema} do
       expected = "Reference 'invalid' not found."
 
-      assert_raise SchemaError, expected, fn ->
+      assert_raise RefError, expected, fn ->
         validate(schema, %{invalid: 1})
       end
     end
@@ -366,7 +359,7 @@ defmodule JsonXema.RefTest do
     test "validate/2 with invalid id", %{schema: schema} do
       expected = "Reference 'foobar' not found."
 
-      assert_raise SchemaError, expected, fn ->
+      assert_raise RefError, expected, fn ->
         validate(schema, %{baz: 1})
       end
     end
@@ -416,14 +409,14 @@ defmodule JsonXema.RefTest do
     end
 
     test "ids", %{schema: schema} do
-      assert schema.ids == %{
+      assert schema.refs == %{
                "http://localhost:1234/node" => %Ref{
                  uri: nil,
-                 pointer: "/definitions/node"
+                 pointer: "#/definitions/node"
                },
                "http://localhost:1234/tree" => %Ref{
                  uri: nil,
-                 pointer: ""
+                 pointer: "#"
                }
              }
     end
@@ -486,25 +479,29 @@ defmodule JsonXema.RefTest do
                {:error,
                 %{
                   properties: %{
-                    nodes: [
-                      {0,
-                       %{
-                         properties: %{
-                           subtree: %{
-                             properties: %{
-                               nodes: [
-                                 {1,
-                                  %{
-                                    properties: %{
-                                      subtree: %{required: ["nodes"]}
-                                    }
-                                  }}
-                               ]
+                    nodes: %{
+                      items: [
+                        {0,
+                         %{
+                           properties: %{
+                             subtree: %{
+                               properties: %{
+                                 nodes: %{
+                                   items: [
+                                     {1,
+                                      %{
+                                        properties: %{
+                                          subtree: %{required: ["nodes"]}
+                                        }
+                                      }}
+                                   ]
+                                 }
+                               }
                              }
                            }
-                         }
-                       }}
-                    ]
+                         }}
+                      ]
+                    }
                   }
                 }}
     end

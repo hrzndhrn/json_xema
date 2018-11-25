@@ -3,14 +3,16 @@ defmodule JsonXema.ToXema do
 
   describe "to_xema/1 converts JsonXema to Xema:" do
     test "any schema" do
-      schema = JsonXema.new(~s({}))
-      expected = "Xema.new(:any)"
+      json_xema = JsonXema.new(~s({}))
 
-      assert convert(schema) == expected
+      expected = Xema.new(:any)
+
+      assert %Xema{} = xema = JsonXema.to_xema(json_xema)
+      assert Xema.source(xema) == Xema.source(expected)
     end
 
     test "list schema" do
-      schema = JsonXema.new(~s(
+      json_xema = JsonXema.new(~s(
         {
           "type": "array",
           "items": [
@@ -19,13 +21,14 @@ defmodule JsonXema.ToXema do
           ]
         }
       ))
-      expected = "Xema.new(:list, items: [:string, {:number, minimum: 4}])"
+      expected = Xema.new({:list, items: [:string, {:number, minimum: 4}]})
 
-      assert convert(schema) == expected
+      assert %Xema{} = xema = JsonXema.to_xema(json_xema)
+      assert Xema.source(xema) == Xema.source(expected)
     end
 
     test "object schema" do
-      schema = JsonXema.new(~s(
+      json_xema = JsonXema.new(~s(
         {
           "type": "object",
           "properties": {
@@ -36,46 +39,42 @@ defmodule JsonXema.ToXema do
       ))
 
       expected =
-        :map
-        |> Xema.new(
-          properties: %{
-            "bar" => {:number, maximum: 4},
-            "foo" => :string
-          }
+        Xema.new(
+          {:map,
+           properties: %{
+             "bar" => {:number, maximum: 4},
+             "foo" => :string
+           }}
         )
-        |> Xema.to_string(format: :call)
 
-      assert convert(schema) == expected
+      assert %Xema{} = xema = JsonXema.to_xema(json_xema)
+      assert Xema.source(xema) == Xema.source(expected)
     end
 
     test "multi type" do
-      schema = JsonXema.new(~s(
+      json_xema = JsonXema.new(~s(
         {"type": ["integer", "null"]}
       ))
 
-      expected =
-        [:integer, nil]
-        |> Xema.new()
-        |> Xema.to_string()
+      expected = Xema.new([:integer, nil])
 
-      assert convert(schema) == expected
+      assert %Xema{} = xema = JsonXema.to_xema(json_xema)
+      assert Xema.source(xema) == Xema.source(expected)
     end
 
     test "unique items from string" do
-      schema = JsonXema.new(~s(
+      json_xema = JsonXema.new(~s(
         {"uniqueItems": true}
       ))
 
-      expected =
-        [unique_items: true]
-        |> Xema.new()
-        |> Xema.to_string()
+      expected = Xema.new(unique_items: true)
 
-      assert convert(schema) == expected
+      assert %Xema{} = xema = JsonXema.to_xema(json_xema)
+      assert Xema.source(xema) == Xema.source(expected)
     end
 
     test "dependencies with boolean subschemas" do
-      schema = JsonXema.new(~s(
+      json_xema = JsonXema.new(~s(
         {
           "dependencies": {
             "foo": true,
@@ -84,31 +83,21 @@ defmodule JsonXema.ToXema do
         }
       ))
 
-      expected =
-        {:dependencies, %{"bar" => false, "foo" => true}}
-        |> Xema.new()
-        |> Xema.to_string()
+      expected = Xema.new(dependencies: %{"bar" => false, "foo" => true})
 
-      assert convert(schema) == expected
+      assert %Xema{} = xema = JsonXema.to_xema(json_xema)
+      assert Xema.source(xema) == Xema.source(expected)
     end
 
     test "const" do
-      schema = JsonXema.new(~s(
+      json_xema = JsonXema.new(~s(
         { "const": 44 }
       ))
 
-      expected =
-        {:const, 44}
-        |> Xema.new()
-        |> Xema.to_string()
+      expected = Xema.new(const: 44)
 
-      assert convert(schema) == expected
+      assert %Xema{} = xema = JsonXema.to_xema(json_xema)
+      assert Xema.source(xema) == Xema.source(expected)
     end
   end
-
-  defp convert(json_xema),
-    do:
-      json_xema
-      |> JsonXema.to_xema()
-      |> Xema.to_string(format: :call)
 end

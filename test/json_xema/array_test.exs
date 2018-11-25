@@ -1,7 +1,7 @@
 defmodule JsonXema.ArrayTest do
   use ExUnit.Case, async: true
 
-  import JsonXema, only: [is_valid?: 2, validate: 2]
+  import JsonXema, only: [valid?: 2, validate: 2]
 
   describe "'list' schema" do
     setup do
@@ -22,12 +22,12 @@ defmodule JsonXema.ArrayTest do
       assert validate(schema, "not an array") == expected
     end
 
-    test "is_valid?/2 with a valid value", %{schema: schema} do
-      assert is_valid?(schema, [1])
+    test "valid?/2 with a valid value", %{schema: schema} do
+      assert valid?(schema, [1])
     end
 
-    test "is_valid?/2 with an invalid value", %{schema: schema} do
-      refute is_valid?(schema, 42)
+    test "valid?/2 with an invalid value", %{schema: schema} do
+      refute valid?(schema, 42)
     end
   end
 
@@ -81,7 +81,7 @@ defmodule JsonXema.ArrayTest do
     end
 
     test "validate/2 integers with invalid list", %{integers: schema} do
-      expected = {:error, [{2, %{type: :integer, value: "foo"}}]}
+      expected = {:error, %{items: [{2, %{type: :integer, value: "foo"}}]}}
 
       assert validate(schema, [1, 2, "foo"]) == expected
     end
@@ -97,10 +97,12 @@ defmodule JsonXema.ArrayTest do
     test "validate/2 strings with invalid list", %{strings: schema} do
       expected = {
         :error,
-        [
-          {0, %{type: :string, value: 1}},
-          {1, %{type: :string, value: 2}}
-        ]
+        %{
+          items: [
+            {0, %{type: :string, value: 1}},
+            {1, %{type: :string, value: 2}}
+          ]
+        }
       }
 
       assert validate(schema, [1, 2, "foo"]) == expected
@@ -150,15 +152,15 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 with invalid values", %{schema: schema} do
       assert validate(schema, ["foo", "bar"]) ==
-               {:error, [{1, %{type: :number, value: "bar"}}]}
+               {:error, %{items: [{1, %{type: :number, value: "bar"}}]}}
 
       assert validate(schema, ["x", 33]) ==
-               {:error, [{0, %{value: "x", minLength: 3}}]}
+               {:error, %{items: [{0, %{value: "x", minLength: 3}}]}}
     end
 
     test "validate/2 with invalid value and additional item", %{schema: schema} do
       assert validate(schema, ["x", 33, 7]) ==
-               {:error, [{0, %{value: "x", minLength: 3}}]}
+               {:error, %{items: [{0, %{value: "x", minLength: 3}}]}}
     end
 
     test "validate/2 with additional item", %{schema: schema} do
@@ -192,7 +194,7 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 with additional item", %{schema: schema} do
       assert validate(schema, ["foo", 42, "add"]) ==
-               {:error, [{2, %{additionalItems: false}}]}
+               {:error, %{items: [{2, %{additionalItems: false}}]}}
     end
   end
 
@@ -220,7 +222,7 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 with invalid additional item", %{schema: schema} do
       assert validate(schema, [11, "twelve", 13]) ==
-               {:error, [{2, %{type: :string, value: 13}}]}
+               {:error, %{items: [{2, %{type: :string, value: 13}}]}}
     end
   end
 end

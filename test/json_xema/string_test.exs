@@ -1,7 +1,7 @@
 defmodule JsonXema.StringTest do
   use ExUnit.Case, async: true
 
-  import JsonXema, only: [is_valid?: 2, validate: 2]
+  import JsonXema, only: [valid?: 2, validate: 2]
 
   describe "string schema:" do
     setup do
@@ -24,12 +24,12 @@ defmodule JsonXema.StringTest do
       assert validate(schema, nil) == expected
     end
 
-    test "is_valid?/2 with a valid value", %{schema: schema} do
-      assert is_valid?(schema, "foo")
+    test "valid?/2 with a valid value", %{schema: schema} do
+      assert valid?(schema, "foo")
     end
 
-    test "is_valid?/2 with an invalid value", %{schema: schema} do
-      refute is_valid?(schema, [])
+    test "valid?/2 with an invalid value", %{schema: schema} do
+      refute valid?(schema, [])
     end
   end
 

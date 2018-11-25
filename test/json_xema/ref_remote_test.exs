@@ -119,6 +119,7 @@ defmodule JsonXema.RefRemoteTest do
       }
     end
 
+    @tag :only
     test "validate/2 with a valid value", %{schema: schema} do
       assert validate(schema, %{list: [1]}) == :ok
     end
@@ -126,7 +127,11 @@ defmodule JsonXema.RefRemoteTest do
     test "validate/2 with an invalid value", %{schema: schema} do
       assert validate(schema, %{list: ["1"]}) ==
                {:error,
-                %{properties: %{list: [{0, %{type: :integer, value: "1"}}]}}}
+                %{
+                  properties: %{
+                    list: %{items: [{0, %{type: :integer, value: "1"}}]}
+                  }
+                }}
     end
   end
 
@@ -158,7 +163,13 @@ defmodule JsonXema.RefRemoteTest do
                {:error,
                 %{
                   properties: %{
-                    name: %{anyOf: [%{type: :null}, %{type: :string}], value: 1}
+                    name: %{
+                      anyOf: [
+                        %{type: :null, value: 1},
+                        %{type: :string, value: 1}
+                      ],
+                      value: 1
+                    }
                   }
                 }}
     end
@@ -192,7 +203,13 @@ defmodule JsonXema.RefRemoteTest do
                {:error,
                 %{
                   properties: %{
-                    name: %{anyOf: [%{type: :null}, %{type: :string}], value: 1}
+                    name: %{
+                      anyOf: [
+                        %{type: :null, value: 1},
+                        %{type: :string, value: 1}
+                      ],
+                      value: 1
+                    }
                   }
                 }}
     end

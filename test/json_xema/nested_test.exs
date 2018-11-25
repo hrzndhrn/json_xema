@@ -60,16 +60,18 @@ defmodule Xema.NestedTest do
         :error,
         %{
           properties: %{
-            items: [
-              {
-                1,
-                %{
-                  properties: %{
-                    num: %{value: -2, minimum: 0}
+            items: %{
+              items: [
+                {
+                  1,
+                  %{
+                    properties: %{
+                      num: %{value: -2, minimum: 0}
+                    }
                   }
                 }
-              }
-            ]
+              ]
+            }
           }
         }
       }

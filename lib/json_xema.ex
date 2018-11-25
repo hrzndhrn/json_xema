@@ -83,7 +83,7 @@ defmodule JsonXema do
     #    @type_map |> Map.keys() |> Enum.each(&String.to_atom/1)
   end
 
-  @spec new(String.t() | map) :: JsonXema.t()
+  @spec new(String.t() | map) :: %JsonXema{}
 
   def init(string)
       when is_binary(string),
@@ -109,7 +109,7 @@ defmodule JsonXema do
   def to_xema(%JsonXema{} = jsonXema) do
     struct!(
       Xema,
-      content: jsonXema.content,
+      schema: jsonXema.schema,
       refs: jsonXema.refs
     )
   end
@@ -118,6 +118,7 @@ defmodule JsonXema do
        when is_boolean(bool),
        do: Schema.new(type: bool)
 
+  # Creates a schema for a reference.
   defp schema(%{"$ref" => pointer} = map) do
     map |> Map.delete("$ref") |> Map.put(:ref, pointer) |> schema()
   end
