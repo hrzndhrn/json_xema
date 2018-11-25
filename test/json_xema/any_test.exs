@@ -1,27 +1,28 @@
 defmodule JsonXema.AnyTest do
   use ExUnit.Case
 
-  import JsonXema, only: [is_valid?: 2, validate: 2]
+  import JsonXema, only: [valid?: 2, validate: 2]
 
   describe "'any' schema" do
     setup do
       %{schema: JsonXema.new("{}")}
     end
 
-    test "is_valid?/2 with a string", %{schema: schema} do
-      assert is_valid?(schema, "foo")
+    @tag :only
+    test "valid?/2 with a string", %{schema: schema} do
+      assert valid?(schema, "foo")
     end
 
-    test "is_valid?/2 with a number", %{schema: schema} do
-      assert is_valid?(schema, 42)
+    test "valid?/2 with a number", %{schema: schema} do
+      assert valid?(schema, 42)
     end
 
-    test "is_valid?/2 with nil", %{schema: schema} do
-      assert is_valid?(schema, nil)
+    test "valid?/2 with nil", %{schema: schema} do
+      assert valid?(schema, nil)
     end
 
-    test "is_valid?/2 with a list", %{schema: schema} do
-      assert is_valid?(schema, [1, 2, 3])
+    test "valid?/2 with a list", %{schema: schema} do
+      assert valid?(schema, [1, 2, 3])
     end
 
     test "validate/2 with a string", %{schema: schema} do
@@ -63,12 +64,12 @@ defmodule JsonXema.AnyTest do
       assert validate(schema, 2) == expected
     end
 
-    test "is_valid?/2 with a valid value", %{schema: schema} do
-      assert is_valid?(schema, 1)
+    test "valid?/2 with a valid value", %{schema: schema} do
+      assert valid?(schema, 1)
     end
 
-    test "is_valid?/2 with an invalid value", %{schema: schema} do
-      refute is_valid?(schema, 5)
+    test "valid?/2 with an invalid value", %{schema: schema} do
+      refute valid?(schema, 5)
     end
   end
 
@@ -135,7 +136,7 @@ defmodule JsonXema.AnyTest do
 
     test "validate/2 with an imvalid value", %{schema: schema} do
       assert validate(schema, -1) ==
-               {:error, %{allOf: [%{minimum: 0}], value: -1}}
+               {:error, %{allOf: [%{minimum: 0, value: -1}], value: -1}}
     end
   end
 
@@ -159,7 +160,13 @@ defmodule JsonXema.AnyTest do
     test "validate/2 with an imvalid value", %{schema: schema} do
       assert validate(schema, "foo") ==
                {:error,
-                %{anyOf: [%{type: :null}, %{type: :integer}], value: "foo"}}
+                %{
+                  anyOf: [
+                    %{type: :null, value: "foo"},
+                    %{type: :integer, value: "foo"}
+                  ],
+                  value: "foo"
+                }}
     end
   end
 
@@ -190,7 +197,13 @@ defmodule JsonXema.AnyTest do
 
       assert validate(schema, 4) ==
                {:error,
-                %{oneOf: [%{multipleOf: 5}, %{multipleOf: 3}], value: 4}}
+                %{
+                  oneOf: [
+                    %{multipleOf: 5, value: 4},
+                    %{multipleOf: 3, value: 4}
+                  ],
+                  value: 4
+                }}
     end
   end
 
@@ -219,7 +232,13 @@ defmodule JsonXema.AnyTest do
 
       assert validate(schema, 4) ==
                {:error,
-                %{oneOf: [%{multipleOf: 5}, %{multipleOf: 3}], value: 4}}
+                %{
+                  oneOf: [
+                    %{multipleOf: 5, value: 4},
+                    %{multipleOf: 3, value: 4}
+                  ],
+                  value: 4
+                }}
     end
   end
 end

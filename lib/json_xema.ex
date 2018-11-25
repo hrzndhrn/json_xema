@@ -2,7 +2,7 @@ defmodule JsonXema do
   @moduledoc """
   TODO: Documentation for JsonXema.
   """
-  use Xema.Base
+  use Xema.Behaviour
 
   import ConvCase
   import String, only: [to_existing_atom: 1]
@@ -16,14 +16,22 @@ defmodule JsonXema do
           | :email
           | :ipv4
           | :ipv6
+          | :json_pointer
           | :uri
+          | :uri_reference
+          | :uri_template
+          | :regex
 
   @format_attributes [
     :date_time,
     :email,
     :ipv4,
     :ipv6,
-    :uri
+    :json_pointer,
+    :regex,
+    :uri,
+    :uri_reference,
+    :uri_template
   ]
 
   @type_map %{
@@ -41,60 +49,77 @@ defmodule JsonXema do
 
   @types Map.keys(@type_map)
 
-  @keywords [
-    :anyOf,
-    :additionalItems,
-    :additionalProperties,
-    :exclusiveMaximum,
-    :exclusiveMinimum,
-    :maxItems,
-    :maxLength,
-    :maxProperties,
-    :minItems,
-    :minLength,
-    :minProperties,
-    :multipleOf,
-    :uniqueItems
-  ]
+  @atom_keywords %Schema{}
+                 |> Map.delete(:data)
+                 |> Map.delete(:__struct__)
+                 |> Map.keys()
+                 |> MapSet.new()
 
+  @string_keywords @atom_keywords
+                   |> Enum.map(&Atom.to_string/1)
+                   |> MapSet.new()
+
+  #  @keywords [
+  #    :anyOf,
+  #    :additionalItems,
+  #    :additionalProperties,
+  #    :exclusiveMaximum,
+  #    :exclusiveMinimum,
+  #    :maxItems,
+  #    :maxLength,
+  #    :maxProperties,
+  #    :minItems,
+  #    :minLength,
+  #    :minProperties,
+  #    :multipleOf,
+  #    :uniqueItems
+  #  ]
+  #
   @on_load :load_atoms
   @doc false
   def load_atoms do
-    Enum.each(@keywords, &Code.ensure_loaded/1)
+    #    Enum.each(@keywords, &Code.ensure_loaded/1)
     Enum.each(@format_attributes, &Code.ensure_loaded/1)
-    @type_map |> Map.keys() |> Enum.each(&String.to_atom/1)
+    #    @type_map |> Map.keys() |> Enum.each(&String.to_atom/1)
   end
 
   @spec new(String.t() | map) :: JsonXema.t()
 
-  def init(string, _)
+  def init(string)
       when is_binary(string),
-      do: string |> Jason.decode!(keys: :strings) |> init(nil)
+      do:
+        string
+        |> Jason.decode!(keys: :strings)
+        |> init()
 
-  def init(value, _)
-      when is_boolean(value),
-      do: schema(value)
+  def init(bool)
+      when is_boolean(bool),
+      do: schema(bool)
 
-  def init(value, _) when is_map(value),
-    do: value |> Map.put_new("type", "any") |> schema()
+  def init(map)
+      when is_map(map),
+      do:
+        map
+        |> Map.put_new("type", "any")
+        |> schema()
 
   def on_error(error), do: map_error(error)
 
   @spec to_xema(JsonXeam.t()) :: Xema.t()
-  def to_xema(%JsonXema{} = jsonXema),
-    do:
-      jsonXema.content
-      |> Xema.new()
+  def to_xema(%JsonXema{} = jsonXema) do
+    struct!(
+      Xema,
+      content: jsonXema.content,
+      refs: jsonXema.refs
+    )
+  end
 
   defp schema(bool)
        when is_boolean(bool),
        do: Schema.new(type: bool)
 
   defp schema(%{"$ref" => pointer} = map) do
-    case Map.keys(map) do
-      ["$ref"] -> Ref.new(pointer)
-      _ -> map |> Map.delete("$ref") |> Map.put(:ref, pointer)
-    end
+    map |> Map.delete("$ref") |> Map.put(:ref, pointer) |> schema()
   end
 
   defp schema(map)
@@ -147,17 +172,69 @@ defmodule JsonXema do
       map
       |> Map.update(:additional_items, nil, &bool_or_schema/1)
       |> Map.update(:additional_properties, nil, &bool_or_schema/1)
+      |> Map.update(:contains, nil, &schema/1)
       |> Map.update(:all_of, nil, &schemas/1)
       |> Map.update(:any_of, nil, &schemas/1)
       |> Map.update(:definitions, nil, &schemas/1)
       |> Map.update(:dependencies, nil, &dependencies/1)
+      |> Map.update(:else, nil, &schema/1)
       |> Map.update(:format, nil, &to_format_attribute/1)
+      |> Map.update(:if, nil, &schema/1)
       |> Map.update(:items, nil, &items/1)
       |> Map.update(:not, nil, &schema/1)
       |> Map.update(:one_of, nil, &schemas/1)
       |> Map.update(:pattern_properties, nil, &schemas/1)
       |> Map.update(:properties, nil, &schemas/1)
+      |> Map.update(:property_names, nil, &schema/1)
       |> Map.update(:required, nil, &MapSet.new/1)
+      |> Map.update(:then, nil, &schema/1)
+      |> update_data()
+
+  defp update_data(keywords) do
+    {data, keywords} = do_update_data(keywords)
+
+    case data do
+      data when map_size(data) == 0 ->
+        Map.put(keywords, :data, nil)
+
+      data ->
+        Map.put(keywords, :data, data)
+    end
+  end
+
+  defp do_update_data(keywords),
+    do:
+      keywords
+      |> diff_keywords()
+      |> Enum.reduce({%{}, keywords}, fn key, {data, keywords} ->
+        {value, keywords} = Map.pop(keywords, key)
+        {Map.put(data, key, maybe_schema(value)), keywords}
+      end)
+
+  defp maybe_schema(map) when is_map(map) do
+    case has_keyword?(map) do
+      true -> schema(map)
+      false -> map
+    end
+  end
+
+  defp maybe_schema(value), do: value
+
+  defp diff_keywords(map),
+    do:
+      map
+      |> Map.keys()
+      |> MapSet.new()
+      |> MapSet.difference(@atom_keywords)
+      |> MapSet.to_list()
+
+  defp has_keyword?(map),
+    do:
+      map
+      |> Map.keys()
+      |> MapSet.new()
+      |> MapSet.disjoint?(@string_keywords)
+      |> Kernel.not()
 
   defp items(value)
        when is_map(value) or is_boolean(value),

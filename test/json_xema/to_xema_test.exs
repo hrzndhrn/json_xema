@@ -74,7 +74,6 @@ defmodule JsonXema.ToXema do
       assert convert(schema) == expected
     end
 
-    @tag :only
     test "dependencies with boolean subschemas" do
       schema = JsonXema.new(~s(
         {
@@ -87,6 +86,19 @@ defmodule JsonXema.ToXema do
 
       expected =
         {:dependencies, %{"bar" => false, "foo" => true}}
+        |> Xema.new()
+        |> Xema.to_string()
+
+      assert convert(schema) == expected
+    end
+
+    test "const" do
+      schema = JsonXema.new(~s(
+        { "const": 44 }
+      ))
+
+      expected =
+        {:const, 44}
         |> Xema.new()
         |> Xema.to_string()
 

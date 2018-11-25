@@ -7,9 +7,9 @@ defmodule Xema.SchemaTest do
     setup do
       %{
         draft04:
-        "test/support/schema/draft04.json"
-        |> File.read!()
-        |> JsonXema.new()
+          "test/support/schema/draft04.json"
+          |> File.read!()
+          |> JsonXema.new()
       }
     end
 

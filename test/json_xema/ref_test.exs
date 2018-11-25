@@ -418,15 +418,11 @@ defmodule JsonXema.RefTest do
     test "ids", %{schema: schema} do
       assert schema.ids == %{
                "http://localhost:1234/node" => %Ref{
-                 path: nil,
-                 remote: false,
-                 url: nil,
+                 uri: nil,
                  pointer: "/definitions/node"
                },
                "http://localhost:1234/tree" => %Ref{
-                 path: nil,
-                 remote: false,
-                 url: nil,
+                 uri: nil,
                  pointer: ""
                }
              }

@@ -3,8 +3,8 @@ defmodule JsonXema.Dependencies do
 
   import JsonXema, only: [validate: 2]
 
-    test "dependencies with boolean subschemas and string keys" do
-      schema = JsonXema.new(~s(
+  test "dependencies with boolean subschemas and string keys" do
+    schema = JsonXema.new(~s(
         {
           "dependencies": {
             "foo": true,
@@ -13,7 +13,7 @@ defmodule JsonXema.Dependencies do
         }
       ))
 
-      assert schema.content.dependencies["bar"] == %Xema.Schema{type: false}
-      assert schema.content.dependencies["foo"] == %Xema.Schema{type: true}
-    end
+    assert schema.content.dependencies["bar"] == %Xema.Schema{type: false}
+    assert schema.content.dependencies["foo"] == %Xema.Schema{type: true}
+  end
 end
