@@ -39,14 +39,15 @@ defmodule JsonXema.MixProject do
     [
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.2", only: :test},
-      {:jason, "~> 1.0"},
-      # {:xema, "~> 0.5"},
-      {:xema, path: "../xema"},
       {:credo, "~> 1.0", only: [:dev, :test]},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:excoveralls, "~> 0.8", only: :test},
-      {:httpoison, "~> 1.0", only: :test}
+      {:httpoison, "~> 1.0", only: :test},
+      {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
+      {:jason, "~> 1.0"},
+      # {:xema, "~> 0.5"},
+      {:xema, path: "../xema"}
     ]
   end
 
