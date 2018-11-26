@@ -1,7 +1,8 @@
 defmodule JsonXema do
   @moduledoc """
-  TODO: Documentation for JsonXema.
+  A [JSON Schema](http://json-schema.org) validator.
   """
+
   use Xema.Behaviour
 
   import ConvCase
@@ -84,6 +85,7 @@ defmodule JsonXema do
 
   @spec new(String.t() | map) :: %JsonXema{}
 
+  @spec init(String.t() | boolean | map) :: Schema.t()
   def init(string)
       when is_binary(string),
       do:
@@ -102,14 +104,20 @@ defmodule JsonXema do
         |> Map.put_new("type", "any")
         |> schema()
 
+  # Maps keywords from snake case to camel case.
+  @doc false
+  @spec on_error(map) :: map
   def on_error(error), do: map_error(error)
 
-  @spec to_xema(JsonXeam.t()) :: Xema.t()
-  def to_xema(%JsonXema{} = jsonXema) do
+  @doc """
+  Converts a `%JsonXema{}` into a `%Xema{}`.
+  """
+  @spec to_xema(%JsonXema{}) :: %Xema{}
+  def to_xema(%JsonXema{} = json_xema) do
     struct!(
       Xema,
-      schema: jsonXema.schema,
-      refs: jsonXema.refs
+      schema: json_xema.schema,
+      refs: json_xema.refs
     )
   end
 
