@@ -1,8 +1,6 @@
 defmodule JsonXema.Dependencies do
   use ExUnit.Case, async: true
 
-  import JsonXema, only: [validate: 2]
-
   test "dependencies with boolean subschemas and string keys" do
     schema = JsonXema.new(~s(
         {

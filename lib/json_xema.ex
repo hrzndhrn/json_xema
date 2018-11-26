@@ -8,7 +8,6 @@ defmodule JsonXema do
   import String, only: [to_existing_atom: 1]
 
   alias Jason
-  alias Xema.Ref
   alias Xema.Schema
 
   @type format_attribute ::
