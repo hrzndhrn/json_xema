@@ -5,11 +5,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of date-time strings" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "date-time"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid date-time string", %{schema: schema} do
@@ -65,11 +65,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of URIs" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "uri"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid URL with anchor tag", %{schema: schema} do
@@ -170,11 +170,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of URI References" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "uri-reference"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid URI", %{schema: schema} do
@@ -215,11 +215,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "format: uri-template" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "uri-template"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid uri-template", %{schema: schema} do
@@ -245,11 +245,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of e-mail addresses" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "email"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid e-mail address", %{schema: schema} do
@@ -265,11 +265,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of IP addresses" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "ipv4"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid IP address", %{schema: schema} do
@@ -300,11 +300,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of IPv6 addresses" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "ipv6"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid IPv6 address", %{schema: schema} do
@@ -330,11 +330,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of host names" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "hostname"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid host name", %{schema: schema} do
@@ -362,11 +362,11 @@ defmodule Draft6.Optional.FormatTest do
 
   describe "validation of JSON-pointers (JSON String Representation)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "json-pointer"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid JSON-pointer", %{schema: schema} do

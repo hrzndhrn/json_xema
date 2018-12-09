@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.RegexTest do
 
   describe "validation of regular expressions" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "regex"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid regular expression", %{schema: schema} do

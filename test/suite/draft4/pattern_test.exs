@@ -5,11 +5,11 @@ defmodule Draft4.PatternTest do
 
   describe "pattern validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "pattern": "^a*$"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a matching pattern is valid", %{schema: schema} do
@@ -30,11 +30,11 @@ defmodule Draft4.PatternTest do
 
   describe "pattern is not anchored" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "pattern": "a+"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "matches a substring", %{schema: schema} do

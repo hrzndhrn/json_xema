@@ -5,7 +5,7 @@ defmodule Xema.BooleanSchemaTest do
 
   describe "true schema:" do
     setup do
-      %{schema: JsonXema.new("true")}
+      %{schema: "true" |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid?/2 returns always true", %{schema: schema} do
@@ -27,7 +27,7 @@ defmodule Xema.BooleanSchemaTest do
 
   describe "false schema:" do
     setup do
-      %{schema: JsonXema.new("false")}
+      %{schema: "false" |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid?/2 returns always false", %{schema: schema} do
@@ -49,7 +49,10 @@ defmodule Xema.BooleanSchemaTest do
 
   describe "all_of with boolean schemas, all true:" do
     setup do
-      %{schema: JsonXema.new(~s({"all_of": [true, true]}))}
+      %{
+        schema:
+          ~s({"all_of": [true, true]}) |> Jason.decode!() |> JsonXema.new()
+      }
     end
 
     test "valid?/2 returns always true", %{schema: schema} do

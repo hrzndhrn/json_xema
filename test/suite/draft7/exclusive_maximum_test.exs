@@ -5,11 +5,11 @@ defmodule Draft7.ExclusiveMaximumTest do
 
   describe "exclusiveMaximum validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "exclusiveMaximum": 3.0
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "below the exclusiveMaximum is valid", %{schema: schema} do

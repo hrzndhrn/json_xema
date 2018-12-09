@@ -5,13 +5,13 @@ defmodule Draft6.PropertyNamesTest do
 
   describe "propertyNames validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "propertyNames": {
             "maxLength": 3
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "all property names valid", %{schema: schema} do
@@ -47,11 +47,11 @@ defmodule Draft6.PropertyNamesTest do
 
   describe "propertyNames with boolean schema true" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "propertyNames": true
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "object with any properties is valid", %{schema: schema} do
@@ -67,11 +67,11 @@ defmodule Draft6.PropertyNamesTest do
 
   describe "propertyNames with boolean schema false" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "propertyNames": false
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "object with any properties is invalid", %{schema: schema} do

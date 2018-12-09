@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.RelativeJsonPointerTest do
 
   describe "validation of Relative JSON Pointers (RJP)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "relative-json-pointer"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid upwards RJP", %{schema: schema} do

@@ -5,11 +5,11 @@ defmodule Draft7.ConstTest do
 
   describe "const validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "const": 2
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "same value is valid", %{schema: schema} do
@@ -30,14 +30,14 @@ defmodule Draft7.ConstTest do
 
   describe "const with object" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "const": {
             "baz": "bax",
             "foo": "bar"
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "same object is valid", %{schema: schema} do
@@ -63,7 +63,7 @@ defmodule Draft7.ConstTest do
 
   describe "const with array" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "const": [
             {
@@ -71,7 +71,7 @@ defmodule Draft7.ConstTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "same array is valid", %{schema: schema} do
@@ -92,11 +92,11 @@ defmodule Draft7.ConstTest do
 
   describe "const with null" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "const": null
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "null is valid", %{schema: schema} do

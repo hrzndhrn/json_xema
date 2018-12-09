@@ -8,6 +8,8 @@ defmodule JsonXema do
   import ConvCase
 
   alias Jason
+  alias JsonXema.SchemaError
+  alias JsonXema.SchemaValidator
   alias Xema.Schema
   alias Xema.Format
 
@@ -26,14 +28,16 @@ defmodule JsonXema do
 
   @types Map.keys(@type_map)
 
-  @json_keywords %Schema{}
-                 |> Map.delete(:data)
-                 |> Map.delete(:__struct__)
-                 |> Map.keys()
-                 |> Enum.map(&Atom.to_string/1)
-                 |> Enum.map(&to_camel_case/1)
-                 |> Enum.concat(["$ref"])
-                 |> MapSet.new()
+  defp json_keywords,
+    do:
+      %Schema{}
+      |> Map.delete(:data)
+      |> Map.delete(:__struct__)
+      |> Map.keys()
+      |> Enum.map(&Atom.to_string/1)
+      |> Enum.map(&to_camel_case/1)
+      |> Enum.concat(["$ref"])
+      |> MapSet.new()
 
   @on_load :load_atoms
   @doc false
@@ -48,24 +52,37 @@ defmodule JsonXema do
 
   @spec new(String.t() | map) :: %JsonXema{}
 
-  @spec init(String.t() | boolean | map) :: Schema.t()
-  def init(string)
-      when is_binary(string),
-      do:
-        string
-        |> Jason.decode!()
-        |> init()
-
+  @spec init(boolean | map) :: Schema.t()
   def init(bool)
       when is_boolean(bool),
       do: schema(bool)
 
-  def init(map)
-      when is_map(map),
-      do:
-        map
+  def init(map) when is_map(map) do
+    with {:ok, data} <- validate(map) do
+      try do
+        data
         |> Map.put_new("type", "any")
         |> schema()
+      rescue
+        _ -> raise SchemaError, "Can't build schema!"
+      end
+    else
+      {:error, reason} ->
+        raise SchemaError, reason
+    end
+  end
+
+  defp validate(map) do
+    case Map.get(map, "$schema") do
+      nil ->
+        {:ok, map}
+
+      schema ->
+        with :ok <- SchemaValidator.validate(schema, map) do
+          {:ok, map}
+        end
+    end
+  end
 
   # Maps keywords from snake case to camel case.
   @doc false
@@ -83,7 +100,6 @@ defmodule JsonXema do
       refs: json_xema.refs
     )
   end
-
 
   defp schema(bool)
        when is_boolean(bool),
@@ -205,7 +221,7 @@ defmodule JsonXema do
       map
       |> Map.keys()
       |> MapSet.new()
-      |> MapSet.difference(@json_keywords)
+      |> MapSet.difference(json_keywords())
       |> MapSet.to_list()
 
   defp has_keyword?(map),
@@ -213,7 +229,7 @@ defmodule JsonXema do
       map
       |> Map.keys()
       |> MapSet.new()
-      |> MapSet.disjoint?(@json_keywords)
+      |> MapSet.disjoint?(json_keywords())
       |> Kernel.not()
 
   defp items(value)

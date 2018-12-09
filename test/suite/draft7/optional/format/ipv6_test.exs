@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.Ipv6Test do
 
   describe "validation of IPv6 addresses" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "ipv6"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid IPv6 address", %{schema: schema} do

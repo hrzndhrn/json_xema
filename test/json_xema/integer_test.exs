@@ -8,7 +8,7 @@ defmodule JsonXema.IntegerTest do
   describe "'integer' schema" do
     setup do
       %{
-        schema: JsonXema.new(~s({"type" : "integer"}))
+        schema: ~s({"type" : "integer"}) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -46,11 +46,11 @@ defmodule JsonXema.IntegerTest do
   describe "'integer' schema with range" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
             "type" : "integer",
             "minimum" : 2,
             "maximum" : 4
-          }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -76,13 +76,13 @@ defmodule JsonXema.IntegerTest do
   describe "'integer' schema with exclusive range" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
             "type" : "integer",
             "minimum" : 2,
             "maximum" : 4,
             "exclusiveMaximum" : true,
             "exclusiveMinimum" : true
-          }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -117,10 +117,10 @@ defmodule JsonXema.IntegerTest do
 
   describe "'integer' schema with multiple-of" do
     setup do
-      %{schema: JsonXema.new(~s({
+      %{schema: ~s({
           "type" : "integer",
           "multipleOf" : 2
-        }))}
+      }) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with a valid integer", %{schema: schema} do
@@ -135,10 +135,10 @@ defmodule JsonXema.IntegerTest do
 
   describe "'integer' schema with enum" do
     setup do
-      %{schema: JsonXema.new(~s({
+      %{schema: ~s({
           "type" : "integer",
           "enum" : [1, 3]
-        }))}
+      }) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "with a value from the enum", %{schema: schema} do

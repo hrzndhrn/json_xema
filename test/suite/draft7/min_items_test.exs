@@ -5,11 +5,11 @@ defmodule Draft7.MinItemsTest do
 
   describe "minItems validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "minItems": 1
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "longer is valid", %{schema: schema} do

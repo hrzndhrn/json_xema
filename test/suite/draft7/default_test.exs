@@ -5,7 +5,7 @@ defmodule Draft7.DefaultTest do
 
   describe "invalid type for default" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "foo": {
@@ -14,7 +14,7 @@ defmodule Draft7.DefaultTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid when property is specified", %{schema: schema} do
@@ -30,7 +30,7 @@ defmodule Draft7.DefaultTest do
 
   describe "invalid string value for default" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "bar": {
@@ -40,7 +40,7 @@ defmodule Draft7.DefaultTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid when property is specified", %{schema: schema} do

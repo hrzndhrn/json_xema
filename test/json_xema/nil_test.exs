@@ -5,7 +5,7 @@ defmodule Xema.NilTest do
 
   describe "'nil' schema" do
     setup do
-      %{schema: JsonXema.new(~s({"type": "null"}))}
+      %{schema: ~s({"type": "null"}) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with nil value", %{schema: schema} do

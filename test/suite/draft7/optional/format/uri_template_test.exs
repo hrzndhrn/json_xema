@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.UriTemplateTest do
 
   describe "format: uri-template" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "uri-template"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid uri-template", %{schema: schema} do

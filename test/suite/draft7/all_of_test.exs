@@ -5,7 +5,7 @@ defmodule Draft7.AllOfTest do
 
   describe "allOf" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "allOf": [
             {
@@ -30,7 +30,7 @@ defmodule Draft7.AllOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "allOf", %{schema: schema} do
@@ -56,7 +56,7 @@ defmodule Draft7.AllOfTest do
 
   describe "allOf with base schema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "allOf": [
             {
@@ -89,7 +89,7 @@ defmodule Draft7.AllOfTest do
             "bar"
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid", %{schema: schema} do
@@ -120,7 +120,7 @@ defmodule Draft7.AllOfTest do
 
   describe "allOf simple types" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "allOf": [
             {
@@ -131,7 +131,7 @@ defmodule Draft7.AllOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid", %{schema: schema} do
@@ -147,14 +147,14 @@ defmodule Draft7.AllOfTest do
 
   describe "allOf with boolean schemas, all true" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "allOf": [
             true,
             true
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is valid", %{schema: schema} do
@@ -165,14 +165,14 @@ defmodule Draft7.AllOfTest do
 
   describe "allOf with boolean schemas, some false" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "allOf": [
             true,
             false
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is invalid", %{schema: schema} do
@@ -183,14 +183,14 @@ defmodule Draft7.AllOfTest do
 
   describe "allOf with boolean schemas, all false" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "allOf": [
             false,
             false
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is invalid", %{schema: schema} do

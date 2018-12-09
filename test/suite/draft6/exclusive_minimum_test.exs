@@ -5,11 +5,11 @@ defmodule Draft6.ExclusiveMinimumTest do
 
   describe "exclusiveMinimum validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "exclusiveMinimum": 1.1
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "above the exclusiveMinimum is valid", %{schema: schema} do

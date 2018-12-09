@@ -5,11 +5,11 @@ defmodule Draft4.MaxItemsTest do
 
   describe "maxItems validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "maxItems": 2
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "shorter is valid", %{schema: schema} do

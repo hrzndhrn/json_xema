@@ -5,11 +5,11 @@ defmodule Draft4.MinimumTest do
 
   describe "minimum validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "minimum": 1.1
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "above the minimum is valid", %{schema: schema} do
@@ -35,12 +35,12 @@ defmodule Draft4.MinimumTest do
 
   describe "minimum validation (explicit false exclusivity)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "exclusiveMinimum": false,
           "minimum": 1.1
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "above the minimum is valid", %{schema: schema} do
@@ -66,12 +66,12 @@ defmodule Draft4.MinimumTest do
 
   describe "exclusiveMinimum validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "exclusiveMinimum": true,
           "minimum": 1.1
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "above the minimum is still valid", %{schema: schema} do

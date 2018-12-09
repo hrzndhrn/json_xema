@@ -5,11 +5,11 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "integer (1)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "integer"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a bignum is an integer", %{schema: schema} do
@@ -22,11 +22,11 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "number (1)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "number"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a bignum is a number", %{schema: schema} do
@@ -39,11 +39,11 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "integer (2)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "integer"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a negative bignum is an integer", %{schema: schema} do
@@ -56,11 +56,11 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "number (2)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "number"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a negative bignum is a number", %{schema: schema} do
@@ -73,11 +73,11 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "string" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "string"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a bignum is not a string", %{schema: schema} do
@@ -90,11 +90,11 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "integer comparison (1)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "maximum": 18446744073709551615
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "comparison works for high numbers", %{schema: schema} do
@@ -105,12 +105,12 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "float comparison with high precision" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "exclusiveMaximum": true,
           "maximum": 9.727837981879871e26
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "comparison works for high numbers", %{schema: schema} do
@@ -121,11 +121,11 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "integer comparison (2)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "minimum": -18446744073709551615
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "comparison works for very negative numbers", %{schema: schema} do
@@ -136,12 +136,12 @@ defmodule Draft4.Optional.BignumTest do
 
   describe "float comparison with high precision on negative numbers" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "exclusiveMinimum": true,
           "minimum": -9.727837981879871e26
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "comparison works for very negative numbers", %{schema: schema} do

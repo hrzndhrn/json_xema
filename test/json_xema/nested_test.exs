@@ -6,7 +6,7 @@ defmodule Xema.NestedTest do
   describe "list of objects in one schema:" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {
               "type": "object",
               "properties": {
@@ -31,7 +31,7 @@ defmodule Xema.NestedTest do
                 }
               }
             }
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 

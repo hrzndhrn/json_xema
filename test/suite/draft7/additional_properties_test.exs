@@ -5,7 +5,7 @@ defmodule Draft7.AdditionalPropertiesTest do
 
   describe "additionalProperties being false does not allow other properties" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalProperties": false,
           "patternProperties": {
@@ -16,7 +16,7 @@ defmodule Draft7.AdditionalPropertiesTest do
             "foo": {}
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "no additional properties is valid", %{schema: schema} do
@@ -52,14 +52,14 @@ defmodule Draft7.AdditionalPropertiesTest do
 
   describe "non-ASCII pattern with additionalProperties" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalProperties": false,
           "patternProperties": {
             "^á": {}
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "matching the pattern is valid", %{schema: schema} do
@@ -75,7 +75,7 @@ defmodule Draft7.AdditionalPropertiesTest do
 
   describe "additionalProperties allows a schema which should validate" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalProperties": {
             "type": "boolean"
@@ -85,7 +85,7 @@ defmodule Draft7.AdditionalPropertiesTest do
             "foo": {}
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "no additional properties is valid", %{schema: schema} do
@@ -106,13 +106,13 @@ defmodule Draft7.AdditionalPropertiesTest do
 
   describe "additionalProperties can exist by itself" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalProperties": {
             "type": "boolean"
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an additional valid property is valid", %{schema: schema} do
@@ -128,14 +128,14 @@ defmodule Draft7.AdditionalPropertiesTest do
 
   describe "additionalProperties are allowed by default" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "bar": {},
             "foo": {}
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "additional properties are allowed", %{schema: schema} do
@@ -146,7 +146,7 @@ defmodule Draft7.AdditionalPropertiesTest do
 
   describe "additionalProperties should not look in applicators" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalProperties": {
             "type": "boolean"
@@ -159,7 +159,7 @@ defmodule Draft7.AdditionalPropertiesTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "properties defined in allOf are not allowed", %{schema: schema} do

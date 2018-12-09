@@ -3,7 +3,7 @@ defmodule JsonXema.ToXema do
 
   describe "to_xema/1 converts JsonXema to Xema:" do
     test "any schema" do
-      json_xema = JsonXema.new(~s({}))
+      json_xema = ~s({}) |> Jason.decode!() |> JsonXema.new()
 
       expected = Xema.new(:any)
 
@@ -12,7 +12,7 @@ defmodule JsonXema.ToXema do
     end
 
     test "list schema" do
-      json_xema = JsonXema.new(~s(
+      json_xema = ~s(
         {
           "type": "array",
           "items": [
@@ -20,7 +20,7 @@ defmodule JsonXema.ToXema do
             {"type": "number", "minimum": 4}
           ]
         }
-      ))
+      ) |> Jason.decode!() |> JsonXema.new()
       expected = Xema.new({:list, items: [:string, {:number, minimum: 4}]})
 
       assert %Xema{} = xema = JsonXema.to_xema(json_xema)
@@ -28,7 +28,7 @@ defmodule JsonXema.ToXema do
     end
 
     test "object schema" do
-      json_xema = JsonXema.new(~s(
+      json_xema = ~s(
         {
           "type": "object",
           "properties": {
@@ -36,7 +36,7 @@ defmodule JsonXema.ToXema do
             "bar": {"type": "number", "maximum": 4}
           }
         }
-      ))
+      ) |> Jason.decode!() |> JsonXema.new()
 
       expected =
         Xema.new(
@@ -52,9 +52,9 @@ defmodule JsonXema.ToXema do
     end
 
     test "multi type" do
-      json_xema = JsonXema.new(~s(
+      json_xema = ~s(
         {"type": ["integer", "null"]}
-      ))
+      ) |> Jason.decode!() |> JsonXema.new()
 
       expected = Xema.new([:integer, nil])
 
@@ -63,9 +63,9 @@ defmodule JsonXema.ToXema do
     end
 
     test "unique items from string" do
-      json_xema = JsonXema.new(~s(
+      json_xema = ~s(
         {"uniqueItems": true}
-      ))
+      ) |> Jason.decode!() |> JsonXema.new()
 
       expected = Xema.new(unique_items: true)
 
@@ -74,14 +74,14 @@ defmodule JsonXema.ToXema do
     end
 
     test "dependencies with boolean subschemas" do
-      json_xema = JsonXema.new(~s(
+      json_xema = ~s(
         {
           "dependencies": {
             "foo": true,
             "bar": false
           }
         }
-      ))
+      ) |> Jason.decode!() |> JsonXema.new()
 
       expected = Xema.new(dependencies: %{"bar" => false, "foo" => true})
 
@@ -90,9 +90,7 @@ defmodule JsonXema.ToXema do
     end
 
     test "const" do
-      json_xema = JsonXema.new(~s(
-        { "const": 44 }
-      ))
+      json_xema = ~s({ "const": 44 }) |> Jason.decode!() |> JsonXema.new()
 
       expected = Xema.new(const: 44)
 

@@ -5,7 +5,7 @@ defmodule Draft6.EnumTest do
 
   describe "simple enum validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "enum": [
             1,
@@ -13,7 +13,7 @@ defmodule Draft6.EnumTest do
             3
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "one of the enum is valid", %{schema: schema} do
@@ -29,7 +29,7 @@ defmodule Draft6.EnumTest do
 
   describe "heterogeneous enum validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "enum": [
             6,
@@ -41,7 +41,7 @@ defmodule Draft6.EnumTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "one of the enum is valid", %{schema: schema} do
@@ -62,7 +62,7 @@ defmodule Draft6.EnumTest do
 
   describe "enums in properties" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "bar": {
@@ -81,7 +81,7 @@ defmodule Draft6.EnumTest do
           ],
           "type": "object"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "both properties are valid", %{schema: schema} do

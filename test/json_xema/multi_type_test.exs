@@ -3,18 +3,20 @@ defmodule Xema.MultiTypeTest do
 
   import JsonXema, only: [validate: 2]
 
+  alias JsonXema.SchemaError
+
   test "&new/1 called with a wrong type list raised an exception" do
-    assert_raise ArgumentError, fn ->
-      JsonXema.new(~s({"type": ["string", "foo"]}))
+    assert_raise SchemaError, fn ->
+      ~s({"type": ["string", "foo"]}) |> Jason.decode!() |> JsonXema.new()
     end
   end
 
   describe "schema with type string or nil:" do
     setup do
-      %{schema: JsonXema.new(~s({
+      %{schema: ~s({
         "type": ["string", "null"],
         "minLength": 5
-      }))}
+      }) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "with a string", %{schema: schema} do
@@ -37,11 +39,11 @@ defmodule Xema.MultiTypeTest do
 
   describe "property with type number or nil:" do
     setup do
-      %{schema: JsonXema.new(~s({
+      %{schema: ~s({
         "properties": {
           "foo": ["number", "null"]
         }
-      }))}
+      }) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "with a number", %{schema: schema} do

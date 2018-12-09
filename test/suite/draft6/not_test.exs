@@ -5,13 +5,13 @@ defmodule Draft6.NotTest do
 
   describe "not" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "not": {
             "type": "integer"
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "allowed", %{schema: schema} do
@@ -27,7 +27,7 @@ defmodule Draft6.NotTest do
 
   describe "not multiple types" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "not": {
             "type": [
@@ -36,7 +36,7 @@ defmodule Draft6.NotTest do
             ]
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid", %{schema: schema} do
@@ -57,7 +57,7 @@ defmodule Draft6.NotTest do
 
   describe "not more complex schema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "not": {
             "properties": {
@@ -68,7 +68,7 @@ defmodule Draft6.NotTest do
             "type": "object"
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "match", %{schema: schema} do
@@ -89,7 +89,7 @@ defmodule Draft6.NotTest do
 
   describe "forbidden property" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "foo": {
@@ -97,7 +97,7 @@ defmodule Draft6.NotTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "property present", %{schema: schema} do
@@ -113,11 +113,11 @@ defmodule Draft6.NotTest do
 
   describe "not with boolean schema true" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "not": true
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is invalid", %{schema: schema} do
@@ -128,11 +128,11 @@ defmodule Draft6.NotTest do
 
   describe "not with boolean schema false" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "not": false
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is valid", %{schema: schema} do

@@ -5,11 +5,11 @@ defmodule Draft6.UniqueItemsTest do
 
   describe "uniqueItems validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "uniqueItems": true
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "unique array of integers is valid", %{schema: schema} do

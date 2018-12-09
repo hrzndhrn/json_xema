@@ -5,7 +5,7 @@ defmodule Draft4.PropertiesTest do
 
   describe "object properties validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "bar": {
@@ -16,7 +16,7 @@ defmodule Draft4.PropertiesTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "both properties present and valid is valid", %{schema: schema} do
@@ -52,7 +52,7 @@ defmodule Draft4.PropertiesTest do
 
   describe "properties, patternProperties, additionalProperties interaction" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalProperties": {
             "type": "integer"
@@ -72,7 +72,7 @@ defmodule Draft4.PropertiesTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "property validates property", %{schema: schema} do

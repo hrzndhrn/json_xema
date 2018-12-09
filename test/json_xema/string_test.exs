@@ -5,7 +5,7 @@ defmodule JsonXema.StringTest do
 
   describe "string schema:" do
     setup do
-      %{schema: JsonXema.new(~s({"type": "string"}))}
+      %{schema: ~s({"type": "string"}) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with a string", %{schema: schema} do
@@ -36,11 +36,11 @@ defmodule JsonXema.StringTest do
   describe "string schema with restricted length:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "string",
           "minLength": 3,
           "maxLength": 4
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -61,10 +61,10 @@ defmodule JsonXema.StringTest do
   describe "string schema with pattern" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "string",
           "pattern": "^.+match.+$"
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -81,10 +81,10 @@ defmodule JsonXema.StringTest do
   describe "string schema with enum" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "string",
           "enum": ["one", "two"]
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 

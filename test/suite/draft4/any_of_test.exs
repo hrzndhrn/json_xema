@@ -5,7 +5,7 @@ defmodule Draft4.AnyOfTest do
 
   describe "anyOf" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "anyOf": [
             {
@@ -16,7 +16,7 @@ defmodule Draft4.AnyOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "first anyOf valid", %{schema: schema} do
@@ -42,7 +42,7 @@ defmodule Draft4.AnyOfTest do
 
   describe "anyOf with base schema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "anyOf": [
             {
@@ -54,7 +54,7 @@ defmodule Draft4.AnyOfTest do
           ],
           "type": "string"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "mismatch base schema", %{schema: schema} do
@@ -75,7 +75,7 @@ defmodule Draft4.AnyOfTest do
 
   describe "anyOf complex types" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "anyOf": [
             {
@@ -100,7 +100,7 @@ defmodule Draft4.AnyOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "first anyOf valid (complex)", %{schema: schema} do

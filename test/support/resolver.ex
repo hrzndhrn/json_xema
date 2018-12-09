@@ -7,7 +7,7 @@ defmodule Test.Resolver do
   def fetch(uri) do
     case HTTPoison.get(uri) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, body}
+        {:ok, Jason.decode!(body)}
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:error, "Remote schema '#{uri}' not found."}

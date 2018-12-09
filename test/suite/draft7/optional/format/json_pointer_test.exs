@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.JsonPointerTest do
 
   describe "validation of JSON-pointers (JSON String Representation)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "json-pointer"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid JSON-pointer", %{schema: schema} do

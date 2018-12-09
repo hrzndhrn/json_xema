@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.HostnameTest do
 
   describe "validation of host names" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "hostname"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid host name", %{schema: schema} do

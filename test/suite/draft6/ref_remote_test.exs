@@ -5,11 +5,11 @@ defmodule Draft6.RefRemoteTest do
 
   describe "remote ref" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$ref": "http://localhost:1234/integer.json"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "remote ref valid", %{schema: schema} do
@@ -25,11 +25,11 @@ defmodule Draft6.RefRemoteTest do
 
   describe "fragment within remote ref" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$ref": "http://localhost:1234/subSchemas.json#/integer"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "remote fragment valid", %{schema: schema} do
@@ -45,11 +45,11 @@ defmodule Draft6.RefRemoteTest do
 
   describe "ref within remote ref" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$ref": "http://localhost:1234/subSchemas.json#/refToInteger"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "ref within ref valid", %{schema: schema} do
@@ -65,7 +65,7 @@ defmodule Draft6.RefRemoteTest do
 
   describe "base URI change" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$id": "http://localhost:1234/",
           "items": {
@@ -75,7 +75,7 @@ defmodule Draft6.RefRemoteTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "base URI change ref valid", %{schema: schema} do
@@ -91,7 +91,7 @@ defmodule Draft6.RefRemoteTest do
 
   describe "base URI change - change folder" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$id": "http://localhost:1234/scope_change_defs1.json",
           "definitions": {
@@ -110,7 +110,7 @@ defmodule Draft6.RefRemoteTest do
           },
           "type": "object"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "number is valid", %{schema: schema} do
@@ -126,7 +126,7 @@ defmodule Draft6.RefRemoteTest do
 
   describe "base URI change - change folder in subschema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$id": "http://localhost:1234/scope_change_defs2.json",
           "definitions": {
@@ -149,7 +149,7 @@ defmodule Draft6.RefRemoteTest do
           },
           "type": "object"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "number is valid", %{schema: schema} do
@@ -165,7 +165,7 @@ defmodule Draft6.RefRemoteTest do
 
   describe "root ref in remote ref" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$id": "http://localhost:1234/object",
           "properties": {
@@ -175,7 +175,7 @@ defmodule Draft6.RefRemoteTest do
           },
           "type": "object"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "string is valid", %{schema: schema} do

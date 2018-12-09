@@ -4,12 +4,14 @@ defmodule JsonXema.DataTest do
   describe "custom data: " do
     test "additional data goes to the data map" do
       schema =
-        JsonXema.new("""
+        """
         {
           "type": "object",
           "foo": 3
         }
-        """)
+        """
+        |> Jason.decode!()
+        |> JsonXema.new()
 
       assert schema.schema.data == %{"foo" => 3}
     end
@@ -17,7 +19,7 @@ defmodule JsonXema.DataTest do
     @tag :only
     test "maps are copied" do
       schema =
-        JsonXema.new("""
+        """
         {
           "type": "object",
           "foo": {
@@ -25,49 +27,61 @@ defmodule JsonXema.DataTest do
             },
           "baz": 42
         }
-        """)
+        """
+        |> Jason.decode!()
+        |> JsonXema.new()
 
       assert schema.schema.data == %{"foo" => %{"bar" => 5}, "baz" => 42}
     end
 
     test "can contain schemas" do
       schema =
-        JsonXema.new("""
+        """
         {
           "type": "string",
           "foo": {
             "type": "integer"
           }
         }
-        """)
+        """
+        |> Jason.decode!()
+        |> JsonXema.new()
+
+      foo = ~s({"type": "integer"}) |> Jason.decode!() |> JsonXema.new()
 
       assert schema.schema.data == %{
-               "foo" => JsonXema.new(~s({"type": "integer"})).schema
+               "foo" => foo.schema
              }
 
       schema =
-        JsonXema.new("""
+        """
         {
           "type": "integer",
           "foo": {
             "minItems": 5
           }
         }
-        """)
+        """
+        |> Jason.decode!()
+        |> JsonXema.new()
+
+      foo = ~s({"minItems": 5}) |> Jason.decode!() |> JsonXema.new()
 
       assert schema.schema.data == %{
-               "foo" => JsonXema.new(~s({"minItems": 5})).schema
+               "foo" => foo.schema
              }
     end
 
     test "data goes into data" do
       schema =
-        JsonXema.new("""
+        """
         {
           "type": "object",
           "data": 3
         }
-        """)
+        """
+        |> Jason.decode!()
+        |> JsonXema.new()
 
       assert schema.schema.data == %{"data" => 3}
     end

@@ -5,13 +5,13 @@ defmodule Draft7.ContainsTest do
 
   describe "contains keyword validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "contains": {
             "minimum": 5
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "array with item matching schema (5) is valid", %{schema: schema} do
@@ -49,13 +49,13 @@ defmodule Draft7.ContainsTest do
 
   describe "contains keyword with const keyword" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "contains": {
             "const": 5
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "array with item 5 is valid", %{schema: schema} do
@@ -76,11 +76,11 @@ defmodule Draft7.ContainsTest do
 
   describe "contains keyword with boolean schema true" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "contains": true
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any non-empty array is valid", %{schema: schema} do
@@ -96,11 +96,11 @@ defmodule Draft7.ContainsTest do
 
   describe "contains keyword with boolean schema false" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "contains": false
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any non-empty array is invalid", %{schema: schema} do

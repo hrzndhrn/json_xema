@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.DateTest do
 
   describe "validation of date strings" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "date"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid date string", %{schema: schema} do

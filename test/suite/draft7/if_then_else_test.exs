@@ -5,13 +5,13 @@ defmodule Draft7.IfThenElseTest do
 
   describe "ignore if without then or else" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "if": {
             "const": 0
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid when valid against lone if", %{schema: schema} do
@@ -27,13 +27,13 @@ defmodule Draft7.IfThenElseTest do
 
   describe "ignore then without if" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "then": {
             "const": 0
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid when valid against lone then", %{schema: schema} do
@@ -49,13 +49,13 @@ defmodule Draft7.IfThenElseTest do
 
   describe "ignore else without if" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "else": {
             "const": 0
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid when valid against lone else", %{schema: schema} do
@@ -71,7 +71,7 @@ defmodule Draft7.IfThenElseTest do
 
   describe "if and then without else" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "if": {
             "exclusiveMaximum": 0
@@ -80,7 +80,7 @@ defmodule Draft7.IfThenElseTest do
             "minimum": -10
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid through then", %{schema: schema} do
@@ -101,7 +101,7 @@ defmodule Draft7.IfThenElseTest do
 
   describe "if and else without then" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "else": {
             "multipleOf": 2
@@ -110,7 +110,7 @@ defmodule Draft7.IfThenElseTest do
             "exclusiveMaximum": 0
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid when if test passes", %{schema: schema} do
@@ -131,7 +131,7 @@ defmodule Draft7.IfThenElseTest do
 
   describe "validate against correct branch, then vs else" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "else": {
             "multipleOf": 2
@@ -143,7 +143,7 @@ defmodule Draft7.IfThenElseTest do
             "minimum": -10
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid through then", %{schema: schema} do
@@ -169,7 +169,7 @@ defmodule Draft7.IfThenElseTest do
 
   describe "non-interference across combined schemas" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "allOf": [
             {
@@ -189,7 +189,7 @@ defmodule Draft7.IfThenElseTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid, but woud have been invalid through then", %{schema: schema} do

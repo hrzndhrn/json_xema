@@ -5,9 +5,9 @@ defmodule Draft7.BooleanSchemaTest do
 
   describe "boolean schema 'true'" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         true
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "number is valid", %{schema: schema} do
@@ -58,9 +58,9 @@ defmodule Draft7.BooleanSchemaTest do
 
   describe "boolean schema 'false'" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         false
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "number is invalid", %{schema: schema} do

@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.EmailTest do
 
   describe "validation of e-mail addresses" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "email"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid e-mail address", %{schema: schema} do

@@ -5,7 +5,7 @@ defmodule Draft4.OneOfTest do
 
   describe "oneOf" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             {
@@ -16,7 +16,7 @@ defmodule Draft4.OneOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "first oneOf valid", %{schema: schema} do
@@ -42,7 +42,7 @@ defmodule Draft4.OneOfTest do
 
   describe "oneOf with base schema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             {
@@ -54,7 +54,7 @@ defmodule Draft4.OneOfTest do
           ],
           "type": "string"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "mismatch base schema", %{schema: schema} do
@@ -75,7 +75,7 @@ defmodule Draft4.OneOfTest do
 
   describe "oneOf complex types" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             {
@@ -100,7 +100,7 @@ defmodule Draft4.OneOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "first oneOf valid (complex)", %{schema: schema} do

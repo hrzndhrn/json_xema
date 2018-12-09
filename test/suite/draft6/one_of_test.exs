@@ -5,7 +5,7 @@ defmodule Draft6.OneOfTest do
 
   describe "oneOf" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             {
@@ -16,7 +16,7 @@ defmodule Draft6.OneOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "first oneOf valid", %{schema: schema} do
@@ -42,7 +42,7 @@ defmodule Draft6.OneOfTest do
 
   describe "oneOf with base schema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             {
@@ -54,7 +54,7 @@ defmodule Draft6.OneOfTest do
           ],
           "type": "string"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "mismatch base schema", %{schema: schema} do
@@ -75,7 +75,7 @@ defmodule Draft6.OneOfTest do
 
   describe "oneOf with boolean schemas, all true" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             true,
@@ -83,7 +83,7 @@ defmodule Draft6.OneOfTest do
             true
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is invalid", %{schema: schema} do
@@ -94,7 +94,7 @@ defmodule Draft6.OneOfTest do
 
   describe "oneOf with boolean schemas, one true" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             true,
@@ -102,7 +102,7 @@ defmodule Draft6.OneOfTest do
             false
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is valid", %{schema: schema} do
@@ -113,7 +113,7 @@ defmodule Draft6.OneOfTest do
 
   describe "oneOf with boolean schemas, more than one true" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             true,
@@ -121,7 +121,7 @@ defmodule Draft6.OneOfTest do
             false
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is invalid", %{schema: schema} do
@@ -132,7 +132,7 @@ defmodule Draft6.OneOfTest do
 
   describe "oneOf with boolean schemas, all false" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             false,
@@ -140,7 +140,7 @@ defmodule Draft6.OneOfTest do
             false
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any value is invalid", %{schema: schema} do
@@ -151,7 +151,7 @@ defmodule Draft6.OneOfTest do
 
   describe "oneOf complex types" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "oneOf": [
             {
@@ -176,7 +176,7 @@ defmodule Draft6.OneOfTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "first oneOf valid (complex)", %{schema: schema} do

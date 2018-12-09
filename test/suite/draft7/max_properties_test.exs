@@ -5,11 +5,11 @@ defmodule Draft7.MaxPropertiesTest do
 
   describe "maxProperties validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "maxProperties": 2
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "shorter is valid", %{schema: schema} do

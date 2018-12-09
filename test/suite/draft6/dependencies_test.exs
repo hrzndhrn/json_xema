@@ -5,7 +5,7 @@ defmodule Draft6.DependenciesTest do
 
   describe "dependencies" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "bar": [
@@ -13,7 +13,7 @@ defmodule Draft6.DependenciesTest do
             ]
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "neither", %{schema: schema} do
@@ -54,13 +54,13 @@ defmodule Draft6.DependenciesTest do
 
   describe "dependencies with empty array" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "bar": []
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "empty object", %{schema: schema} do
@@ -76,7 +76,7 @@ defmodule Draft6.DependenciesTest do
 
   describe "multiple dependencies" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "quux": [
@@ -85,7 +85,7 @@ defmodule Draft6.DependenciesTest do
             ]
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "neither", %{schema: schema} do
@@ -121,7 +121,7 @@ defmodule Draft6.DependenciesTest do
 
   describe "multiple dependencies subschema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "bar": {
@@ -136,7 +136,7 @@ defmodule Draft6.DependenciesTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid", %{schema: schema} do
@@ -167,14 +167,14 @@ defmodule Draft6.DependenciesTest do
 
   describe "dependencies with boolean subschemas" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "bar": false,
             "foo": true
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "object with property having schema true is valid", %{schema: schema} do

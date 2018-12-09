@@ -5,7 +5,7 @@ defmodule Draft4.DependenciesTest do
 
   describe "dependencies" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "bar": [
@@ -13,7 +13,7 @@ defmodule Draft4.DependenciesTest do
             ]
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "neither", %{schema: schema} do
@@ -54,7 +54,7 @@ defmodule Draft4.DependenciesTest do
 
   describe "multiple dependencies" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "quux": [
@@ -63,7 +63,7 @@ defmodule Draft4.DependenciesTest do
             ]
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "neither", %{schema: schema} do
@@ -99,7 +99,7 @@ defmodule Draft4.DependenciesTest do
 
   describe "multiple dependencies subschema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "dependencies": {
             "bar": {
@@ -114,7 +114,7 @@ defmodule Draft4.DependenciesTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid", %{schema: schema} do

@@ -5,7 +5,7 @@ defmodule JsonXema.ArrayTest do
 
   describe "'list' schema" do
     setup do
-      %{schema: JsonXema.new(~s({"type" : "array"}))}
+      %{schema: ~s({"type" : "array"}) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with an empty list", %{schema: schema} do
@@ -33,11 +33,11 @@ defmodule JsonXema.ArrayTest do
 
   describe "'list' schema with size" do
     setup do
-      %{schema: JsonXema.new(~s({
+      %{schema: ~s({
         "type" : "array",
         "minItems" : 2,
         "maxItems" : 3
-      }))}
+      }) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with too short list", %{schema: schema} do
@@ -57,18 +57,18 @@ defmodule JsonXema.ArrayTest do
   describe "'list' schema with typed items" do
     setup do
       %{
-        integers: JsonXema.new(~s({
+        integers: ~s({
           "type" : "array",
           "items" : {
             "type" : "integer"
           }
-        })),
-        strings: JsonXema.new(~s({
+        }) |> Jason.decode!() |> JsonXema.new(),
+        strings: ~s({
           "type" : "array",
           "items" : {
             "type" : "string"
           }
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -111,10 +111,10 @@ defmodule JsonXema.ArrayTest do
 
   describe "'list' schema with unique items" do
     setup do
-      %{schema: JsonXema.new(~s({
+      %{schema: ~s({
         "type" : "array",
         "uniqueItems" : true
-      }))}
+      }) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with list of unique items", %{schema: schema} do
@@ -130,7 +130,7 @@ defmodule JsonXema.ArrayTest do
   describe "'list' schema with tuple validation" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type" : "array",
           "items" : [
             {
@@ -142,7 +142,7 @@ defmodule JsonXema.ArrayTest do
               "minimum" : 10
             }
           ]
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -175,7 +175,7 @@ defmodule JsonXema.ArrayTest do
   describe "'list' schema with tuple validation without additional items" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type" : "array",
           "additionalItems" : false,
           "items" : [
@@ -188,7 +188,7 @@ defmodule JsonXema.ArrayTest do
               "minimum" : 10
             }
           ]
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -201,7 +201,7 @@ defmodule JsonXema.ArrayTest do
   describe "list schema with with specific additional items" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type" : "array",
           "additionalItems" : {
             "type" : "string"
@@ -212,7 +212,7 @@ defmodule JsonXema.ArrayTest do
               "minimum" : 10
             }
           ]
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 

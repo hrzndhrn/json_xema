@@ -5,7 +5,7 @@ defmodule Xema.NumberTest do
 
   describe "number schema:" do
     setup do
-      %{schema: JsonXema.new(~s({"type": "number"}))}
+      %{schema: ~s({"type": "number"}) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with a float", %{schema: schema} do
@@ -33,9 +33,9 @@ defmodule Xema.NumberTest do
 
   describe "number schema with range:" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {"type": "number", "minimum": 2, "maximum": 4}
-      ))}
+      ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with a number in range", %{schema: schema} do
@@ -60,7 +60,7 @@ defmodule Xema.NumberTest do
   describe "number schema with exclusive range (draft-04):" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {
               "type": "number",
               "minimum": 2,
@@ -68,7 +68,7 @@ defmodule Xema.NumberTest do
               "exclusiveMinimum": true,
               "exclusiveMaximum": true
             }
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -104,13 +104,13 @@ defmodule Xema.NumberTest do
   describe "number schema with exclusive range (draft-06):" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {
               "type": "number",
               "exclusiveMinimum": 2,
               "exclusiveMaximum": 4
             }
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -145,9 +145,9 @@ defmodule Xema.NumberTest do
 
   describe "number schema with multiple-of:" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {"type": "number", "multipleOf": 1.2}
-      ))}
+      ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with a valid number", %{schema: schema} do
@@ -163,9 +163,9 @@ defmodule Xema.NumberTest do
 
   describe "number schema with enum:" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {"type": "number", "enum": [1.2, 1.3, 3.3]}
-      ))}
+      ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "with a value from the enum", %{schema: schema} do

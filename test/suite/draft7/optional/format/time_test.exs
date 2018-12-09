@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.TimeTest do
 
   describe "validation of time strings" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "time"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid time string", %{schema: schema} do

@@ -5,7 +5,7 @@ defmodule JsonXema.BooleanTest do
 
   describe "'boolean' schema" do
     setup do
-      %{schema: JsonXema.new(~s({"type" : "boolean"}))}
+      %{schema: ~s({"type" : "boolean"}) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid?/2 with value true", %{schema: schema} do

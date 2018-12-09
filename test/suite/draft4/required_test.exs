@@ -5,7 +5,7 @@ defmodule Draft4.RequiredTest do
 
   describe "required validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "bar": {},
@@ -15,7 +15,7 @@ defmodule Draft4.RequiredTest do
             "foo"
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "present required property is valid", %{schema: schema} do
@@ -46,13 +46,13 @@ defmodule Draft4.RequiredTest do
 
   describe "required default validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "foo": {}
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "not required by default", %{schema: schema} do

@@ -5,7 +5,7 @@ defmodule JsonXema.AnyTest do
 
   describe "'any' schema" do
     setup do
-      %{schema: JsonXema.new("{}")}
+      %{schema: "{}" |> Jason.decode!() |> JsonXema.new()}
     end
 
     @tag :only
@@ -45,9 +45,10 @@ defmodule JsonXema.AnyTest do
   describe "'any' schema with enum:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
-            "enum" : [1, 1.2, [1], "foo"]
-      }))
+        schema:
+          ~s({"enum" : [1, 1.2, [1], "foo"]})
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -75,7 +76,12 @@ defmodule JsonXema.AnyTest do
 
   describe "keyword not:" do
     setup do
-      %{schema: JsonXema.new(~s({"not" : {"type" : "integer"}}))}
+      %{
+        schema:
+          ~s({"not" : {"type" : "integer"}})
+          |> Jason.decode!()
+          |> JsonXema.new()
+      }
     end
 
     test "validate/2 with a valid value", %{schema: schema} do
@@ -90,7 +96,7 @@ defmodule JsonXema.AnyTest do
   describe "nested keyword not:" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {
               "type": "object",
               "properties": {
@@ -102,7 +108,7 @@ defmodule JsonXema.AnyTest do
                 }
               }
             }
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -120,14 +126,14 @@ defmodule JsonXema.AnyTest do
   describe "keyword allOf:" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {
               "allOf": [
                 {"type": "integer"},
                 {"type": "integer", "minimum": 0}
               ]
             }
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -144,12 +150,12 @@ defmodule JsonXema.AnyTest do
   describe "keyword anyOf:" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {"anyOf": [
               {"type": "null"},
               {"type": "integer", "minimum": 1}
             ]}
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -175,7 +181,7 @@ defmodule JsonXema.AnyTest do
   describe "keyword one_of (multiple_of):" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {"oneOf": [
               {
                 "type": "integer",
@@ -185,7 +191,7 @@ defmodule JsonXema.AnyTest do
                 "multipleOf": 5
               }
             ]}
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -212,7 +218,7 @@ defmodule JsonXema.AnyTest do
   describe "keyword one_of (multiple_of integer):" do
     setup do
       %{
-        schema: JsonXema.new(~s(
+        schema: ~s(
             {
               "type": "integer",
               "oneOf": [
@@ -220,7 +226,7 @@ defmodule JsonXema.AnyTest do
                 {"multipleOf": 5}
               ]
             }
-          ))
+        ) |> Jason.decode!() |> JsonXema.new()
       }
     end
 

@@ -5,13 +5,13 @@ defmodule Draft6.ItemsTest do
 
   describe "a schema given for items" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": {
             "type": "integer"
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid items", %{schema: schema} do
@@ -37,7 +37,7 @@ defmodule Draft6.ItemsTest do
 
   describe "an array of schemas for items" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": [
             {
@@ -48,7 +48,7 @@ defmodule Draft6.ItemsTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "correct types", %{schema: schema} do
@@ -84,11 +84,11 @@ defmodule Draft6.ItemsTest do
 
   describe "items with boolean schema (true)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": true
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any array is valid", %{schema: schema} do
@@ -104,11 +104,11 @@ defmodule Draft6.ItemsTest do
 
   describe "items with boolean schema (false)" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": false
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "any non-empty array is invalid", %{schema: schema} do
@@ -124,14 +124,14 @@ defmodule Draft6.ItemsTest do
 
   describe "items with boolean schemas" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": [
             true,
             false
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "array with one item is valid", %{schema: schema} do

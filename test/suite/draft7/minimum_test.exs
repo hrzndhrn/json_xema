@@ -5,11 +5,11 @@ defmodule Draft7.MinimumTest do
 
   describe "minimum validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "minimum": 1.1
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "above the minimum is valid", %{schema: schema} do

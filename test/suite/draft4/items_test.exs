@@ -5,13 +5,13 @@ defmodule Draft4.ItemsTest do
 
   describe "a schema given for items" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": {
             "type": "integer"
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid items", %{schema: schema} do
@@ -37,7 +37,7 @@ defmodule Draft4.ItemsTest do
 
   describe "an array of schemas for items" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": [
             {
@@ -48,7 +48,7 @@ defmodule Draft4.ItemsTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "correct types", %{schema: schema} do

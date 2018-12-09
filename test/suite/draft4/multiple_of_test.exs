@@ -5,11 +5,11 @@ defmodule Draft4.MultipleOfTest do
 
   describe "by int" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "multipleOf": 2
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "int by int", %{schema: schema} do
@@ -30,11 +30,11 @@ defmodule Draft4.MultipleOfTest do
 
   describe "by number" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "multipleOf": 1.5
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "zero is multiple of anything", %{schema: schema} do
@@ -55,11 +55,11 @@ defmodule Draft4.MultipleOfTest do
 
   describe "by small number" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "multipleOf": 0.0001
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "0.0075 is multiple of 0.0001", %{schema: schema} do

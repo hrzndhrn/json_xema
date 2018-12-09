@@ -5,7 +5,7 @@ defmodule JsonXema.ObjectTest do
 
   describe "empty object schema:" do
     setup do
-      %{schema: JsonXema.new(~s({"type": "object"}))}
+      %{schema: ~s({"type": "object"}) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "validate/2 with an empty map", %{schema: schema} do
@@ -30,7 +30,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with properties:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "foo": {
@@ -43,7 +43,7 @@ defmodule JsonXema.ObjectTest do
               "type": "string"
             }
           }
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -85,11 +85,11 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with min/max properties:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "minProperties": 2,
           "maxProperties": 3
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -110,7 +110,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema without additional properties:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "foo": {
@@ -118,7 +118,7 @@ defmodule JsonXema.ObjectTest do
             }
           },
           "additionalProperties": false
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -151,7 +151,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with specific additional properties:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "foo": {
@@ -162,7 +162,7 @@ defmodule JsonXema.ObjectTest do
           "additionalProperties": {
             "type": "integer"
           }
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -199,7 +199,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with required property:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "foo": {
@@ -207,7 +207,7 @@ defmodule JsonXema.ObjectTest do
             }
           },
           "required": ["foo"]
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -231,7 +231,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with required properties" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "a": {
@@ -245,7 +245,7 @@ defmodule JsonXema.ObjectTest do
             }
           },
           "required": ["a", "b", "c"]
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -261,7 +261,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with pattern properties:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "patternProperties": {
             "^s_": {
@@ -272,7 +272,7 @@ defmodule JsonXema.ObjectTest do
             }
           },
           "additionalProperties": false
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -294,14 +294,14 @@ defmodule JsonXema.ObjectTest do
   describe "'map' schema with property names like keywords" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "map": {"type": "number"},
             "items": {"type": "number"},
             "properties": {"type": "number"}
           }
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -313,7 +313,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with dependencies list:" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "a": {"type": "number"},
@@ -323,7 +323,7 @@ defmodule JsonXema.ObjectTest do
           "dependencies": {
             "b": ["c"]
           }
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -347,7 +347,7 @@ defmodule JsonXema.ObjectTest do
   describe "object schema with dependencies schema" do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "properties": {
             "a": {"type": "number"},
@@ -362,7 +362,7 @@ defmodule JsonXema.ObjectTest do
               "required": ["c"]
             }
           }
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
@@ -386,12 +386,12 @@ defmodule JsonXema.ObjectTest do
   describe "In for a penny, in for a pound." do
     setup do
       %{
-        schema: JsonXema.new(~s({
+        schema: ~s({
           "type": "object",
           "dependencies": {
             "penny": ["pound"]
           }
-        }))
+        }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 

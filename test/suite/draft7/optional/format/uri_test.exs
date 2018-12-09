@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.UriTest do
 
   describe "validation of URIs" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "uri"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid URL with anchor tag", %{schema: schema} do

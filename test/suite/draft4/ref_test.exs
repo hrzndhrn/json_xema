@@ -5,7 +5,7 @@ defmodule Draft4.RefTest do
 
   describe "root pointer ref" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalProperties": false,
           "properties": {
@@ -14,7 +14,7 @@ defmodule Draft4.RefTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "match", %{schema: schema} do
@@ -40,7 +40,7 @@ defmodule Draft4.RefTest do
 
   describe "relative pointer ref to object" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "bar": {
@@ -51,7 +51,7 @@ defmodule Draft4.RefTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "match", %{schema: schema} do
@@ -67,7 +67,7 @@ defmodule Draft4.RefTest do
 
   describe "relative pointer ref to array" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": [
             {
@@ -78,7 +78,7 @@ defmodule Draft4.RefTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "match array", %{schema: schema} do
@@ -94,7 +94,7 @@ defmodule Draft4.RefTest do
 
   describe "escaped pointer ref" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "percent%field": {
             "type": "integer"
@@ -117,7 +117,7 @@ defmodule Draft4.RefTest do
             "type": "integer"
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "slash invalid", %{schema: schema} do
@@ -153,7 +153,7 @@ defmodule Draft4.RefTest do
 
   describe "nested refs" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$ref": "#/definitions/c",
           "definitions": {
@@ -168,7 +168,7 @@ defmodule Draft4.RefTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "nested ref valid", %{schema: schema} do
@@ -184,7 +184,7 @@ defmodule Draft4.RefTest do
 
   describe "ref overrides any sibling keywords" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "definitions": {
             "reffed": {
@@ -198,7 +198,7 @@ defmodule Draft4.RefTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "ref valid", %{schema: schema} do
@@ -219,11 +219,11 @@ defmodule Draft4.RefTest do
 
   describe "remote ref, containing refs itself" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "$ref": "http://json-schema.org/draft-04/schema#"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "remote ref valid", %{schema: schema} do
@@ -239,7 +239,7 @@ defmodule Draft4.RefTest do
 
   describe "property named $ref that is not a reference" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "properties": {
             "$ref": {
@@ -247,7 +247,7 @@ defmodule Draft4.RefTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "property named $ref valid", %{schema: schema} do
@@ -263,7 +263,7 @@ defmodule Draft4.RefTest do
 
   describe "Recursive references between schemas" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "definitions": {
             "node": {
@@ -302,7 +302,7 @@ defmodule Draft4.RefTest do
           ],
           "type": "object"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "valid tree", %{schema: schema} do

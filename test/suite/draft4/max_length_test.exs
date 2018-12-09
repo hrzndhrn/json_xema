@@ -5,11 +5,11 @@ defmodule Draft4.MaxLengthTest do
 
   describe "maxLength validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "maxLength": 2
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "shorter is valid", %{schema: schema} do

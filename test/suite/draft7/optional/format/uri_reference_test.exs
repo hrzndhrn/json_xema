@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.UriReferenceTest do
 
   describe "validation of URI References" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "uri-reference"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid URI", %{schema: schema} do

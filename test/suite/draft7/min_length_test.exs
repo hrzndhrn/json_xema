@@ -5,11 +5,11 @@ defmodule Draft7.MinLengthTest do
 
   describe "minLength validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "minLength": 2
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "longer is valid", %{schema: schema} do

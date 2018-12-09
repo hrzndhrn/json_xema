@@ -5,11 +5,11 @@ defmodule Draft7.TypeTest do
 
   describe "integer type matches integers" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "integer"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an integer is an integer", %{schema: schema} do
@@ -57,11 +57,11 @@ defmodule Draft7.TypeTest do
 
   describe "number type matches numbers" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "number"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an integer is a number", %{schema: schema} do
@@ -109,11 +109,11 @@ defmodule Draft7.TypeTest do
 
   describe "string type matches strings" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "string"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "1 is not a string", %{schema: schema} do
@@ -161,11 +161,11 @@ defmodule Draft7.TypeTest do
 
   describe "object type matches objects" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "object"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an integer is not an object", %{schema: schema} do
@@ -206,11 +206,11 @@ defmodule Draft7.TypeTest do
 
   describe "array type matches arrays" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "array"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an integer is not an array", %{schema: schema} do
@@ -251,11 +251,11 @@ defmodule Draft7.TypeTest do
 
   describe "boolean type matches booleans" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "boolean"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an integer is not a boolean", %{schema: schema} do
@@ -296,11 +296,11 @@ defmodule Draft7.TypeTest do
 
   describe "null type matches only the null object" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": "null"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an integer is not null", %{schema: schema} do
@@ -341,14 +341,14 @@ defmodule Draft7.TypeTest do
 
   describe "multiple types can be specified in an array" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "type": [
             "integer",
             "string"
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "an integer is valid", %{schema: schema} do

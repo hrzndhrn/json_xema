@@ -5,11 +5,11 @@ defmodule Draft7.Optional.Format.Ipv4Test do
 
   describe "validation of IP addresses" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "format": "ipv4"
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a valid IP address", %{schema: schema} do

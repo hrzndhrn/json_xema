@@ -5,7 +5,7 @@ defmodule JsonXema.MixProject do
     [
       app: :json_xema,
       version: "0.1.0",
-      elixir: "~> 1.6",
+      elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
@@ -18,6 +18,9 @@ defmodule JsonXema.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test
+      ],
+      dialyzer: [
+        ignore_warnings: "dialyzer.ignore-warnings"
       ]
     ]
   end
@@ -40,12 +43,12 @@ defmodule JsonXema.MixProject do
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.2", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:excoveralls, "~> 0.8", only: :test},
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.0", only: [:dev, :test]},
       # {:xema, "~> 0.5"},
       {:xema, path: "../xema"}
     ]

@@ -10,14 +10,16 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "properties": {
-                "foo": {"$ref": "#"}
-              },
-              "additionalProperties": false
-            }
-          """)
+          """
+          {
+            "properties": {
+              "foo": {"$ref": "#"}
+            },
+            "additionalProperties": false
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -56,14 +58,16 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "properties": {
-                "foo": {"type": "integer"},
-                "bar": {"$ref": "#/properties/foo"}
-              }
+          """
+          {
+            "properties": {
+              "foo": {"type": "integer"},
+              "bar": {"$ref": "#/properties/foo"}
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -97,18 +101,20 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "properties": {
-                "foo": {"$ref": "#/definitions/pos"},
-                "bar": {"$ref": "#/definitions/neg"}
-              },
-              "definitions": {
-                "pos": {"type": "integer", "minimum": 0},
-                "neg": {"type": "integer", "maximum": 0}
-              }
+          """
+          {
+            "properties": {
+              "foo": {"$ref": "#/definitions/pos"},
+              "bar": {"$ref": "#/definitions/neg"}
+            },
+            "definitions": {
+              "pos": {"type": "integer", "minimum": 0},
+              "neg": {"type": "integer", "maximum": 0}
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -132,17 +138,19 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "properties": {
-                "foo": {"$ref": "#/definitions/bar"}
-              },
-              "definitions": {
-                "bar": {"$ref": "#/definitions/pos"},
-                "pos": {"type": "integer", "minimum": 0}
-              }
+          """
+          {
+            "properties": {
+              "foo": {"$ref": "#/definitions/bar"}
+            },
+            "definitions": {
+              "bar": {"$ref": "#/definitions/pos"},
+              "pos": {"type": "integer", "minimum": 0}
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -160,14 +168,16 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "$ref": "#/definitions/pos",
-              "definitions": {
-                "pos": {"type": "integer", "minimum": 0}
-              }
+          """
+          {
+            "$ref": "#/definitions/pos",
+            "definitions": {
+              "pos": {"type": "integer", "minimum": 0}
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -184,19 +194,21 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "id": "http://foo.com",
-              "$ref": "pos",
-              "definitions": {
-                "pos": {
-                  "type": "integer",
-                  "minimum": 0,
-                  "id": "http://foo.com/pos"
-                }
+          """
+          {
+            "id": "http://foo.com",
+            "$ref": "pos",
+            "definitions": {
+              "pos": {
+                "type": "integer",
+                "minimum": 0,
+                "id": "http://foo.com/pos"
               }
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -213,16 +225,18 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "items": [
-                {"type": "integer"},
-                {"$ref": "#/items/0"},
-                {"$ref": "#/items/1"},
-                {"$ref": "#/items/11"}
-              ]
-            }
-          """)
+          """
+          {
+            "items": [
+              {"type": "integer"},
+              {"$ref": "#/items/0"},
+              {"$ref": "#/items/1"},
+              {"$ref": "#/items/11"}
+            ]
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -252,23 +266,25 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "definitions": {
-                "tilda~field": {"type": "integer"},
-                "slash/field": {"type": "integer"},
-                "percent%field": {"type": "integer"}
-              },
-              "properties": {
-                "tilda_1": {"$ref": "#/definitions/tilda~field"},
-                "tilda_2": {"$ref": "#/definitions/tilda~0field"},
-                "tilda_3": {"$ref": "#/definitions/tilda%7Efield"},
-                "percent": {"$ref": "#/definitions/percent%25field"},
-                "slash_1": {"$ref": "#/definitions/slash~1field"},
-                "slash_2": {"$ref": "#/definitions/slash%2Ffield"}
-              }
+          """
+          {
+            "definitions": {
+              "tilda~field": {"type": "integer"},
+              "slash/field": {"type": "integer"},
+              "percent%field": {"type": "integer"}
+            },
+            "properties": {
+              "tilda_1": {"$ref": "#/definitions/tilda~field"},
+              "tilda_2": {"$ref": "#/definitions/tilda~0field"},
+              "tilda_3": {"$ref": "#/definitions/tilda%7Efield"},
+              "percent": {"$ref": "#/definitions/percent%25field"},
+              "slash_1": {"$ref": "#/definitions/slash~1field"},
+              "slash_2": {"$ref": "#/definitions/slash%2Ffield"}
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -329,21 +345,23 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "type": "object",
-              "id": "http://localhost",
-              "definitions": {
-                "int": {"type": "integer", "id": "http://localhost/int"},
-                "foobar": {"type": "integer", "id": "foobar"}
-              },
-              "properties": {
-                "num": {"$ref": "int"},
-                "invalid": {"$ref": "invalid"},
-                "baz": {"$ref": "foobar"}
-              }
+          """
+          {
+            "type": "object",
+            "id": "http://localhost",
+            "definitions": {
+              "int": {"type": "integer", "id": "http://localhost/int"},
+              "foobar": {"type": "integer", "id": "foobar"}
+            },
+            "properties": {
+              "num": {"$ref": "int"},
+              "invalid": {"$ref": "invalid"},
+              "baz": {"$ref": "foobar"}
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -364,33 +382,35 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "type": "object",
-              "id": "http://localhost:1234/tree",
-              "description": "tree of nodes",
-              "properties": {
-                "meta": {"type": "string"},
-                "nodes": {
-                  "type": "array",
-                  "items": {"$ref": "node"}
-                }
-              },
-              "required": ["meta", "nodes"],
-              "definitions": {
-                "node": {
-                  "type": "object",
-                  "id": "http://localhost:1234/node",
-                  "description": "node",
-                  "properties": {
-                    "value": {"type": "number"},
-                    "subtree": {"$ref": "tree"}
-                  },
-                  "required": ["value"]
-                }
+          """
+          {
+            "type": "object",
+            "id": "http://localhost:1234/tree",
+            "description": "tree of nodes",
+            "properties": {
+              "meta": {"type": "string"},
+              "nodes": {
+                "type": "array",
+                "items": {"$ref": "node"}
+              }
+            },
+            "required": ["meta", "nodes"],
+            "definitions": {
+              "node": {
+                "type": "object",
+                "id": "http://localhost:1234/node",
+                "description": "node",
+                "properties": {
+                  "value": {"type": "number"},
+                  "subtree": {"$ref": "tree"}
+                },
+                "required": ["value"]
               }
             }
-          """)
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 

@@ -5,7 +5,7 @@ defmodule Draft6.PatternPropertiesTest do
 
   describe "patternProperties validates properties matching a regex" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "patternProperties": {
             "f.*o": {
@@ -13,7 +13,7 @@ defmodule Draft6.PatternPropertiesTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a single valid match is valid", %{schema: schema} do
@@ -54,7 +54,7 @@ defmodule Draft6.PatternPropertiesTest do
 
   describe "multiple simultaneous patternProperties are validated" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "patternProperties": {
             "a*": {
@@ -65,7 +65,7 @@ defmodule Draft6.PatternPropertiesTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "a single valid match is valid", %{schema: schema} do
@@ -101,7 +101,7 @@ defmodule Draft6.PatternPropertiesTest do
 
   describe "regexes are not anchored by default and are case sensitive" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "patternProperties": {
             "X_": {
@@ -112,7 +112,7 @@ defmodule Draft6.PatternPropertiesTest do
             }
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "non recognized members are ignored", %{schema: schema} do
@@ -138,14 +138,14 @@ defmodule Draft6.PatternPropertiesTest do
 
   describe "patternProperties with boolean schemas" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "patternProperties": {
             "b.*": false,
             "f.*": true
           }
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "object with property matching schema true is valid", %{schema: schema} do

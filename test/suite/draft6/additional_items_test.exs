@@ -5,7 +5,7 @@ defmodule Draft6.AdditionalItemsTest do
 
   describe "additionalItems as schema" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalItems": {
             "type": "integer"
@@ -14,7 +14,7 @@ defmodule Draft6.AdditionalItemsTest do
             {}
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "additional items match schema", %{schema: schema} do
@@ -30,12 +30,12 @@ defmodule Draft6.AdditionalItemsTest do
 
   describe "items is schema, no additionalItems" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalItems": false,
           "items": {}
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "all items match schema", %{schema: schema} do
@@ -46,7 +46,7 @@ defmodule Draft6.AdditionalItemsTest do
 
   describe "array of items with no additionalItems" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalItems": false,
           "items": [
@@ -55,7 +55,7 @@ defmodule Draft6.AdditionalItemsTest do
             {}
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "fewer number of items present", %{schema: schema} do
@@ -76,11 +76,11 @@ defmodule Draft6.AdditionalItemsTest do
 
   describe "additionalItems as false without items" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "additionalItems": false
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "items defaults to empty schema so everything is valid", %{
@@ -98,7 +98,7 @@ defmodule Draft6.AdditionalItemsTest do
 
   describe "additionalItems are allowed by default" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "items": [
             {
@@ -106,7 +106,7 @@ defmodule Draft6.AdditionalItemsTest do
             }
           ]
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "only the first item is validated", %{schema: schema} do

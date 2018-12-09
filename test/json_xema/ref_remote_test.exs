@@ -18,7 +18,9 @@ defmodule JsonXema.RefRemoteTest do
       expected = "unexpected byte at position 0: 0x41 ('A')"
 
       assert_raise DecodeError, expected, fn ->
-        JsonXema.new(~s|{"$ref": "http://localhost:1234/invalid.json"}|)
+        ~s|{"$ref": "http://localhost:1234/invalid.json"}|
+        |> Jason.decode!()
+        |> JsonXema.new()
       end
     end
 
@@ -27,7 +29,9 @@ defmodule JsonXema.RefRemoteTest do
         "Remote schema 'http://localhost:1234/not-found.json' not found."
 
       assert_raise SchemaError, expected, fn ->
-        JsonXema.new(~s|{"$ref": "http://localhost:1234/not-found.json"}|)
+        ~s|{"$ref": "http://localhost:1234/not-found.json"}|
+        |> Jason.decode!()
+        |> JsonXema.new()
       end
     end
   end
@@ -35,7 +39,10 @@ defmodule JsonXema.RefRemoteTest do
   describe "remote ref" do
     setup do
       %{
-        schema: JsonXema.new(~s|{"$ref": "http://localhost:1234/integer.json"}|)
+        schema:
+          ~s|{"$ref": "http://localhost:1234/integer.json"}|
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -53,11 +60,13 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
+          """
             {
               "$ref": "http://localhost:1234/subSchemas.json#/integer"
             }
-          """)
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -74,12 +83,14 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
-            {
-              "$ref":
-              "http://localhost:1234/subSchemas.json#/refToInteger"
-            }
-          """)
+          """
+          {
+            "$ref":
+            "http://localhost:1234/subSchemas.json#/refToInteger"
+          }
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -96,7 +107,7 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
+          """
             {
               "type": "object",
               "id": "http://localhost:1234/scope_change_defs1.json",
@@ -115,7 +126,9 @@ defmodule JsonXema.RefRemoteTest do
                 }
               }
             }
-          """)
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -138,7 +151,7 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
+          """
             {
               "type": "object",
               "id": "http://localhost:1234/object",
@@ -148,7 +161,9 @@ defmodule JsonXema.RefRemoteTest do
                 }
               }
             }
-          """)
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 
@@ -178,7 +193,7 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          JsonXema.new("""
+          """
             {
               "type": "object",
               "id": "http://localhost:1234",
@@ -188,7 +203,9 @@ defmodule JsonXema.RefRemoteTest do
                 }
               }
             }
-          """)
+          """
+          |> Jason.decode!()
+          |> JsonXema.new()
       }
     end
 

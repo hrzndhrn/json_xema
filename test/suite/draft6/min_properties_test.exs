@@ -5,11 +5,11 @@ defmodule Draft6.MinPropertiesTest do
 
   describe "minProperties validation" do
     setup do
-      %{schema: JsonXema.new(~s(
+      %{schema: ~s(
         {
           "minProperties": 1
         }
-      ))}
+        ) |> Jason.decode!() |> JsonXema.new()}
     end
 
     test "longer is valid", %{schema: schema} do
