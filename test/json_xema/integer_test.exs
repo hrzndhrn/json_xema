@@ -1,7 +1,9 @@
 defmodule JsonXema.IntegerTest do
   use ExUnit.Case, async: true
 
-  import JsonXema, only: [valid?: 2, validate: 2]
+  import JsonXema, only: [valid?: 2, validate: 2, validate!: 2]
+
+  alias Xema.ValidationError
 
   describe "'integer' schema" do
     setup do
@@ -15,7 +17,17 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with a float", %{schema: schema} do
-      assert validate(schema, 2.3) == {:error, %{type: "integer", value: 2.3}}
+      assert validate(schema, 2.3) ==
+        {:error, %{type: "integer", value: 2.3}}
+    end
+
+    test "validate!/2 with a float", %{schema: schema} do
+      validate!(schema, 2.3)
+    rescue
+      error ->
+        assert %ValidationError{} = error
+        assert error.message == "Validation failed!"
+        assert error.reason == %{type: "integer", value: 2.3}
     end
 
     test "validate/2 with a string", %{schema: schema} do
