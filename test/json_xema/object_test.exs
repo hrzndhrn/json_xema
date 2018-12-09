@@ -277,15 +277,15 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with valid map", %{schema: schema} do
-      assert validate(schema, %{s_1: "foo", i_1: 42}) == :ok
+      assert validate(schema, %{"s_1" => "foo", "i_1" => 42}) == :ok
     end
 
     test "validate/2 with invalid map", %{schema: schema} do
-      assert validate(schema, %{x_1: 44}) ==
+      assert validate(schema, %{"x_1" => 44}) ==
                {:error,
                 %{
                   properties: %{
-                    x_1: %{additionalProperties: false}
+                    "x_1" => %{additionalProperties: false}
                   }
                 }}
     end

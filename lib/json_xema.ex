@@ -168,8 +168,6 @@ defmodule JsonXema do
 
   defp update_key(key) when is_atom(key), do: key
 
-  defp update_key("$" <> key), do: update_key(key)
-
   defp update_key(key)
        when is_binary(key),
        do:
@@ -345,15 +343,6 @@ defmodule JsonXema do
        do: for({k, v} <- map, into: %{}, do: {fun.(k), v})
 
   @spec map_values(map | struct, function) :: map
-  defp map_values(%{__struct__: module} = value, fun) do
-    map =
-      value
-      |> Map.from_struct()
-      |> map_values(fun)
-
-    struct(module, map)
-  end
-
   defp map_values(map, fun)
        when is_map(map),
        do: for({k, v} <- map, into: %{}, do: {k, fun.(v)})
