@@ -17,8 +17,7 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with a float", %{schema: schema} do
-      assert validate(schema, 2.3) ==
-        {:error, %{type: "integer", value: 2.3}}
+      assert validate(schema, 2.3) == {:error, %{type: "integer", value: 2.3}}
     end
 
     test "validate!/2 with a float", %{schema: schema} do

@@ -9,29 +9,7 @@ defmodule JsonXema do
 
   alias Jason
   alias Xema.Schema
-
-  @type format_attribute ::
-          :date_time
-          | :email
-          | :ipv4
-          | :ipv6
-          | :json_pointer
-          | :uri
-          | :uri_reference
-          | :uri_template
-          | :regex
-
-  @format_attributes [
-    :date_time,
-    :email,
-    :ipv4,
-    :ipv6,
-    :json_pointer,
-    :regex,
-    :uri,
-    :uri_reference,
-    :uri_template
-  ]
+  alias Xema.Format
 
   @type_map %{
     "any" => :any,
@@ -48,28 +26,18 @@ defmodule JsonXema do
 
   @types Map.keys(@type_map)
 
-  @string_keywords %Schema{}
-                   |> Map.delete(:data)
-                   |> Map.delete(:__struct__)
-                   |> Map.keys()
-                   |> Enum.map(&Atom.to_string/1)
-                   |> MapSet.new()
-
-  @json_keywords @string_keywords
+  @json_keywords %Schema{}
+                 |> Map.delete(:data)
+                 |> Map.delete(:__struct__)
+                 |> Map.keys()
+                 |> Enum.map(&Atom.to_string/1)
                  |> Enum.map(&to_camel_case/1)
                  |> Enum.concat(["$ref"])
                  |> MapSet.new()
 
-  # @string_keywords @atom_keywords
-  #                 |> Enum.map(&Atom.to_string/1)
-  #                 |> MapSet.new()
-
   @on_load :load_atoms
   @doc false
   def load_atoms do
-    #    Enum.each(@keywords, &Code.ensure_loaded/1)
-    Enum.each(@format_attributes, &Code.ensure_loaded/1)
-    #    @type_map |> Map.keys() |> Enum.each(&String.to_atom/1)
     Schema.keywords()
     |> Enum.map(&Atom.to_string/1)
     |> Enum.map(&ConvCase.to_camel_case/1)
@@ -85,7 +53,7 @@ defmodule JsonXema do
       when is_binary(string),
       do:
         string
-        |> Jason.decode!(keys: :strings)
+        |> Jason.decode!()
         |> init()
 
   def init(bool)
@@ -115,6 +83,7 @@ defmodule JsonXema do
       refs: json_xema.refs
     )
   end
+
 
   defp schema(bool)
        when is_boolean(bool),
@@ -283,7 +252,7 @@ defmodule JsonXema do
         {key, dep} -> {key, schema(dep)}
       end)
 
-  @spec to_format_attribute(String.t()) :: format_attribute
+  @spec to_format_attribute(String.t()) :: Format.format()
   defp to_format_attribute(str),
     do:
       str
