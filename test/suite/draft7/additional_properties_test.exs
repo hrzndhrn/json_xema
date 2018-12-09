@@ -143,4 +143,28 @@ defmodule Draft7.AdditionalPropertiesTest do
       assert valid?(schema, data)
     end
   end
+
+  describe "additionalProperties should not look in applicators" do
+    setup do
+      %{schema: JsonXema.new(~s(
+        {
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "allOf": [
+            {
+              "properties": {
+                "foo": {}
+              }
+            }
+          ]
+        }
+      ))}
+    end
+
+    test "properties defined in allOf are not allowed", %{schema: schema} do
+      data = %{"bar" => true, "foo" => 1}
+      refute valid?(schema, data)
+    end
+  end
 end
