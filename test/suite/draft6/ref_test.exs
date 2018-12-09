@@ -217,6 +217,26 @@ defmodule Draft6.RefTest do
     end
   end
 
+  describe "remote ref, containing refs itself" do
+    setup do
+      %{schema: JsonXema.new(~s(
+        {
+          "$ref": "http://json-schema.org/draft-06/schema#"
+        }
+      ))}
+    end
+
+    test "remote ref valid", %{schema: schema} do
+      data = %{"minLength" => 1}
+      assert valid?(schema, data)
+    end
+
+    test "remote ref invalid", %{schema: schema} do
+      data = %{"minLength" => -1}
+      refute valid?(schema, data)
+    end
+  end
+
   describe "property named $ref that is not a reference" do
     setup do
       %{schema: JsonXema.new(~s(
