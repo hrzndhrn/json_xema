@@ -13,7 +13,7 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with a string", %{schema: schema} do
-      expected = {:error, %{type: :object, value: "foo"}}
+      expected = {:error, %{type: "object", value: "foo"}}
 
       assert validate(schema, "foo") == expected
     end
@@ -53,20 +53,20 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with invalid values (atom keys)", %{schema: schema} do
-      assert validate(schema, %{foo: "foo", bar: "bar"}) ==
+      assert validate(schema, %{"foo" => "foo", "bar" => "bar"}) ==
                {:error,
                 %{
                   properties: %{
-                    foo: %{type: :number, value: "foo"}
+                    "foo" => %{type: "number", value: "foo"}
                   }
                 }}
 
-      assert validate(schema, %{foo: "foo", bar: 2}) ==
+      assert validate(schema, %{"foo" => "foo", "bar" => 2}) ==
                {:error,
                 %{
                   properties: %{
-                    foo: %{type: :number, value: "foo"},
-                    bar: %{type: :string, value: 2}
+                    "foo" => %{type: "number", value: "foo"},
+                    "bar" => %{type: "string", value: 2}
                   }
                 }}
     end
@@ -76,14 +76,9 @@ defmodule JsonXema.ObjectTest do
                {:error,
                 %{
                   properties: %{
-                    "foo" => %{type: :number, value: "foo"}
+                    "foo" => %{type: "number", value: "foo"}
                   }
                 }}
-    end
-
-    test "validate/2 with mixed map", %{schema: schema} do
-      assert validate(schema, %{"foo" => 1, foo: 2}) ==
-               {:error, %{properties: %{"foo" => :mixed_map}}}
     end
   end
 
@@ -128,27 +123,26 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with valid map", %{schema: schema} do
-      assert validate(schema, %{foo: 44}) == :ok
       assert validate(schema, %{"foo" => 44}) == :ok
     end
 
     test "validate/2 with additional property", %{schema: schema} do
-      assert validate(schema, %{foo: 44, add: 1}) ==
+      assert validate(schema, %{"foo" => 44, "add" => 1}) ==
                {:error,
                 %{
                   properties: %{
-                    add: %{additionalProperties: false}
+                    "add" => %{additionalProperties: false}
                   }
                 }}
     end
 
     test "validate/2 with additional properties", %{schema: schema} do
-      assert validate(schema, %{foo: 44, add: 1, plus: 3}) ==
+      assert validate(schema, %{"foo" => 44, "add" => 1, "plus" => 3}) ==
                {:error,
                 %{
                   properties: %{
-                    add: %{additionalProperties: false},
-                    plus: %{additionalProperties: false}
+                    "add" => %{additionalProperties: false},
+                    "plus" => %{additionalProperties: false}
                   }
                 }}
     end
@@ -173,26 +167,30 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with valid additional property", %{schema: schema} do
-      assert validate(schema, %{foo: "foo", add: 1}) == :ok
+      assert validate(schema, %{"foo" => "foo", "add" => 1}) == :ok
     end
 
     test "validate/2 with invalid additional property", %{schema: schema} do
-      assert validate(schema, %{foo: "foo", add: "invalid"}) ==
+      assert validate(schema, %{"foo" => "foo", "add" => "invalid"}) ==
                {
                  :error,
                  %{
-                   add: %{type: :integer, value: "invalid"}
+                   "add" => %{type: "integer", value: "invalid"}
                  }
                }
     end
 
     test "validate/2 with invalid additional properties", %{schema: schema} do
-      assert validate(schema, %{foo: "foo", add: "invalid", plus: "+"}) ==
+      assert validate(schema, %{
+               "foo" => "foo",
+               "add" => "invalid",
+               "plus" => "+"
+             }) ==
                {
                  :error,
                  %{
-                   add: %{type: :integer, value: "invalid"},
-                   plus: %{type: :integer, value: "+"}
+                   "add" => %{type: "integer", value: "invalid"},
+                   "plus" => %{type: "integer", value: "+"}
                  }
                }
     end
@@ -214,7 +212,7 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with required property (atom key)", %{schema: schema} do
-      assert validate(schema, %{foo: 44}) == :ok
+      assert validate(schema, %{"foo" => 44}) == :ok
     end
 
     test "validate/2 with required property (string key)", %{schema: schema} do
@@ -252,7 +250,7 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 without required properties", %{schema: schema} do
-      assert validate(schema, %{b: 3, d: 8}) ==
+      assert validate(schema, %{"b" => 3, "d" => 8}) ==
                {:error,
                 %{
                   required: ["a", "c"]
@@ -338,7 +336,7 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with missing dependency", %{schema: schema} do
-      assert validate(schema, %{a: 1, b: 2}) ==
+      assert validate(schema, %{"a" => 1, "b" => 2}) ==
                {:error,
                 %{
                   :dependencies => %{"b" => "c"}
@@ -377,7 +375,7 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "validate/2 with missing dependency", %{schema: schema} do
-      assert validate(schema, %{a: 1, b: 2}) ==
+      assert validate(schema, %{"a" => 1, "b" => 2}) ==
                {:error,
                 %{
                   dependencies: %{"b" => %{required: ["c"]}}
@@ -410,7 +408,7 @@ defmodule JsonXema.ObjectTest do
     end
 
     test "a penny", %{schema: schema} do
-      assert validate(schema, %{penny: 1}) ==
+      assert validate(schema, %{"penny" => 1}) ==
                {:error, %{dependencies: %{"penny" => "pound"}}}
     end
   end

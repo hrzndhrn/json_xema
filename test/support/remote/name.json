@@ -1,11 +1,14 @@
 {
-  "type": "string",
   "definitions": {
-    "or_nil": {
-      "any_of": [
-        {"type": "null"},
-        {"$ref": "#"}
+    "orNull": {
+      "anyOf": [{
+          "type": "null"
+        },
+        {
+          "$ref": "#"
+        }
       ]
     }
-  }
+  },
+  "type": "string"
 }

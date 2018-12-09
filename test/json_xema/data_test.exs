@@ -11,9 +11,10 @@ defmodule JsonXema.DataTest do
         }
         """)
 
-      assert schema.schema.data == %{foo: 3}
+      assert schema.schema.data == %{"foo" => 3}
     end
 
+    @tag :only
     test "maps are copied" do
       schema =
         JsonXema.new("""
@@ -21,11 +22,12 @@ defmodule JsonXema.DataTest do
           "type": "object",
           "foo": {
             "bar": 5
-          }
+            },
+          "baz": 42
         }
         """)
 
-      assert schema.schema.data.foo == %{"bar" => 5}
+      assert schema.schema.data == %{"foo" => %{"bar" => 5}, "baz" => 42}
     end
 
     test "can contain schemas" do
@@ -39,20 +41,23 @@ defmodule JsonXema.DataTest do
         }
         """)
 
-      assert schema.schema.data.foo ==
-               JsonXema.new(~s({"type": "integer"})).schema
+      assert schema.schema.data == %{
+               "foo" => JsonXema.new(~s({"type": "integer"})).schema
+             }
 
       schema =
         JsonXema.new("""
         {
           "type": "integer",
           "foo": {
-            "min_items": 5
+            "minItems": 5
           }
         }
         """)
 
-      assert schema.schema.data.foo == JsonXema.new(~s({"min_items": 5})).schema
+      assert schema.schema.data == %{
+               "foo" => JsonXema.new(~s({"minItems": 5})).schema
+             }
     end
 
     test "data goes into data" do
@@ -64,7 +69,7 @@ defmodule JsonXema.DataTest do
         }
         """)
 
-      assert schema.schema.data == %{data: 3}
+      assert schema.schema.data == %{"data" => 3}
     end
   end
 end

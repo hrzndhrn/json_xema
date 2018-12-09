@@ -37,10 +37,10 @@ defmodule Xema.NestedTest do
 
     test "validate/2 with valid data", %{schema: schema} do
       data = %{
-        id: 5,
-        items: [
-          %{num: 1, desc: "foo"},
-          %{num: 2, desc: "bar"}
+        "id" => 5,
+        "items" => [
+          %{"num" => 1, "desc" => "foo"},
+          %{"num" => 2, "desc" => "bar"}
         ]
       }
 
@@ -49,10 +49,10 @@ defmodule Xema.NestedTest do
 
     test "validate/2 with invalid data", %{schema: schema} do
       data = %{
-        id: 5,
-        items: [
-          %{num: 1, desc: "foo"},
-          %{num: -2, desc: "bar"}
+        "id" => 5,
+        "items" => [
+          %{"num" => 1, "desc" => "foo"},
+          %{"num" => -2, "desc" => "bar"}
         ]
       }
 
@@ -60,13 +60,13 @@ defmodule Xema.NestedTest do
         :error,
         %{
           properties: %{
-            items: %{
+            "items" => %{
               items: [
                 {
                   1,
                   %{
                     properties: %{
-                      num: %{value: -2, minimum: 0}
+                      "num" => %{value: -2, minimum: 0}
                     }
                   }
                 }

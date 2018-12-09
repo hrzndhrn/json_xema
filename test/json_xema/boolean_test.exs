@@ -33,7 +33,7 @@ defmodule JsonXema.BooleanTest do
     end
 
     test "validate/2 with non boolean value", %{schema: schema} do
-      expected = {:error, %{type: :boolean, value: "true"}}
+      expected = {:error, %{type: "boolean", value: "true"}}
 
       assert validate(schema, "true") == expected
     end

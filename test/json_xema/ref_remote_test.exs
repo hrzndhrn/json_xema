@@ -45,7 +45,7 @@ defmodule JsonXema.RefRemoteTest do
 
     test "validate/2 with an invalid value", %{schema: schema} do
       assert JsonXema.validate(schema, "1") ==
-               {:error, %{type: :integer, value: "1"}}
+               {:error, %{type: "integer", value: "1"}}
     end
   end
 
@@ -55,7 +55,7 @@ defmodule JsonXema.RefRemoteTest do
         schema:
           JsonXema.new("""
             {
-              "$ref": "http://localhost:1234/subSchemas.json#/definitions/int"
+              "$ref": "http://localhost:1234/subSchemas.json#/integer"
             }
           """)
       }
@@ -66,7 +66,7 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, "1") == {:error, %{type: :integer, value: "1"}}
+      assert validate(schema, "1") == {:error, %{type: "integer", value: "1"}}
     end
   end
 
@@ -77,7 +77,7 @@ defmodule JsonXema.RefRemoteTest do
           JsonXema.new("""
             {
               "$ref":
-              "http://localhost:1234/subSchemas.json#/definitions/refToInt"
+              "http://localhost:1234/subSchemas.json#/refToInteger"
             }
           """)
       }
@@ -88,7 +88,7 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, "1") == {:error, %{type: :integer, value: "1"}}
+      assert validate(schema, "1") == {:error, %{type: "integer", value: "1"}}
     end
   end
 
@@ -119,17 +119,16 @@ defmodule JsonXema.RefRemoteTest do
       }
     end
 
-    @tag :only
     test "validate/2 with a valid value", %{schema: schema} do
-      assert validate(schema, %{list: [1]}) == :ok
+      assert validate(schema, %{"list" => [1]}) == :ok
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{list: ["1"]}) ==
+      assert validate(schema, %{"list" => ["1"]}) ==
                {:error,
                 %{
                   properties: %{
-                    list: %{items: [{0, %{type: :integer, value: "1"}}]}
+                    "list" => %{items: [{0, %{type: "integer", value: "1"}}]}
                   }
                 }}
     end
@@ -145,7 +144,7 @@ defmodule JsonXema.RefRemoteTest do
               "id": "http://localhost:1234/object",
               "properties": {
                 "name": {
-                  "$ref": "name.json#/definitions/or_nil"
+                  "$ref": "name.json#/definitions/orNull"
                 }
               }
             }
@@ -154,19 +153,19 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with a valid value", %{schema: schema} do
-      assert validate(schema, %{name: "foo"}) == :ok
-      assert validate(schema, %{name: nil}) == :ok
+      assert validate(schema, %{"name" => "foo"}) == :ok
+      assert validate(schema, %{"name" => nil}) == :ok
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{name: 1}) ==
+      assert validate(schema, %{"name" => 1}) ==
                {:error,
                 %{
                   properties: %{
-                    name: %{
+                    "name" => %{
                       anyOf: [
-                        %{type: :null, value: 1},
-                        %{type: :string, value: 1}
+                        %{type: "null", value: 1},
+                        %{type: "string", value: 1}
                       ],
                       value: 1
                     }
@@ -185,7 +184,7 @@ defmodule JsonXema.RefRemoteTest do
               "id": "http://localhost:1234",
               "properties": {
                 "name": {
-                  "$ref": "name.json#/definitions/or_nil"
+                  "$ref": "name.json#/definitions/orNull"
                 }
               }
             }
@@ -194,19 +193,19 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with a valid value", %{schema: schema} do
-      assert validate(schema, %{name: "foo"}) == :ok
-      assert validate(schema, %{name: nil}) == :ok
+      assert validate(schema, %{"name" => "foo"}) == :ok
+      assert validate(schema, %{"name" => nil}) == :ok
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{name: 1}) ==
+      assert validate(schema, %{"name" => 1}) ==
                {:error,
                 %{
                   properties: %{
-                    name: %{
+                    "name" => %{
                       anyOf: [
-                        %{type: :null, value: 1},
-                        %{type: :string, value: 1}
+                        %{type: "null", value: 1},
+                        %{type: "string", value: 1}
                       ],
                       value: 1
                     }

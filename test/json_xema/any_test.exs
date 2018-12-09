@@ -97,7 +97,7 @@ defmodule JsonXema.AnyTest do
                 "foo": {
                   "not": {
                     "type": "string",
-                    "min_length": 3
+                    "minLength": 3
                   }
                 }
               }
@@ -106,13 +106,14 @@ defmodule JsonXema.AnyTest do
       }
     end
 
+    @tag :only
     test "validate/2 with a valid value", %{schema: schema} do
-      assert validate(schema, %{foo: ""}) == :ok
+      assert validate(schema, %{"foo" => ""}) == :ok
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{foo: "foo"}) ==
-               {:error, %{properties: %{foo: %{not: :ok, value: "foo"}}}}
+      assert validate(schema, %{"foo" => "foo"}) ==
+               {:error, %{properties: %{"foo" => %{not: :ok, value: "foo"}}}}
     end
   end
 
@@ -144,7 +145,7 @@ defmodule JsonXema.AnyTest do
     setup do
       %{
         schema: JsonXema.new(~s(
-            {"any_of": [
+            {"anyOf": [
               {"type": "null"},
               {"type": "integer", "minimum": 1}
             ]}
@@ -157,13 +158,14 @@ defmodule JsonXema.AnyTest do
       assert validate(schema, nil) == :ok
     end
 
+    @tag :only
     test "validate/2 with an imvalid value", %{schema: schema} do
       assert validate(schema, "foo") ==
                {:error,
                 %{
                   anyOf: [
-                    %{type: :null, value: "foo"},
-                    %{type: :integer, value: "foo"}
+                    %{type: "null", value: "foo"},
+                    %{type: "integer", value: "foo"}
                   ],
                   value: "foo"
                 }}

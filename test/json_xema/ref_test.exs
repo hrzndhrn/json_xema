@@ -22,27 +22,28 @@ defmodule JsonXema.RefTest do
     end
 
     test "validate/2 with valid data", %{schema: schema} do
-      assert validate(schema, %{foo: 1}) == :ok
+      assert validate(schema, %{"foo" => 1}) == :ok
     end
 
     test "validate/2 with invalid data", %{schema: schema} do
-      assert validate(schema, %{bar: 1}) ==
-               {:error, %{properties: %{bar: %{additionalProperties: false}}}}
+      assert validate(schema, %{"bar" => 1}) ==
+               {:error,
+                %{properties: %{"bar" => %{additionalProperties: false}}}}
     end
 
     test "validate/2 with recursive valid data", %{schema: schema} do
-      assert validate(schema, %{foo: %{foo: %{foo: 3}}}) == :ok
+      assert validate(schema, %{"foo" => %{"foo" => %{"foo" => 3}}}) == :ok
     end
 
     test "validate/2 with recursive invalid data", %{schema: schema} do
-      assert validate(schema, %{foo: %{foo: %{bar: 3}}}) ==
+      assert validate(schema, %{"foo" => %{"foo" => %{"bar" => 3}}}) ==
                {:error,
                 %{
                   properties: %{
-                    foo: %{
+                    "foo" => %{
                       properties: %{
-                        foo: %{
-                          properties: %{bar: %{additionalProperties: false}}
+                        "foo" => %{
+                          properties: %{"bar" => %{additionalProperties: false}}
                         }
                       }
                     }
@@ -67,24 +68,26 @@ defmodule JsonXema.RefTest do
     end
 
     test "validate/2 with valid data", %{schema: schema} do
-      assert validate(schema, %{foo: 42}) == :ok
-      assert validate(schema, %{bar: 42}) == :ok
-      assert validate(schema, %{foo: 21, bar: 42}) == :ok
+      assert validate(schema, %{"foo" => 42}) == :ok
+      assert validate(schema, %{"bar" => 42}) == :ok
+      assert validate(schema, %{"foo" => 21, "bar" => 42}) == :ok
     end
 
     test "validate/2 with invalid data", %{schema: schema} do
-      assert validate(schema, %{foo: "42"}) ==
-               {:error, %{properties: %{foo: %{type: :integer, value: "42"}}}}
+      assert validate(schema, %{"foo" => "42"}) ==
+               {:error,
+                %{properties: %{"foo" => %{type: "integer", value: "42"}}}}
 
-      assert validate(schema, %{bar: "42"}) ==
-               {:error, %{properties: %{bar: %{type: :integer, value: "42"}}}}
+      assert validate(schema, %{"bar" => "42"}) ==
+               {:error,
+                %{properties: %{"bar" => %{type: "integer", value: "42"}}}}
 
-      assert validate(schema, %{foo: "21", bar: "42"}) ==
+      assert validate(schema, %{"foo" => "21", "bar" => "42"}) ==
                {:error,
                 %{
                   properties: %{
-                    bar: %{type: :integer, value: "42"},
-                    foo: %{type: :integer, value: "21"}
+                    "bar" => %{type: "integer", value: "42"},
+                    "foo" => %{type: "integer", value: "21"}
                   }
                 }}
     end
@@ -110,16 +113,16 @@ defmodule JsonXema.RefTest do
     end
 
     test "validate/2 with valid values", %{schema: schema} do
-      assert validate(schema, %{foo: 5, bar: -1}) == :ok
+      assert validate(schema, %{"foo" => 5, "bar" => -1}) == :ok
     end
 
     test "validate/2 with invalid values", %{schema: schema} do
-      assert validate(schema, %{foo: -1, bar: 1}) ==
+      assert validate(schema, %{"foo" => -1, "bar" => 1}) ==
                {:error,
                 %{
                   properties: %{
-                    bar: %{maximum: 0, value: 1},
-                    foo: %{minimum: 0, value: -1}
+                    "bar" => %{maximum: 0, value: 1},
+                    "foo" => %{minimum: 0, value: -1}
                   }
                 }}
     end
@@ -144,12 +147,12 @@ defmodule JsonXema.RefTest do
     end
 
     test "validate/2 with valid value", %{schema: schema} do
-      assert validate(schema, %{foo: 42}) == :ok
+      assert validate(schema, %{"foo" => 42}) == :ok
     end
 
     test "validate/2 with invalid value", %{schema: schema} do
-      assert validate(schema, %{foo: -21}) ==
-               {:error, %{properties: %{foo: %{minimum: 0, value: -21}}}}
+      assert validate(schema, %{"foo" => -21}) ==
+               {:error, %{properties: %{"foo" => %{minimum: 0, value: -21}}}}
     end
   end
 
@@ -230,10 +233,10 @@ defmodule JsonXema.RefTest do
 
     test "validate/2 with invalid value", %{schema: schema} do
       assert validate(schema, [1, "2"]) ==
-               {:error, %{items: [{1, %{type: :integer, value: "2"}}]}}
+               {:error, %{items: [{1, %{type: "integer", value: "2"}}]}}
 
       assert validate(schema, [1, 2, "3"]) ==
-               {:error, %{items: [{2, %{type: :integer, value: "3"}}]}}
+               {:error, %{items: [{2, %{type: "integer", value: "3"}}]}}
     end
 
     test "validate/2 an invalid ref", %{schema: schema} do
@@ -274,49 +277,49 @@ defmodule JsonXema.RefTest do
     end
 
     test "validate/2 tilda_1 with invalid value", %{schema: schema} do
-      assert validate(schema, %{tilda_1: "1"}) ==
+      assert validate(schema, %{"tilda_1" => "1"}) ==
                {:error,
-                %{properties: %{tilda_1: %{type: :integer, value: "1"}}}}
+                %{properties: %{"tilda_1" => %{type: "integer", value: "1"}}}}
     end
 
     test "validate/2 tilda_2 with valid value", %{schema: schema} do
-      assert validate(schema, %{tilda_2: 1}) == :ok
+      assert validate(schema, %{"tilda_2" => 1}) == :ok
     end
 
     test "validate/2 tilda_3 with valid value", %{schema: schema} do
-      assert validate(schema, %{tilda_3: 1}) == :ok
+      assert validate(schema, %{"tilda_3" => 1}) == :ok
     end
 
     test "validate/2 percent with valid value", %{schema: schema} do
-      assert validate(schema, %{percent: 1}) == :ok
+      assert validate(schema, %{"percent" => 1}) == :ok
     end
 
     test "validate/2 slash_1 with valid value", %{schema: schema} do
-      assert validate(schema, %{slash_1: 1}) == :ok
+      assert validate(schema, %{"slash_1" => 1}) == :ok
     end
 
     test "validate/2 slash_2 with valid value", %{schema: schema} do
-      assert validate(schema, %{slash_2: 1}) == :ok
+      assert validate(schema, %{"slash_2" => 1}) == :ok
     end
 
     test "validate/2 with invalid values", %{schema: schema} do
       assert validate(schema, %{
-               tilda_1: "1",
-               tilda_2: "1",
-               tilda_3: "1",
-               slash_1: "1",
-               slash_2: "1",
-               percent: "1"
+               "tilda_1" => "1",
+               "tilda_2" => "1",
+               "tilda_3" => "1",
+               "slash_1" => "1",
+               "slash_2" => "1",
+               "percent" => "1"
              }) ==
                {:error,
                 %{
                   properties: %{
-                    percent: %{type: :integer, value: "1"},
-                    slash_1: %{type: :integer, value: "1"},
-                    slash_2: %{type: :integer, value: "1"},
-                    tilda_1: %{type: :integer, value: "1"},
-                    tilda_2: %{type: :integer, value: "1"},
-                    tilda_3: %{type: :integer, value: "1"}
+                    "percent" => %{type: "integer", value: "1"},
+                    "slash_1" => %{type: "integer", value: "1"},
+                    "slash_2" => %{type: "integer", value: "1"},
+                    "tilda_1" => %{type: "integer", value: "1"},
+                    "tilda_2" => %{type: "integer", value: "1"},
+                    "tilda_3" => %{type: "integer", value: "1"}
                   }
                 }}
     end
@@ -345,22 +348,14 @@ defmodule JsonXema.RefTest do
     end
 
     test "validate/2 with valid ref", %{schema: schema} do
-      assert validate(schema, %{num: 1}) == :ok
+      assert validate(schema, %{"num" => 1}) == :ok
     end
 
     test "validate/2 with invalid ref", %{schema: schema} do
       expected = "Reference 'invalid' not found."
 
       assert_raise RefError, expected, fn ->
-        validate(schema, %{invalid: 1})
-      end
-    end
-
-    test "validate/2 with invalid id", %{schema: schema} do
-      expected = "Reference 'foobar' not found."
-
-      assert_raise RefError, expected, fn ->
-        validate(schema, %{baz: 1})
+        validate(schema, %{"invalid" => 1})
       end
     end
   end
@@ -401,8 +396,8 @@ defmodule JsonXema.RefTest do
 
     test "validate/2 with a valid root", %{schema: schema} do
       tree = %{
-        meta: "root",
-        nodes: []
+        "meta" => "root",
+        "nodes" => []
       }
 
       assert validate(schema, tree) == :ok
@@ -423,22 +418,22 @@ defmodule JsonXema.RefTest do
 
     test "validate/2 with a valid tree", %{schema: schema} do
       tree = %{
-        meta: "root",
-        nodes: [
+        "meta" => "root",
+        "nodes" => [
           %{
-            value: 5,
-            subtree: %{
-              meta: "sub",
-              nodes: [
+            "value" => 5,
+            "subtree" => %{
+              "meta" => "sub",
+              "nodes" => [
                 %{
-                  value: 42
+                  "value" => 42
                 },
                 %{
-                  value: 21,
-                  subtree: %{
-                    meta: "foo",
-                    value: 667,
-                    nodes: []
+                  "value" => 21,
+                  "subtree" => %{
+                    "meta" => "foo",
+                    "value" => 667,
+                    "nodes" => []
                   }
                 }
               ]
@@ -452,21 +447,21 @@ defmodule JsonXema.RefTest do
 
     test "validate/2 with a missing nodes property", %{schema: schema} do
       tree = %{
-        meta: "root",
-        nodes: [
+        "meta" => "root",
+        "nodes" => [
           %{
-            value: 5,
-            subtree: %{
-              meta: "sub",
-              nodes: [
+            "value" => 5,
+            "subtree" => %{
+              "meta" => "sub",
+              "nodes" => [
                 %{
-                  value: 42
+                  "value" => 42
                 },
                 %{
-                  value: 21,
-                  subtree: %{
-                    meta: "foo",
-                    value: 667
+                  "value" => 21,
+                  "subtree" => %{
+                    "meta" => "foo",
+                    "value" => 667
                   }
                 }
               ]
@@ -479,19 +474,19 @@ defmodule JsonXema.RefTest do
                {:error,
                 %{
                   properties: %{
-                    nodes: %{
+                    "nodes" => %{
                       items: [
                         {0,
                          %{
                            properties: %{
-                             subtree: %{
+                             "subtree" => %{
                                properties: %{
-                                 nodes: %{
+                                 "nodes" => %{
                                    items: [
                                      {1,
                                       %{
                                         properties: %{
-                                          subtree: %{required: ["nodes"]}
+                                          "subtree" => %{required: ["nodes"]}
                                         }
                                       }}
                                    ]
