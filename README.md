@@ -3,22 +3,69 @@
 [![Coverage Status](https://coveralls.io/repos/github/hrzndhrn/json_xema/badge.svg?branch=master)](https://coveralls.io/github/hrzndhrn/json_xema?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**TODO: Add description**
+JsonXema is a [JSON Schema](http://json-schema.org) validator with support
+for draft 04, 06, and 07.
+
+JsonXema based on elixir schema validator
+[Xema](https://github.com/hrzndhrn/xema).
+
+Xema is in early beta. If you try it and has an issue, report them.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `json_xema` to your list of dependencies in `mix.exs`:
+If [available in Hex](https://hex.pm), the package can be installed
+like this:
+
+First, add JsonXema to your `mix.exs` dependencies:
 
 ```elixir
 def deps do
   [
-    {:json_xema, "~> 0.1.0"}
+    {:json_xema, "~> 0.1"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/json_xema](https://hexdocs.pm/json_xema).
+Then, update your dependencies:
 
+```Shell
+$ mix deps.get
+```
+
+## Usage
+
+TODO
+
+## Tests
+
+Tests in [test/json_xema](test/json_xema) are not organised as classic unit
+tests but are related to JSON schema keywords or a specific feature.
+
+The directory [test/suite](test/suite) contains tests for draft 04, 06, and 07
+and are generated from the
+[Json Schema Test Suite](https://github.com/json-schema-org/JSON-Schema-Test-Suite).
+
+## References
+
+The home of JSON Schema: http://json-schema.org/
+
+Specification:
+
+* Draft-04
+  * [JSON Schema core](http://json-schema.org/draft-04/json-schema-core.html)
+defines the basic foundation of JSON Schema
+  * [JSON Schema Validation](http://json-schema.org/draft-04/json-schema-validation.html)
+defines the validation keywords of JSON Schema
+* Draft-06
+  * [JSON Schema core](http://json-schema.org/draft-06/json-schema-core.html)
+  * [JSON Schema Validation](http://json-schema.org/draft-06/json-schema-validation.html)
+  * [JSON Schema Release Notes](http://json-schema.org/draft-06/json-schema-release-notes.html)
+contains informations to migrate schemas.
+* Draft-07
+  * [JSON Schema core](http://json-schema.org/draft-07/json-schema-core.html)
+  * [JSON Schema Validation](http://json-schema.org/draft-07/json-schema-validation.html)
+  * [JSON Schema Release Notes](http://json-schema.org/draft-07/json-schema-release-notes.html)
+
+
+[Understanding JSON Schema](https://spacetelescope.github.io/understanding-json-schema/index.html)
+a great tutorial for JSON Schema authors.
