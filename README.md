@@ -36,11 +36,11 @@ $ mix deps.get
 
 A JSON parser is required to create a schema from JSON. It is also possible to
 create a schema directly from an elixir data structure. There are three functions available to validate data against a schema.
-* `JsonXema.valid?/2` gets a schema and any data and returns `true` for valid
++ `JsonXema.valid?/2` gets a schema and any data and returns `true` for valid
   data and `false` otherwise.
-* `JsonXema.validate/2` gets a schema and any data and returns `:ok` for valid
++ `JsonXema.validate/2` gets a schema and any data and returns `:ok` for valid
   data and an error tuple otherwise.
-* `JsonXema.validate!/2` gets a schema and any data and returns `:ok` for valid
++ `JsonXema.validate!/2` gets a schema and any data and returns `:ok` for valid
   data and raised an exception otherwise.
 
 ```elixir
@@ -78,7 +78,7 @@ false
 {:error, %{properties: %{"old" => %{additionalProperties: false}}}}
 ```
 
-## Unsupported semantic validatio
+## Unsupported semantic validation
 For now, the keyword `format` do not support the following formats:
 + `idn-email` the I18N equivalent of `email`
 + `idn-hostname` I18N equivalent of `hostname`
