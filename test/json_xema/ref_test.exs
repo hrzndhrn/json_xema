@@ -10,14 +10,12 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "properties": {
               "foo": {"$ref": "#"}
             },
             "additionalProperties": false
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -58,14 +56,12 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "properties": {
               "foo": {"type": "integer"},
               "bar": {"$ref": "#/properties/foo"}
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -101,8 +97,7 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "properties": {
               "foo": {"$ref": "#/definitions/pos"},
               "bar": {"$ref": "#/definitions/neg"}
@@ -111,8 +106,7 @@ defmodule JsonXema.RefTest do
               "pos": {"type": "integer", "minimum": 0},
               "neg": {"type": "integer", "maximum": 0}
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -138,8 +132,7 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "properties": {
               "foo": {"$ref": "#/definitions/bar"}
             },
@@ -147,8 +140,7 @@ defmodule JsonXema.RefTest do
               "bar": {"$ref": "#/definitions/pos"},
               "pos": {"type": "integer", "minimum": 0}
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -168,14 +160,12 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "$ref": "#/definitions/pos",
             "definitions": {
               "pos": {"type": "integer", "minimum": 0}
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -194,8 +184,7 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "id": "http://foo.com",
             "$ref": "pos",
             "definitions": {
@@ -205,8 +194,7 @@ defmodule JsonXema.RefTest do
                 "id": "http://foo.com/pos"
               }
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -225,16 +213,14 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "items": [
               {"type": "integer"},
               {"$ref": "#/items/0"},
               {"$ref": "#/items/1"},
               {"$ref": "#/items/11"}
             ]
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -266,8 +252,7 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "definitions": {
               "tilda~field": {"type": "integer"},
               "slash/field": {"type": "integer"},
@@ -281,8 +266,7 @@ defmodule JsonXema.RefTest do
               "slash_1": {"$ref": "#/definitions/slash~1field"},
               "slash_2": {"$ref": "#/definitions/slash%2Ffield"}
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -345,8 +329,7 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "type": "object",
             "id": "http://localhost",
             "definitions": {
@@ -358,8 +341,7 @@ defmodule JsonXema.RefTest do
               "invalid": {"$ref": "invalid"},
               "baz": {"$ref": "foobar"}
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -382,8 +364,7 @@ defmodule JsonXema.RefTest do
     setup do
       %{
         schema:
-          """
-          {
+          ~s({
             "type": "object",
             "id": "http://localhost:1234/tree",
             "description": "tree of nodes",
@@ -407,8 +388,7 @@ defmodule JsonXema.RefTest do
                 "required": ["value"]
               }
             }
-          }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }

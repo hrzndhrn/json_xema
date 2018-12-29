@@ -60,11 +60,7 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          """
-            {
-              "$ref": "http://localhost:1234/subSchemas.json#/integer"
-            }
-          """
+          ~s({"$ref": "http://localhost:1234/subSchemas.json#/integer"})
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -83,12 +79,7 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          """
-          {
-            "$ref":
-            "http://localhost:1234/subSchemas.json#/refToInteger"
-          }
-          """
+          ~s({"$ref": "http://localhost:1234/subSchemas.json#/refToInteger"})
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -107,26 +98,24 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          """
-            {
-              "type": "object",
-              "id": "http://localhost:1234/scope_change_defs1.json",
-              "properties": {
-                "list": {
-                  "$ref": "#/definitions/baz"
-                }
-              },
-              "definitions": {
-                "baz": {
-                  "type": "array",
-                  "id": "folder/",
-                  "items": {
-                    "$ref": "folderInteger.json"
-                  }
+          ~s({
+            "type": "object",
+            "id": "http://localhost:1234/scope_change_defs1.json",
+            "properties": {
+              "list": {
+                "$ref": "#/definitions/baz"
+              }
+            },
+            "definitions": {
+              "baz": {
+                "type": "array",
+                "id": "folder/",
+                "items": {
+                  "$ref": "folderInteger.json"
                 }
               }
             }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -151,17 +140,15 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          """
-            {
-              "type": "object",
-              "id": "http://localhost:1234/object",
-              "properties": {
-                "name": {
-                  "$ref": "name.json#/definitions/orNull"
-                }
+          ~s({
+            "type": "object",
+            "id": "http://localhost:1234/object",
+            "properties": {
+              "name": {
+                "$ref": "name.json#/definitions/orNull"
               }
             }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }
@@ -193,17 +180,15 @@ defmodule JsonXema.RefRemoteTest do
     setup do
       %{
         schema:
-          """
-            {
-              "type": "object",
-              "id": "http://localhost:1234",
-              "properties": {
-                "name": {
-                  "$ref": "name.json#/definitions/orNull"
-                }
+          ~s({
+            "type": "object",
+            "id": "http://localhost:1234",
+            "properties": {
+              "name": {
+                "$ref": "name.json#/definitions/orNull"
               }
             }
-          """
+          })
           |> Jason.decode!()
           |> JsonXema.new()
       }

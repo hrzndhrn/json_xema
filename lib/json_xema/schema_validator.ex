@@ -1,6 +1,17 @@
 defmodule JsonXema.SchemaValidator do
+  @moduledoc """
+  This module contains validators to check schemas against the official
+  JSON Schemas.
+  """
+
   alias JsonXema.SchemaError
 
+  @doc """
+  This function validates schemas against:
+  + http://json-schema.org/draft-04/schema#
+  + http://json-schema.org/draft-06/schema#
+  + http://json-schema.org/draft-07/schema#
+  """
   @spec validate(String.t(), any) :: Xema.Validator.result()
   def validate("http://json-schema.org/draft-06/schema#", value),
     do: Xema.validate(draft06(), value)

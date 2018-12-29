@@ -10,8 +10,8 @@ defmodule JsonXema do
   alias Jason
   alias JsonXema.SchemaError
   alias JsonXema.SchemaValidator
-  alias Xema.Schema
   alias Xema.Format
+  alias Xema.Schema
 
   @type_map %{
     "any" => :any,
@@ -45,7 +45,7 @@ defmodule JsonXema do
     Schema.keywords()
     |> Enum.map(&Atom.to_string/1)
     |> Enum.map(&ConvCase.to_camel_case/1)
-    |> Enum.map(&String.to_atom/1)
+    |> Enum.each(&String.to_atom/1)
 
     :ok
   end
@@ -74,7 +74,7 @@ defmodule JsonXema do
         |> Map.put_new("type", "any")
         |> schema()
       rescue
-        _ -> raise SchemaError, "Can't build schema!"
+        _ -> reraise SchemaError, "Can't build schema!", __STACKTRACE__
       end
     else
       {:error, reason} ->
