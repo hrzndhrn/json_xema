@@ -57,7 +57,13 @@ defmodule JsonXema.MixProject do
     [
       maintainers: ["Marcus Kruse"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/hrzndhrn/json_xema"}
+      links: %{"GitHub" => "https://github.com/hrzndhrn/json_xema"},
+      files: [
+        "lib",
+        "mix.exs",
+        "README*",
+        "LICENSE*"
+      ]
     ]
   end
 end
