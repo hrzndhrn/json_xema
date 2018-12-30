@@ -14,7 +14,6 @@ defmodule JsonXema.DataTest do
       assert schema.schema.data == %{"foo" => 3}
     end
 
-    @tag :only
     test "maps are copied" do
       schema =
         ~s({

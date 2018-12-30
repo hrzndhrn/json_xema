@@ -8,7 +8,6 @@ defmodule JsonXema.AnyTest do
       %{schema: "{}" |> Jason.decode!() |> JsonXema.new()}
     end
 
-    @tag :only
     test "valid?/2 with a string", %{schema: schema} do
       assert valid?(schema, "foo")
     end
@@ -112,7 +111,6 @@ defmodule JsonXema.AnyTest do
       }
     end
 
-    @tag :only
     test "validate/2 with a valid value", %{schema: schema} do
       assert validate(schema, %{"foo" => ""}) == :ok
     end
@@ -164,7 +162,6 @@ defmodule JsonXema.AnyTest do
       assert validate(schema, nil) == :ok
     end
 
-    @tag :only
     test "validate/2 with an imvalid value", %{schema: schema} do
       assert validate(schema, "foo") ==
                {:error,

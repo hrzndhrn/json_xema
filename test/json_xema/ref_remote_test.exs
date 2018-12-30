@@ -215,4 +215,24 @@ defmodule JsonXema.RefRemoteTest do
                 }}
     end
   end
+
+  describe "file ref" do
+    setup do
+      %{
+        schema:
+          ~s({
+          "type": "object",
+          "properties": {
+            "int": {"ref": "integer.json"}
+          }
+        })
+          |> Jason.decode!()
+          |> JsonXema.new()
+      }
+    end
+
+    test "valid data", %{schema: schema} do
+      assert validate(schema, %{"int" => 66})
+    end
+  end
 end
