@@ -2,17 +2,22 @@ defmodule Test.Resolver do
   @moduledoc false
 
   defmodule FileResolver do
+    @moduledoc false
+
     @behaviour Xema.Resolver
 
     @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
-    def fetch(uri), do:
-      "test/support/remote"
-      |> Path.join(uri.path)
-      |> File.read!()
-      |> Jason.decode()
+    def fetch(uri),
+      do:
+        "test/support/remote"
+        |> Path.join(uri.path)
+        |> File.read!()
+        |> Jason.decode()
   end
 
   defmodule RemoteResolver do
+    @moduledoc false
+
     @behaviour Xema.Resolver
 
     @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
