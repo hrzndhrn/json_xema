@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -40,7 +40,7 @@ defmodule JsonXema.MixProject do
   end
 
   defp description() do
-    "A JSON Schema validator."
+    "A JSON Schema validator for draft-04, -06, and -07."
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
@@ -48,11 +48,15 @@ defmodule JsonXema.MixProject do
 
   defp deps do
     [
+      {:benchee, "~> 0.13", only: :dev},
+      {:benchee_json, "~> 0.5", only: :dev},
+      {:benchee_html, "~> 0.5", only: :dev},
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.2", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:ex_json_schema, "~> 0.5"},
       {:excoveralls, "~> 0.8", only: :test},
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
