@@ -40,7 +40,7 @@ defmodule JsonXema.MixProject do
   end
 
   defp description() do
-    "A JSON Schema validator."
+    "A JSON Schema validator for draft-04, -06, and -07."
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
