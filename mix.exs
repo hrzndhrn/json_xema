@@ -19,6 +19,14 @@ defmodule JsonXema.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
+      docs: [
+        extras: [
+          "docs/readme.md",
+          "docs/usage.md",
+          "docs/resolver.md",
+          "docs/unsupported.md"
+        ]
+      ],
       dialyzer: [
         ignore_warnings: "dialyzer.ignore-warnings"
       ]
@@ -62,7 +70,11 @@ defmodule JsonXema.MixProject do
         "lib",
         "mix.exs",
         "README*",
-        "LICENSE*"
+        "LICENSE*",
+        "docs/readme.md",
+        "docs/usage.md",
+        "docs/resolver.md",
+        "docs/unsupported.md"
       ]
     ]
   end
