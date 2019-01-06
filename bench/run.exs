@@ -30,6 +30,7 @@ defmodule Bench do
 
   def run do
     basic()
+    emails()
   end
 
   defp basic() do
@@ -41,6 +42,33 @@ defmodule Bench do
     basic_data = %{
       valid: data("valid/basic.json"),
       invalid: data("invalid/basic.json")
+    }
+
+    Benchee.run(basic_schema,
+      parallel: 4,
+      inputs: basic_data,
+      print: [fast_warning: false],
+      formatters: [
+        # &Benchee.Formatters.HTML.output/1,
+        &Benchee.Formatters.Console.output/1
+      ],
+      formatter_options: [
+        html: [
+          file: Path.expand("output/basic.html", __DIR__)
+        ]
+      ]
+    )
+  end
+
+  defp emails() do
+    basic_schema = %{
+      "JsonXema" => json_xema("emails.json"),
+      "ExJsonSchema" => ex_json_schema("emails.json")
+    }
+
+    basic_data = %{
+      valid: data("valid/emails.json"),
+      invalid: data("invalid/emails.json")
     }
 
     Benchee.run(basic_schema,
