@@ -47,9 +47,9 @@ defmodule JsonXema do
     |> Enum.map(&ConvCase.to_camel_case/1)
     |> Enum.each(&String.to_atom/1)
 
-    :regex
+    Code.ensure_loaded(Format)
 
-    Format.formats()
+    :regex
 
     :ok
   end
