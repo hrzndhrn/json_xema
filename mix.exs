@@ -61,8 +61,7 @@ defmodule JsonXema.MixProject do
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
       {:jason, "~> 1.0", only: [:dev, :test]},
-      # {:xema, "~> 0.6"}
-      {:xema, path: "../xema"}
+      {:xema, "~> 0.6"}
     ]
   end
 
