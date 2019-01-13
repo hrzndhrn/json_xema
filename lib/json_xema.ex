@@ -13,8 +13,6 @@ defmodule JsonXema do
   alias Xema.Format
   alias Xema.Schema
 
-  Code.ensure_loaded(Xema.Format)
-
   @type_map %{
     "any" => :any,
     "array" => :list,
@@ -48,6 +46,10 @@ defmodule JsonXema do
     |> Enum.map(&Atom.to_string/1)
     |> Enum.map(&ConvCase.to_camel_case/1)
     |> Enum.each(&String.to_atom/1)
+
+    :regex
+
+    Format.formats()
 
     :ok
   end
