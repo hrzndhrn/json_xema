@@ -47,20 +47,31 @@ defmodule JsonXema do
     |> Enum.map(&ConvCase.to_camel_case/1)
     |> Enum.each(&String.to_atom/1)
 
+    Code.ensure_loaded(Format)
+
+    :regex
+
     :ok
   end
 
   @doc """
   This function creates a new `JsonXema` from the given `schema`.
 
+  Possible options:
+  + `:resolver` - a resolver for remote schemas. This option will overwrite the
+                  resolver from the config. See
+                  [Configure a resolver](resolver.html) to how to define a
+                  resolver.
+
   ## Examples
-  iex> ~s({"type": "string"})
-  ...> |> Jason.decode!()
-  ...> |> JsonXema.new()
-  %JsonXema{refs: %{}, schema: %Xema.Schema{type: :string}}
+
+      iex> ~s({"type": "string"})
+      ...> |> Jason.decode!()
+      ...> |> JsonXema.new()
+      %JsonXema{refs: %{}, schema: %Xema.Schema{type: :string}}
   """
-  @spec new(String.t() | map) :: %JsonXema{}
-  def new(schema)
+  @spec new(String.t() | map, atom) :: %JsonXema{}
+  def new(schema, opts)
 
   @spec init(boolean | map) :: Schema.t()
   def init(bool)

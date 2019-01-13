@@ -1,79 +1,62 @@
 defmodule Bench do
-  def json_xema(path) do
-    schema =
-      "bench/schema"
-      |> Path.join(path)
-      |> File.read!()
-      |> Jason.decode!()
-      |> JsonXema.new()
+  def json_xema(raw) do
+    schema = JsonXema.new(raw)
 
-    fn data -> JsonXema.valid?(schema, data) end
+    fn data ->
+      true = JsonXema.valid?(schema, data)
+    end
   end
 
-  def ex_json_schema(path) do
-    schema =
-      "bench/schema"
-      |> Path.join(path)
-      |> File.read!()
-      |> Jason.decode!()
-      |> ExJsonSchema.Schema.resolve()
+  def ex_json_schema(raw) do
+    schema = ExJsonSchema.Schema.resolve(raw)
 
-    fn data -> ExJsonSchema.Validator.valid?(schema, data) end
+    fn data ->
+      true = ExJsonSchema.Validator.valid?(schema, data)
+    end
   end
 
-  def data(path),
+  def schema do
+    properties =
+      "bench/schema"
+      |> File.ls!()
+      |> Enum.into(%{}, fn name ->
+        {name,
+         "bench/schema"
+         |> Path.join(name)
+         |> File.read!()
+         |> Jason.decode!()}
+      end)
+
+    %{"properties" => properties}
+  end
+
+  def data,
     do:
       "bench/data"
-      |> Path.join(path)
-      |> File.read!()
-      |> Jason.decode!()
+      |> File.ls!()
+      |> Enum.into(%{}, fn name ->
+        {name,
+         "bench/data"
+         |> Path.join(name)
+         |> File.read!()
+         |> Jason.decode!()}
+      end)
 
   def run do
-    basic()
-    emails()
-  end
+    schema = schema()
 
-  defp basic() do
-    basic_schema = %{
-      "JsonXema" => json_xema("basic.json"),
-      "ExJsonSchema" => ex_json_schema("basic.json")
+    functions = %{
+      "JsonXema" => json_xema(schema),
+      "ExJsonSchema" => ex_json_schema(schema)
     }
 
-    basic_data = %{
-      valid: data("valid/basic.json"),
-      invalid: data("invalid/basic.json")
+    json = %{
+      json: data()
     }
 
-    Benchee.run(basic_schema,
+    Benchee.run(functions,
       parallel: 4,
-      inputs: basic_data,
-      print: [fast_warning: false],
-      formatters: [
-        # &Benchee.Formatters.HTML.output/1,
-        &Benchee.Formatters.Console.output/1
-      ],
-      formatter_options: [
-        html: [
-          file: Path.expand("output/basic.html", __DIR__)
-        ]
-      ]
-    )
-  end
-
-  defp emails() do
-    basic_schema = %{
-      "JsonXema" => json_xema("emails.json"),
-      "ExJsonSchema" => ex_json_schema("emails.json")
-    }
-
-    basic_data = %{
-      valid: data("valid/emails.json"),
-      invalid: data("invalid/emails.json")
-    }
-
-    Benchee.run(basic_schema,
-      parallel: 4,
-      inputs: basic_data,
+      inputs: json,
       print: [fast_warning: false],
       formatters: [
         # &Benchee.Formatters.HTML.output/1,
