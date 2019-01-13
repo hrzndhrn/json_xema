@@ -13,6 +13,8 @@ defmodule JsonXema do
   alias Xema.Format
   alias Xema.Schema
 
+  Code.ensure_loaded(Xema.Format)
+
   @type_map %{
     "any" => :any,
     "array" => :list,
