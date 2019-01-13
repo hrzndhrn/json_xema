@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "List of IPv4 addresses",
+  "type": "object",
+  "properties": {
+    "ips": {
+      "type": "array",
+      "items": {"format": "ipv4"}
+    }
+  }
+}
