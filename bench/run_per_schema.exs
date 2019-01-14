@@ -60,7 +60,7 @@ defmodule Bench do
       ],
       formatter_options: [
         html: [
-          file: Path.expand("output/basic.html", __DIR__)
+          file: Path.expand("output/#{name}.html", __DIR__)
         ]
       ]
     )
