@@ -73,6 +73,7 @@ defmodule JsonXema do
   @spec new(String.t() | map, atom) :: %JsonXema{}
   def new(schema, opts)
 
+  @doc false
   @spec init(boolean | map) :: Schema.t()
   def init(bool)
       when is_boolean(bool),
@@ -111,7 +112,7 @@ defmodule JsonXema do
   def on_error(error), do: map_error(error)
 
   @doc """
-  Converts a `%JsonXema{}` into a `%Xema{}`.
+  Converts `%JsonXema{}` to `%Xema{}`.
   """
   @spec to_xema(%JsonXema{}) :: %Xema{}
   def to_xema(%JsonXema{} = json_xema) do

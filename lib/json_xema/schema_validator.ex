@@ -1,8 +1,7 @@
 defmodule JsonXema.SchemaValidator do
-  @moduledoc """
-  This module contains validators to check schemas against the official
-  JSON Schemas.
-  """
+  @moduledoc false
+  # This module contains validators to check schemas against the official
+  # JSON Schemas.
 
   alias JsonXema.SchemaError
 
