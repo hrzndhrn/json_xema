@@ -186,6 +186,12 @@ defmodule JsonXema do
 
   defp key_to_existing_atom(key), do: key
 
+  defp to_existing_atom(string) do
+    String.to_existing_atom(string)
+  rescue
+    _ -> string
+  end
+
   defp update(map),
     do:
       map
@@ -295,7 +301,7 @@ defmodule JsonXema do
     do:
       str
       |> String.replace("-", "_")
-      |> String.to_existing_atom()
+      |> to_existing_atom()
 
   @spec map_error(any) :: any
   defp map_error(:mixed_map), do: :mixed_map
