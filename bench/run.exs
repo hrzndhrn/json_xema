@@ -56,6 +56,7 @@ defmodule Bench do
 
     Benchee.run(functions,
       parallel: 4,
+      time: 10,
       inputs: json,
       print: [fast_warning: false],
       formatters: [

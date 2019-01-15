@@ -1,0 +1,16 @@
+{
+  "properties": {
+    "pos": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "neg": {
+      "type": "integer",
+      "maximum": 0
+    },
+    "even": {
+      "type": "integer",
+      "multipleOf": 2
+    }
+  }
+}
