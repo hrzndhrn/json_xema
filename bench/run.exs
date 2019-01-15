@@ -1,62 +1,53 @@
 defmodule Bench do
-  def json_xema(raw) do
-    schema = JsonXema.new(raw)
+  def json_xema(path),
+    do:
+      "bench/schema"
+      |> Path.join(path)
+      |> File.read!()
+      |> Jason.decode!()
+      |> JsonXema.new()
 
-    fn data ->
-      true = JsonXema.valid?(schema, data)
-    end
-  end
+  def ex_json_schema(path),
+    do:
+      "bench/schema"
+      |> Path.join(path)
+      |> File.read!()
+      |> Jason.decode!()
+      |> ExJsonSchema.Schema.resolve()
 
-  def ex_json_schema(raw) do
-    schema = ExJsonSchema.Schema.resolve(raw)
+  def json(path),
+    do:
+      "bench/data"
+      |> Path.join(path)
+      |> File.read!()
+      |> Jason.decode!()
 
-    fn data ->
-      true = ExJsonSchema.Validator.valid?(schema, data)
-    end
-  end
+  def json_xema_valid?(%{json_xema: schema, json: json}),
+    do: true = JsonXema.valid?(schema, json)
 
-  def schema do
-    properties =
+  def ex_json_schema_valid?(%{ex_json_schema: schema, json: json}),
+    do: true = ExJsonSchema.Validator.valid?(schema, json)
+
+  def run do
+    inputs =
       "bench/schema"
       |> File.ls!()
       |> Enum.into(%{}, fn name ->
         {name,
-         "bench/schema"
-         |> Path.join(name)
-         |> File.read!()
-         |> Jason.decode!()}
+         %{
+           json_xema: json_xema(name),
+           ex_json_schema: ex_json_schema(name),
+           json: json(name)
+         }}
       end)
 
-    %{"properties" => properties}
-  end
-
-  def data,
-    do:
-      "bench/data"
-      |> File.ls!()
-      |> Enum.into(%{}, fn name ->
-        {name,
-         "bench/data"
-         |> Path.join(name)
-         |> File.read!()
-         |> Jason.decode!()}
-      end)
-
-  def run do
-    schema = schema()
-
-    functions = %{
-      "JsonXema" => json_xema(schema),
-      "ExJsonSchema" => ex_json_schema(schema)
-    }
-
-    json = %{
-      json: data()
-    }
-
-    Benchee.run(functions,
+    Benchee.run(
+      %{
+        "JsonXema" => &json_xema_valid?/1,
+        "ExJsonSchema" => &ex_json_schema_valid?/1
+      },
       parallel: 4,
-      inputs: json,
+      inputs: inputs,
       print: [fast_warning: false],
       formatters: [
         # &Benchee.Formatters.HTML.output/1,
@@ -64,7 +55,7 @@ defmodule Bench do
       ],
       formatter_options: [
         html: [
-          file: Path.expand("output/basic.html", __DIR__)
+          file: Path.expand("output/bench.html", __DIR__)
         ]
       ]
     )

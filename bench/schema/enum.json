@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "mix": {
+      "enum": [5, "foo", [], true]
+    },
+    "string": {
+      "enum": ["one", "two", "three"]
+    },
+    "int": {
+      "enum": [1, 2, 3]
+    }
+  }
+}
