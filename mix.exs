@@ -10,6 +10,7 @@ defmodule JsonXema.MixProject do
       deps: deps(),
       description: description(),
       package: package(),
+      aliases: aliases(),
       elixirc_paths: elixirc_paths(Mix.env()),
       test_coverage: [tool: ExCoveralls],
       source_url: "https://github.com/hrzndhrn/json_xema",
@@ -81,5 +82,9 @@ defmodule JsonXema.MixProject do
         "docs/unsupported.md"
       ]
     ]
+  end
+
+  defp aliases do
+    [bench: ["run bench/run.exs"]]
   end
 end
