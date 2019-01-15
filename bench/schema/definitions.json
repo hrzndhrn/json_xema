@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "definitions": {
+    "pos": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "neg": {
+      "type": "integer",
+      "maximum": 0
+    },
+    "even": {
+      "type": "integer",
+      "multipleOf": 2
+    }
+  },
+
+  "properties": {
+    "pos": {"$ref": "#/definitions/pos"},
+    "neg": {"$ref": "#/definitions/neg"},
+    "even": {"$ref": "#/definitions/even"}
+  }
+}
