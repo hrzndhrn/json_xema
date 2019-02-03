@@ -3,9 +3,6 @@ defmodule JsonXema.RefTest do
 
   import JsonXema, only: [validate: 2]
 
-  alias Xema.Ref
-  alias Xema.RefError
-
   describe "schema with root pointer" do
     setup do
       %{
@@ -217,8 +214,7 @@ defmodule JsonXema.RefTest do
             "items": [
               {"type": "integer"},
               {"$ref": "#/items/0"},
-              {"$ref": "#/items/1"},
-              {"$ref": "#/items/11"}
+              {"$ref": "#/items/1"}
             ]
           })
           |> Jason.decode!()
@@ -237,14 +233,6 @@ defmodule JsonXema.RefTest do
 
       assert validate(schema, [1, 2, "3"]) ==
                {:error, %{items: [{2, %{type: "integer", value: "3"}}]}}
-    end
-
-    test "validate/2 an invalid ref", %{schema: schema} do
-      expected = "Reference '#/items/11' not found."
-
-      assert_raise RefError, expected, fn ->
-        validate(schema, [1, 2, 3, 4]) == {:error, [{3, {:ref, "#/items/11"}}]}
-      end
     end
   end
 
@@ -325,41 +313,6 @@ defmodule JsonXema.RefTest do
     end
   end
 
-  describe "schema with invalid ref" do
-    setup do
-      %{
-        schema:
-          ~s({
-            "type": "object",
-            "id": "http://localhost",
-            "definitions": {
-              "int": {"type": "integer", "id": "http://localhost/int"},
-              "foobar": {"type": "integer", "id": "foobar"}
-            },
-            "properties": {
-              "num": {"$ref": "int"},
-              "invalid": {"$ref": "invalid"},
-              "baz": {"$ref": "foobar"}
-            }
-          })
-          |> Jason.decode!()
-          |> JsonXema.new()
-      }
-    end
-
-    test "validate/2 with valid ref", %{schema: schema} do
-      assert validate(schema, %{"num" => 1}) == :ok
-    end
-
-    test "validate/2 with invalid ref", %{schema: schema} do
-      expected = "Reference 'invalid' not found."
-
-      assert_raise RefError, expected, fn ->
-        validate(schema, %{"invalid" => 1})
-      end
-    end
-  end
-
   describe "schema with recursive refs" do
     setup do
       %{
@@ -404,16 +357,9 @@ defmodule JsonXema.RefTest do
     end
 
     test "ids", %{schema: schema} do
-      assert schema.refs == %{
-               "http://localhost:1234/node" => %Ref{
-                 uri: nil,
-                 pointer: "#/definitions/node"
-               },
-               "http://localhost:1234/tree" => %Ref{
-                 uri: nil,
-                 pointer: "#"
-               }
-             }
+      assert Map.keys(schema.refs) == [
+               "http://localhost:1234/node",
+               "http://localhost:1234/tree"]
     end
 
     test "validate/2 with a valid tree", %{schema: schema} do

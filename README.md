@@ -38,9 +38,9 @@ $ mix deps.get
 The docs contains a [Usage](https://hexdocs.pm/json_xema/usage.html) page with a
 short and compact description to use `JsonXema`.
 
-A resolver must be configured to support remote schemas. The documentation
+A loader must be configured to support remote schemas. The documentation
 contains a description on page
-[Configure a resolver](https://hexdocs.pm/json_xema/resolver.html).
+[Configure a loader](https://hexdocs.pm/json_xema/loader.html).
 
 Documentation can be generated with
 [ExDoc](https://github.com/elixir-lang/ex_doc) by running `mix docs`. The

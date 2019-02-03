@@ -1,7 +1,7 @@
-defmodule Test.FileResolver do
+defmodule Test.FileLoader do
   @moduledoc false
 
-  @behaviour Xema.Resolver
+  @behaviour Xema.Loader
 
   @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
   def fetch(uri),
@@ -12,10 +12,10 @@ defmodule Test.FileResolver do
       |> Jason.decode()
 end
 
-defmodule RemoteResolver do
+defmodule RemoteLoader do
   @moduledoc false
 
-  @behaviour Xema.Resolver
+  @behaviour Xema.Loader
 
   @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
   def fetch(uri) do

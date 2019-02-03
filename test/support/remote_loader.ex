@@ -1,7 +1,7 @@
-defmodule Test.RemoteResolver do
+defmodule Test.RemoteLoader do
   @moduledoc false
 
-  @behaviour Xema.Resolver
+  @behaviour Xema.Loader
 
   @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
   def fetch(uri) do

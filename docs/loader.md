@@ -1,6 +1,6 @@
-# Configure a resolver
+# Configure a loader
 
-A resolver returns the data for a remote schema. The remote schemas are defined
+A loader returns the data for a remote schema. The remote schemas are defined
 in a schema like this.
 
 ```json
@@ -11,19 +11,19 @@ in a schema like this.
 ...
 ```
 
-A resolver will be configured like this.
+A loader will be configured like this.
 
 ```elixir
-config :xema, resolver: My.Resolver
+config :xema, loader: My.Loader
 ```
 
-A resolver is a module which use the behaviour `Xema.Resolver`.
+A loader is a module which use the behaviour `Xema.Loader`.
 
 ```elixir
-defmodule My.Resolver do
+defmodule My.Loader do
   @moduledoc false
 
-  @behaviour Xema.Resolver
+  @behaviour Xema.Loader
 
   @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
   def fetch(uri) do
@@ -48,9 +48,9 @@ The function `fetch/1` will be called by `Xema` and expects an `%URI{}`. The
 return value must be a tuple of `:ok` and the required data for a schema or an
 error tuple.
 
-## File resolver
+## File loader
 
-A resolver to read schema from the local file system.
+A loader to read schema from the local file system.
 
 In the schema:
 ```elixir
@@ -61,12 +61,12 @@ In the schema:
 ...
 ```
 
-The resolver:
+The loader:
 ```elixir
-defmodule My.Resolver do
+defmodule My.Loader do
   @moduledoc false
 
-  @behaviour Xema.Resolver
+  @behaviour Xema.Loader
 
   @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
   def fetch(uri),

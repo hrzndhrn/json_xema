@@ -227,7 +227,7 @@ defmodule JsonXema.RefRemoteTest do
           }
         })
           |> Jason.decode!()
-          |> JsonXema.new(resolver: Test.FileResolver)
+          |> JsonXema.new(loader: Test.FileLoader)
       }
     end
 
