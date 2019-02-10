@@ -5,9 +5,9 @@ defmodule JsonXema.Json do
 
   @default_jsom_library Jason
 
-  @spec decode(iodata) :: {:ok, term} | {:error, term}
-  def decode(input) do
-    apply(json_library(), :decode, [input])
+  @spec decode!(iodata) :: term
+  def decode!(input) do
+    apply(json_library(), :decode!, [input])
   end
 
   defp json_library,

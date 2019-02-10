@@ -7,7 +7,7 @@ defmodule JsonXema do
 
   import ConvCase
 
-  alias Jason
+  alias JsonXema.Json
   alias JsonXema.SchemaError
   alias JsonXema.SchemaValidator
   alias Xema.Format
@@ -65,16 +65,18 @@ defmodule JsonXema do
 
   ## Examples
 
-      iex> ~s({"type": "string"})
-      ...> |> Jason.decode!()
-      ...> |> JsonXema.new()
+      iex> JsonXema.new ~s({"type": "string"})
       %JsonXema{refs: %{}, schema: %Xema.Schema{type: :string}}
   """
-  @spec new(boolean | map, keyword) :: %JsonXema{}
+  @spec new(String.t() | boolean | map, keyword) :: %JsonXema{}
   def new(schema, opts)
 
   @doc false
-  @spec init(boolean | map) :: Schema.t()
+  @spec init(String.t() | boolean | map) :: Schema.t()
+  def init(string)
+      when is_binary(string),
+      do: string |> Json.decode!() |> init()
+
   def init(bool)
       when is_boolean(bool),
       do: schema(bool)
