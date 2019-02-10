@@ -58,10 +58,10 @@ defmodule JsonXema do
   This function creates a new `JsonXema` from the given `schema`.
 
   Possible options:
-  + `:resolver` - a resolver for remote schemas. This option will overwrite the
-                  resolver from the config. See
-                  [Configure a resolver](resolver.html) to how to define a
-                  resolver.
+  + `:loader` - a loader for remote schemas. This option will overwrite the
+                  loader from the config. See
+                  [Configure a loader](loader.html) to how to define a
+                  loader.
 
   ## Examples
 
@@ -70,7 +70,7 @@ defmodule JsonXema do
       ...> |> JsonXema.new()
       %JsonXema{refs: %{}, schema: %Xema.Schema{type: :string}}
   """
-  @spec new(String.t() | map, atom) :: %JsonXema{}
+  @spec new(boolean | map, keyword) :: %JsonXema{}
   def new(schema, opts)
 
   @doc false

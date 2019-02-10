@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.1.4",
+      version: "0.2.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -24,7 +24,7 @@ defmodule JsonXema.MixProject do
         extras: [
           "docs/readme.md",
           "docs/usage.md",
-          "docs/resolver.md",
+          "docs/loader.md",
           "docs/unsupported.md"
         ]
       ],
@@ -62,7 +62,7 @@ defmodule JsonXema.MixProject do
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
       {:jason, "~> 1.0", only: [:dev, :test]},
-      {:xema, "~> 0.6"}
+      {:xema, "~> 0.7"}
     ]
   end
 
@@ -78,7 +78,7 @@ defmodule JsonXema.MixProject do
         "LICENSE*",
         "docs/readme.md",
         "docs/usage.md",
-        "docs/resolver.md",
+        "docs/loader.md",
         "docs/unsupported.md"
       ]
     ]

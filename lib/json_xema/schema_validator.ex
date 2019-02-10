@@ -3,130 +3,113 @@ defmodule JsonXema.SchemaValidator do
   # This module contains validators to check schemas against the official
   # JSON Schemas.
 
+  @dialyzer {:nowarn_function, validate: 2}
+
   alias JsonXema.SchemaError
 
-  @doc """
-  This function validates schemas against:
-  + http://json-schema.org/draft-04/schema#
-  + http://json-schema.org/draft-06/schema#
-  + http://json-schema.org/draft-07/schema#
-  """
-  @spec validate(String.t(), any) :: Xema.Validator.result()
-  def validate("http://json-schema.org/draft-06/schema#", value),
-    do: Xema.validate(draft06(), value)
+  @draft04 Xema.new(
+             {:map,
+              [
+                default: %{},
+                definitions: %{
+                  "positiveInteger" => {:integer, [minimum: 0]},
+                  "positiveIntegerDefault0" => [
+                    all_of: [
+                      {:ref, "#/definitions/positiveInteger"},
+                      [default: 0]
+                    ]
+                  ],
+                  "schemaArray" => {:list, [items: {:ref, "#"}, min_items: 1]},
+                  "simpleTypes" => [
+                    enum: [
+                      "array",
+                      "boolean",
+                      "integer",
+                      "null",
+                      "number",
+                      "object",
+                      "string"
+                    ]
+                  ],
+                  "stringArray" =>
+                    {:list, [items: :string, min_items: 1, unique_items: true]}
+                },
+                dependencies: %{
+                  "exclusiveMaximum" => ["maximum"],
+                  "exclusiveMinimum" => ["minimum"]
+                },
+                description: "Core schema meta-schema",
+                id: "http://json-schema.org/draft-04/schema#",
+                properties: %{
+                  "uniqueItems" => {:boolean, [default: false]},
+                  "maximum" => :number,
+                  "title" => :string,
+                  "multipleOf" =>
+                    {:number, [exclusive_minimum: true, minimum: 0]},
+                  "anyOf" => {:ref, "#/definitions/schemaArray"},
+                  "format" => :string,
+                  "exclusiveMinimum" => {:boolean, [default: false]},
+                  "id" => :string,
+                  "minimum" => :number,
+                  "definitions" =>
+                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "minItems" => {:ref, "#/definitions/positiveIntegerDefault0"},
+                  "additionalProperties" => [
+                    any_of: [:boolean, {:ref, "#"}],
+                    default: %{}
+                  ],
+                  "patternProperties" =>
+                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "type" => [
+                    any_of: [
+                      ref: "#/definitions/simpleTypes",
+                      list: [
+                        items: {:ref, "#/definitions/simpleTypes"},
+                        min_items: 1,
+                        unique_items: true
+                      ]
+                    ]
+                  ],
+                  "maxItems" => {:ref, "#/definitions/positiveInteger"},
+                  "dependencies" =>
+                    {:map,
+                     [
+                       additional_properties: [
+                         any_of: [ref: "#", ref: "#/definitions/stringArray"]
+                       ]
+                     ]},
+                  "$schema" => :string,
+                  "maxProperties" => {:ref, "#/definitions/positiveInteger"},
+                  "properties" =>
+                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "additionalItems" => [
+                    any_of: [:boolean, {:ref, "#"}],
+                    default: %{}
+                  ],
+                  "items" => [
+                    any_of: [ref: "#", ref: "#/definitions/schemaArray"],
+                    default: %{}
+                  ],
+                  "not" => {:ref, "#"},
+                  "oneOf" => {:ref, "#/definitions/schemaArray"},
+                  "default" => :any,
+                  "required" => {:ref, "#/definitions/stringArray"},
+                  "description" => :string,
+                  "allOf" => {:ref, "#/definitions/schemaArray"},
+                  "minLength" =>
+                    {:ref, "#/definitions/positiveIntegerDefault0"},
+                  "pattern" => {:string, [format: :regex]},
+                  "enum" => {:list, [min_items: 1, unique_items: true]},
+                  "exclusiveMaximum" => {:boolean, [default: false]},
+                  "maxLength" => {:ref, "#/definitions/positiveInteger"},
+                  "minProperties" =>
+                    {:ref, "#/definitions/positiveIntegerDefault0"}
+                },
+                schema: "http://json-schema.org/draft-04/schema#"
+              ]}
+           )
 
-  def validate("http://json-schema.org/draft-07/schema#", value),
-    do: Xema.validate(draft07(), value)
-
-  def validate("http://json-schema.org/draft-04/schema#", value),
-    do: Xema.validate(draft04(), value)
-
-  def validate(uri, _value), do: raise(SchemaError, "Unknown $schema #{uri}.")
-
-  defp draft04,
-    do:
-      Xema.new(
-        {:map,
-         [
-           default: %{},
-           definitions: %{
-             "positiveInteger" => {:integer, [minimum: 0]},
-             "positiveIntegerDefault0" => [
-               all_of: [
-                 {:ref, "#/definitions/positiveInteger"},
-                 [default: 0]
-               ]
-             ],
-             "schemaArray" => {:list, [items: {:ref, "#"}, min_items: 1]},
-             "simpleTypes" => [
-               enum: [
-                 "array",
-                 "boolean",
-                 "integer",
-                 "null",
-                 "number",
-                 "object",
-                 "string"
-               ]
-             ],
-             "stringArray" =>
-               {:list, [items: :string, min_items: 1, unique_items: true]}
-           },
-           dependencies: %{
-             "exclusiveMaximum" => ["maximum"],
-             "exclusiveMinimum" => ["minimum"]
-           },
-           description: "Core schema meta-schema",
-           id: "http://json-schema.org/draft-04/schema#",
-           properties: %{
-             "uniqueItems" => {:boolean, [default: false]},
-             "maximum" => :number,
-             "title" => :string,
-             "multipleOf" => {:number, [exclusive_minimum: true, minimum: 0]},
-             "anyOf" => {:ref, "#/definitions/schemaArray"},
-             "format" => :string,
-             "exclusiveMinimum" => {:boolean, [default: false]},
-             "id" => :string,
-             "minimum" => :number,
-             "definitions" =>
-               {:map, [additional_properties: {:ref, "#"}, default: %{}]},
-             "minItems" => {:ref, "#/definitions/positiveIntegerDefault0"},
-             "additionalProperties" => [
-               any_of: [:boolean, {:ref, "#"}],
-               default: %{}
-             ],
-             "patternProperties" =>
-               {:map, [additional_properties: {:ref, "#"}, default: %{}]},
-             "type" => [
-               any_of: [
-                 ref: "#/definitions/simpleTypes",
-                 list: [
-                   items: {:ref, "#/definitions/simpleTypes"},
-                   min_items: 1,
-                   unique_items: true
-                 ]
-               ]
-             ],
-             "maxItems" => {:ref, "#/definitions/positiveInteger"},
-             "dependencies" =>
-               {:map,
-                [
-                  additional_properties: [
-                    any_of: [ref: "#", ref: "#/definitions/stringArray"]
-                  ]
-                ]},
-             "$schema" => :string,
-             "maxProperties" => {:ref, "#/definitions/positiveInteger"},
-             "properties" =>
-               {:map, [additional_properties: {:ref, "#"}, default: %{}]},
-             "additionalItems" => [
-               any_of: [:boolean, {:ref, "#"}],
-               default: %{}
-             ],
-             "items" => [
-               any_of: [ref: "#", ref: "#/definitions/schemaArray"],
-               default: %{}
-             ],
-             "not" => {:ref, "#"},
-             "oneOf" => {:ref, "#/definitions/schemaArray"},
-             "default" => :any,
-             "required" => {:ref, "#/definitions/stringArray"},
-             "description" => :string,
-             "allOf" => {:ref, "#/definitions/schemaArray"},
-             "minLength" => {:ref, "#/definitions/positiveIntegerDefault0"},
-             "pattern" => {:string, [format: :regex]},
-             "enum" => {:list, [min_items: 1, unique_items: true]},
-             "exclusiveMaximum" => {:boolean, [default: false]},
-             "maxLength" => {:ref, "#/definitions/positiveInteger"},
-             "minProperties" => {:ref, "#/definitions/positiveIntegerDefault0"}
-           },
-           schema: "http://json-schema.org/draft-04/schema#"
-         ]}
-      )
-
-  defp draft06,
-    do:
-      Xema.new(
+  @draft06 Xema.new(
         {[:map, :boolean],
          [
            default: %{},
@@ -221,9 +204,7 @@ defmodule JsonXema.SchemaValidator do
          ]}
       )
 
-  defp draft07,
-    do:
-      Xema.new(
+  @draft07 Xema.new(
         {[:map, :boolean],
          [
            default: true,
@@ -329,4 +310,22 @@ defmodule JsonXema.SchemaValidator do
            title: "Core schema meta-schema"
          ]}
       )
+
+  @doc """
+  This function validates schemas against:
+  + http://json-schema.org/draft-04/schema#
+  + http://json-schema.org/draft-06/schema#
+  + http://json-schema.org/draft-07/schema#
+  """
+  @spec validate(String.t(), any) :: Xema.Validator.result()
+  def validate("http://json-schema.org/draft-04/schema#", value),
+    do: Xema.validate(@draft04, value)
+
+  def validate("http://json-schema.org/draft-06/schema#", value),
+    do: Xema.validate(@draft06, value)
+
+  def validate("http://json-schema.org/draft-07/schema#", value),
+    do: Xema.validate(@draft07, value)
+
+  def validate(uri, _value), do: raise(SchemaError, "Unknown $schema #{uri}.")
 end
