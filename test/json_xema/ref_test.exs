@@ -359,7 +359,8 @@ defmodule JsonXema.RefTest do
     test "ids", %{schema: schema} do
       assert Map.keys(schema.refs) == [
                "http://localhost:1234/node",
-               "http://localhost:1234/tree"]
+               "http://localhost:1234/tree"
+             ]
     end
 
     test "validate/2 with a valid tree", %{schema: schema} do

@@ -56,6 +56,11 @@ The directory [test/suite](test/suite) contains tests for draft 04, 06, and 07
 and are generated from the
 [Json Schema Test Suite](https://github.com/json-schema-org/JSON-Schema-Test-Suite).
 
+## Benchmark
+
+A benchmark test can be started with `mix bench`. More about the benchmark can
+be found at [bench](bench).
+
 ## References
 
 The home of JSON Schema: http://json-schema.org/

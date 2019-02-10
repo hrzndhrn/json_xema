@@ -47,6 +47,7 @@ defmodule Bench do
         "ExJsonSchema" => &ex_json_schema_valid?/1
       },
       parallel: 4,
+      time: 5,
       inputs: inputs,
       print: [fast_warning: false],
       formatters: [
