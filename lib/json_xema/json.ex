@@ -10,6 +10,11 @@ defmodule JsonXema.Json do
     apply(json_library(), :decode!, [input])
   end
 
+  @spec decode(iodata) :: {:ok, term} | {:error, term}
+  def decode(input) do
+    apply(json_library(), :decode, [input])
+  end
+
   defp json_library,
     do: Application.get_env(:json_xema, :json_library, @default_jsom_library)
 end
