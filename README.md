@@ -22,7 +22,8 @@ First, add JsonXema to your `mix.exs` dependencies:
 ```elixir
 def deps do
   [
-    {:json_xema, "~> 0.1"}
+    {:json_xema, "~> 0.1"},
+    {:jason, "~> 1.1"} # if JsonXema is to run with Jason
   ]
 end
 ```
@@ -31,6 +32,27 @@ Then, update your dependencies:
 
 ```shell
 $ mix deps.get
+```
+
+### Installation with Poison
+
+`JsonXema` is using [Jason](https://github.com/michalmuskala/jason)
+per default. To run `JsonXema` with [Posion](https://github.com/devinus/poison)
+the configuration must be extended.
+
+```elixir
+def deps do
+  [
+    {:json_xema, "~> 0.1"},
+    {:poison, "~> 4.0"}
+  ]
+end
+```
+
+config:
+
+```elixir
+config :json_xema, json_library: Posion
 ```
 
 ## Docs
