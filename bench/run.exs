@@ -51,13 +51,12 @@ defmodule Bench do
       inputs: inputs,
       print: [fast_warning: false],
       formatters: [
-        # &Benchee.Formatters.HTML.output/1,
-        &Benchee.Formatters.Console.output/1
+        # {Benchee.Formatters.HTML,
+        #  file: Path.expand("output/bench.html", __DIR__)},
+        Benchee.Formatters.Console
       ],
       formatter_options: [
-        html: [
-          file: Path.expand("output/bench.html", __DIR__)
-        ]
+        html: []
       ]
     )
   end
