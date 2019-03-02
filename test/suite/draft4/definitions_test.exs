@@ -12,7 +12,6 @@ defmodule Draft4.DefinitionsTest do
         ) |> Jason.decode!() |> JsonXema.new()}
     end
 
-    @tag :only
     test "valid definition schema", %{schema: schema} do
       data = %{"definitions" => %{"foo" => %{"type" => "integer"}}}
       assert valid?(schema, data)
