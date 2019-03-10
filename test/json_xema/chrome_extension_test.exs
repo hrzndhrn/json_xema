@@ -24,7 +24,6 @@ defmodule JsonXema.ChromeExtensionTest do
     end
   end
 
-
   defp schema,
     do:
       "test/support/schema/chrome_extension.json"
@@ -32,8 +31,7 @@ defmodule JsonXema.ChromeExtensionTest do
       |> Jason.decode!()
 
   defp data,
-    do:
-      """
+    do: Jason.decode!(~s|
       {
         "name": "Great App Name",
         "description": "Pithy description (132 characters or less, no HTML)",
@@ -51,6 +49,5 @@ defmodule JsonXema.ChromeExtensionTest do
           }
         }
       }
-      """
-      |> Jason.decode!()
+      |)
 end
