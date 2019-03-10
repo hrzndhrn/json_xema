@@ -2,6 +2,7 @@
   "benchee": {:hex, :benchee, "0.14.0", "f771f587c48b4824b497e2a3e374f75e93ef01fc329873b089a3f5dd961b80b8", [:mix], [{:deep_merge, "~> 0.1", [hex: :deep_merge, repo: "hexpm", optional: false]}], "hexpm"},
   "benchee_html": {:hex, :benchee_html, "0.6.0", "a5fcc65ec8d7427599ec915b9f87e43529d15097adf9e43c96ec5673af57d42e", [:mix], [{:benchee, "~> 0.14", [hex: :benchee, repo: "hexpm", optional: false]}, {:benchee_json, "~> 0.6", [hex: :benchee_json, repo: "hexpm", optional: false]}], "hexpm"},
   "benchee_json": {:hex, :benchee_json, "0.6.0", "8cc0a27cd2a6ef1e89b7810272f58fff810c41b73ea4b4d67b5089a82337bff2", [:mix], [{:benchee, "~> 0.14", [hex: :benchee, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm"},
+  "benchee_markdown": {:hex, :benchee_markdown, "0.1.0", "f3383cdd972caba20e6f7290ef9eafd5f1dbc4d149c23dfcf412656b888b1d82", [:mix], [{:benchee, "~> 0.14", [hex: :benchee, repo: "hexpm", optional: false]}], "hexpm"},
   "bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [:mix], [], "hexpm"},
   "certifi": {:hex, :certifi, "2.4.2", "75424ff0f3baaccfd34b1214184b6ef616d89e420b258bb0a5ea7d7bc628f7f0", [:rebar3], [{:parse_trans, "~>3.3", [hex: :parse_trans, repo: "hexpm", optional: false]}], "hexpm"},
   "conv_case": {:hex, :conv_case, "0.2.2", "5a98b74ab8f7ddbad670e5c7bb39ff280e60699aa3b25c7062ceccf48137433c", [:mix], [], "hexpm"},
@@ -32,5 +33,5 @@
   "ranch": {:hex, :ranch, "1.7.1", "6b1fab51b49196860b733a49c07604465a47bdb78aa10c1c16a3d199f7f8c881", [:rebar3], [], "hexpm"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.4", "f0eafff810d2041e93f915ef59899c923f4568f4585904d010387ed74988e77b", [:make, :mix, :rebar3], [], "hexpm"},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.4.1", "d869e4c68901dd9531385bb0c8c40444ebf624e60b6962d95952775cac5e90cd", [:rebar3], [], "hexpm"},
-  "xema": {:hex, :xema, "0.7.0", "3bbb9bd06eb1de8623ae8776a5ef4180ae2bbbb7885d916d0e438340f967cb5d", [:mix], [], "hexpm"},
+  "xema": {:hex, :xema, "0.8.0", "79e8de2af8f86cfbb513f98fc8ee8b6344ab3c536047b9888ce7f8da0df252bd", [:mix], [], "hexpm"},
 }

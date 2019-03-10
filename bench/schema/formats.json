@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "email": {"format": "email"},
+    "date-time": {"format": "date-time"},
+    "hostname": {"format": "hostname"},
+    "ipv4": {"format": "ipv4"},
+    "ipv6": {"format": "ipv6"}
+  }
+}

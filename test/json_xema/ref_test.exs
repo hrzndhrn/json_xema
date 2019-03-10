@@ -3,6 +3,8 @@ defmodule JsonXema.RefTest do
 
   import JsonXema, only: [validate: 2]
 
+  alias Xema.Schema
+
   describe "schema with root pointer" do
     setup do
       %{
@@ -107,6 +109,22 @@ defmodule JsonXema.RefTest do
           |> Jason.decode!()
           |> JsonXema.new()
       }
+    end
+
+    test "schema", %{schema: schema} do
+      assert schema == %JsonXema{
+               refs: %{},
+               schema: %Schema{
+                 definitions: %{
+                   "neg" => %Schema{maximum: 0, type: :integer},
+                   "pos" => %Schema{minimum: 0, type: :integer}
+                 },
+                 properties: %{
+                   "bar" => %Schema{maximum: 0, type: :integer},
+                   "foo" => %Schema{minimum: 0, type: :integer}
+                 }
+               }
+             }
     end
 
     test "validate/2 with valid values", %{schema: schema} do

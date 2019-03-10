@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.2.0",
+      version: "0.2.1",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -50,8 +50,7 @@ defmodule JsonXema.MixProject do
   defp deps do
     [
       {:benchee, "~> 0.14", only: :dev},
-      {:benchee_json, "~> 0.6", only: :dev},
-      {:benchee_html, "~> 0.6", only: :dev},
+      {:benchee_markdown, "~> 0.1", only: :dev},
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.2", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
@@ -62,7 +61,7 @@ defmodule JsonXema.MixProject do
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
       {:jason, "~> 1.0", only: [:dev, :test]},
-      {:xema, "~> 0.7"}
+      {:xema, "~> 0.8"}
     ]
   end
 
