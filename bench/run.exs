@@ -46,8 +46,7 @@ defmodule Bench do
         "JsonXema" => &json_xema_valid?/1,
         "ExJsonSchema" => &ex_json_schema_valid?/1
       },
-      parallel: 4,
-      time: 5,
+      time: 10,
       inputs: inputs,
       print: [fast_warning: false],
       formatters: [
