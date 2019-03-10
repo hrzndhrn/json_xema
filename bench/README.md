@@ -1,181 +1,561 @@
 # Benchmark
 
-The benchmark test is not representative for now, because the benchmark test
-doesn't cover the whole code.
+Benchmark run from 2019-03-10 16:45:45.012774Z UTC
 
-## Example run (2019/02/04)
+## System
 
-```
-Operating System: macOS"
-CPU Information: Intel(R) Core(TM) i7-4770HQ CPU @ 2.20GHz
-Number of Available Cores: 8
-Available memory: 16 GB
-Elixir 1.8.0
-Erlang 21.1
+Benchmark suite executing on the following system:
+
+<table style="width: 1%">
+  <tr>
+    <th style="width: 1%; white-space: nowrap">Operating System</th>
+    <td>macOS</td>
+  </tr><tr>
+    <th style="white-space: nowrap">CPU Information</th>
+    <td style="white-space: nowrap">Intel(R) Core(TM) i7-4770HQ CPU @ 2.20GHz</td>
+  </tr><tr>
+    <th style="white-space: nowrap">Number of Available Cores</th>
+    <td style="white-space: nowrap">8</td>
+  </tr><tr>
+    <th style="white-space: nowrap">Available Memory</th>
+    <td style="white-space: nowrap">16 GB</td>
+  </tr><tr>
+    <th style="white-space: nowrap">Elixir Version</th>
+    <td style="white-space: nowrap">1.8.1</td>
+  </tr><tr>
+    <th style="white-space: nowrap">Erlang Version</th>
+    <td style="white-space: nowrap">21.1</td>
+  </tr>
+</table>
+
+## Configuration
 
 Benchmark suite executing with the following configuration:
-warmup: 2 s
-time: 5 s
-memory time: 0 μs
-parallel: 4
-inputs: basic.json, chrome_extension.json, coordinates.json, definitions.json,
-email.json, emails.json, enum.json, hostname.json, integer.json, integers.json,
-ipv4_list.json, pos_neg_even.json, string.json, string_length.json
-Estimated total run time: 3.27 min
+
+<table style="width: 1%">
+  <tr>
+    <th style="width: 1%">:time</th>
+    <td style="white-space: nowrap">10 s</td>
+  </tr><tr>
+    <th>:parallel</th>
+    <td style="white-space: nowrap">1</td>
+  </tr><tr>
+    <th>:warmup</th>
+    <td style="white-space: nowrap">2 s</td>
+  </tr>
+</table>
+
+## Statistics
 
 
-Benchmarking ExJsonSchema with input basic.json...
-Benchmarking ExJsonSchema with input chrome_extension.json...
-Benchmarking ExJsonSchema with input coordinates.json...
-Benchmarking ExJsonSchema with input definitions.json...
-Benchmarking ExJsonSchema with input email.json...
-Benchmarking ExJsonSchema with input emails.json...
-Benchmarking ExJsonSchema with input enum.json...
-Benchmarking ExJsonSchema with input hostname.json...
-Benchmarking ExJsonSchema with input integer.json...
-Benchmarking ExJsonSchema with input integers.json...
-Benchmarking ExJsonSchema with input ipv4_list.json...
-Benchmarking ExJsonSchema with input pos_neg_even.json...
-Benchmarking ExJsonSchema with input string.json...
-Benchmarking ExJsonSchema with input string_length.json...
-Benchmarking JsonXema with input basic.json...
-Benchmarking JsonXema with input chrome_extension.json...
-Benchmarking JsonXema with input coordinates.json...
-Benchmarking JsonXema with input definitions.json...
-Benchmarking JsonXema with input email.json...
-Benchmarking JsonXema with input emails.json...
-Benchmarking JsonXema with input enum.json...
-Benchmarking JsonXema with input hostname.json...
-Benchmarking JsonXema with input integer.json...
-Benchmarking JsonXema with input integers.json...
-Benchmarking JsonXema with input ipv4_list.json...
-Benchmarking JsonXema with input pos_neg_even.json...
-Benchmarking JsonXema with input string.json...
-Benchmarking JsonXema with input string_length.json...
 
-##### With input basic.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema          315.96 K        3.16 μs   ±939.18%           3 μs         6 μs
-ExJsonSchema      107.46 K        9.31 μs   ±211.71%           8 μs        31 μs
+__Input: chrome_extension.json__
 
-Comparison:
-JsonXema          315.96 K
-ExJsonSchema      107.46 K - 2.94x slower
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">47.62 K</td>
+    <td style="white-space: nowrap; text-align: right">21.00 μs</td>
+    <td style="white-space: nowrap; text-align: right">±111.32%</td>
+    <td style="white-space: nowrap; text-align: right">19 μs</td>
+    <td style="white-space: nowrap; text-align: right">44 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">25.94 K</td>
+    <td style="white-space: nowrap; text-align: right">38.55 μs</td>
+    <td style="white-space: nowrap; text-align: right">±56.19%</td>
+    <td style="white-space: nowrap; text-align: right">35 μs</td>
+    <td style="white-space: nowrap; text-align: right">185 μs</td>
+  </tr>
+</table>
 
-##### With input chrome_extension.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema           39.44 K       25.35 μs    ±52.72%          23 μs        64 μs
-ExJsonSchema       22.28 K       44.89 μs    ±46.01%          38 μs       123 μs
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">47.62 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">25.94 K</td>
+    <td style="white-space: nowrap; text-align: right">1.84x</td>
+  </tr>
+</table>
 
-Comparison:
-JsonXema           39.44 K
-ExJsonSchema       22.28 K - 1.77x slower
 
-##### With input coordinates.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema          309.06 K        3.24 μs   ±997.72%           3 μs         6 μs
-ExJsonSchema       73.73 K       13.56 μs   ±186.02%          12 μs        52 μs
+<hr/>
 
-Comparison:
-JsonXema          309.06 K
-ExJsonSchema       73.73 K - 4.19x slower
+__Input: coordinates.json__
 
-##### With input definitions.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema          205.47 K        4.87 μs   ±496.64%           4 μs         9 μs
-ExJsonSchema       56.82 K       17.60 μs   ±186.72%          15 μs        73 μs
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">387.47 K</td>
+    <td style="white-space: nowrap; text-align: right">2.58 μs</td>
+    <td style="white-space: nowrap; text-align: right">±1288.18%</td>
+    <td style="white-space: nowrap; text-align: right">2 μs</td>
+    <td style="white-space: nowrap; text-align: right">3 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">144.47 K</td>
+    <td style="white-space: nowrap; text-align: right">6.92 μs</td>
+    <td style="white-space: nowrap; text-align: right">±495.14%</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
+    <td style="white-space: nowrap; text-align: right">16 μs</td>
+  </tr>
+</table>
 
-Comparison:
-JsonXema          205.47 K
-ExJsonSchema       56.82 K - 3.62x slower
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">387.47 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">144.47 K</td>
+    <td style="white-space: nowrap; text-align: right">2.68x</td>
+  </tr>
+</table>
 
-##### With input email.json #####
-Name                   ips        average  deviation         median       99th %
-ExJsonSchema      384.77 K        2.60 μs   ±941.52%           2 μs         7 μs
-JsonXema          221.63 K        4.51 μs   ±761.70%           3 μs        15 μs
 
-Comparison:
-ExJsonSchema      384.77 K
-JsonXema          221.63 K - 1.74x slower
+<hr/>
 
-##### With input emails.json #####
-Name                   ips        average  deviation         median       99th %
-ExJsonSchema       80.80 K       12.38 μs   ±128.72%          11 μs        44 μs
-JsonXema           57.05 K       17.53 μs   ±193.59%          11 μs        55 μs
+__Input: draft04.json__
 
-Comparison:
-ExJsonSchema       80.80 K
-JsonXema           57.05 K - 1.42x slower
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">2.37 K</td>
+    <td style="white-space: nowrap; text-align: right">421.87 μs</td>
+    <td style="white-space: nowrap; text-align: right">±27.90%</td>
+    <td style="white-space: nowrap; text-align: right">396 μs</td>
+    <td style="white-space: nowrap; text-align: right">613 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">1.45 K</td>
+    <td style="white-space: nowrap; text-align: right">691.80 μs</td>
+    <td style="white-space: nowrap; text-align: right">±16.32%</td>
+    <td style="white-space: nowrap; text-align: right">632 μs</td>
+    <td style="white-space: nowrap; text-align: right">994 μs</td>
+  </tr>
+</table>
 
-##### With input enum.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema          151.71 K        6.59 μs   ±275.35%           5 μs        21 μs
-ExJsonSchema      116.47 K        8.59 μs   ±251.40%           7 μs        27 μs
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">2.37 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">1.45 K</td>
+    <td style="white-space: nowrap; text-align: right">1.64x</td>
+  </tr>
+</table>
 
-Comparison:
-JsonXema          151.71 K
-ExJsonSchema      116.47 K - 1.30x slower
 
-##### With input hostname.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema          370.24 K        2.70 μs  ±1006.39%           2 μs         5 μs
-ExJsonSchema      283.52 K        3.53 μs   ±851.14%           3 μs         7 μs
+<hr/>
 
-Comparison:
-JsonXema          370.24 K
-ExJsonSchema      283.52 K - 1.31x slower
+__Input: enum.json__
 
-##### With input integer.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema            1.44 M        0.69 μs   ±672.93%        0.60 μs      1.30 μs
-ExJsonSchema        1.32 M        0.76 μs   ±583.80%        0.60 μs      2.28 μs
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">246.44 K</td>
+    <td style="white-space: nowrap; text-align: right">4.06 μs</td>
+    <td style="white-space: nowrap; text-align: right">±649.64%</td>
+    <td style="white-space: nowrap; text-align: right">4 μs</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">155.99 K</td>
+    <td style="white-space: nowrap; text-align: right">6.41 μs</td>
+    <td style="white-space: nowrap; text-align: right">±573.11%</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
+    <td style="white-space: nowrap; text-align: right">15 μs</td>
+  </tr>
+</table>
 
-Comparison:
-JsonXema            1.44 M
-ExJsonSchema        1.32 M - 1.10x slower
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">246.44 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">155.99 K</td>
+    <td style="white-space: nowrap; text-align: right">1.58x</td>
+  </tr>
+</table>
 
-##### With input integers.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema          161.06 K        6.21 μs   ±419.37%           6 μs        11 μs
-ExJsonSchema       78.26 K       12.78 μs   ±160.00%          10 μs        67 μs
 
-Comparison:
-JsonXema          161.06 K
-ExJsonSchema       78.26 K - 2.06x slower
+<hr/>
 
-##### With input ipv4_list.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema           90.52 K       11.05 μs   ±120.70%          10 μs        23 μs
-ExJsonSchema       40.47 K       24.71 μs   ±127.23%          22 μs        86 μs
+__Input: formats.json__
 
-Comparison:
-JsonXema           90.52 K
-ExJsonSchema       40.47 K - 2.24x slower
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">50.65 K</td>
+    <td style="white-space: nowrap; text-align: right">19.74 μs</td>
+    <td style="white-space: nowrap; text-align: right">±122.15%</td>
+    <td style="white-space: nowrap; text-align: right">18 μs</td>
+    <td style="white-space: nowrap; text-align: right">37 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">49.51 K</td>
+    <td style="white-space: nowrap; text-align: right">20.20 μs</td>
+    <td style="white-space: nowrap; text-align: right">±64.75%</td>
+    <td style="white-space: nowrap; text-align: right">19 μs</td>
+    <td style="white-space: nowrap; text-align: right">31 μs</td>
+  </tr>
+</table>
 
-##### With input pos_neg_even.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema          249.99 K        4.00 μs   ±833.50%           4 μs         7 μs
-ExJsonSchema       70.80 K       14.13 μs   ±138.50%          12 μs        51 μs
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap;text-align: right">50.65 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">49.51 K</td>
+    <td style="white-space: nowrap; text-align: right">1.02x</td>
+  </tr>
+</table>
 
-Comparison:
-JsonXema          249.99 K
-ExJsonSchema       70.80 K - 3.53x slower
 
-##### With input string.json #####
-Name                   ips        average  deviation         median       99th %
-JsonXema            1.48 M        0.68 μs   ±507.78%        0.60 μs         2 μs
-ExJsonSchema        1.03 M        0.97 μs   ±525.57%        0.70 μs      2.80 μs
+<hr/>
 
-Comparison:
-JsonXema            1.48 M
-ExJsonSchema        1.03 M - 1.44x slower
+__Input: integers.json__
 
-##### With input string_length.json #####
-Name                   ips        average  deviation         median       99th %
-ExJsonSchema      534.13 K        1.87 μs  ±1292.12%           2 μs         4 μs
-JsonXema          447.16 K        2.24 μs  ±1112.03%           2 μs         7 μs
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">178.81 K</td>
+    <td style="white-space: nowrap; text-align: right">5.59 μs</td>
+    <td style="white-space: nowrap; text-align: right">±546.45%</td>
+    <td style="white-space: nowrap; text-align: right">5 μs</td>
+    <td style="white-space: nowrap; text-align: right">8 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">115.58 K</td>
+    <td style="white-space: nowrap; text-align: right">8.65 μs</td>
+    <td style="white-space: nowrap; text-align: right">±389.08%</td>
+    <td style="white-space: nowrap; text-align: right">7 μs</td>
+    <td style="white-space: nowrap; text-align: right">17 μs</td>
+  </tr>
+</table>
 
-Comparison:
-ExJsonSchema      534.13 K
-JsonXema          447.16 K - 1.19x slower
-```
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">178.81 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">115.58 K</td>
+    <td style="white-space: nowrap; text-align: right">1.55x</td>
+  </tr>
+</table>
+
+
+<hr/>
+
+__Input: pos_neg_even.json__
+
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">298.05 K</td>
+    <td style="white-space: nowrap; text-align: right">3.36 μs</td>
+    <td style="white-space: nowrap; text-align: right">±1316.95%</td>
+    <td style="white-space: nowrap; text-align: right">3 μs</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">146.95 K</td>
+    <td style="white-space: nowrap; text-align: right">6.81 μs</td>
+    <td style="white-space: nowrap; text-align: right">±489.40%</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
+    <td style="white-space: nowrap; text-align: right">13 μs</td>
+  </tr>
+</table>
+
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">298.05 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">146.95 K</td>
+    <td style="white-space: nowrap; text-align: right">2.03x</td>
+  </tr>
+</table>
+
+
+<hr/>
+
+__Input: pos_neg_even_def.json__
+
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">299.50 K</td>
+    <td style="white-space: nowrap; text-align: right">3.34 μs</td>
+    <td style="white-space: nowrap; text-align: right">±1274.18%</td>
+    <td style="white-space: nowrap; text-align: right">3 μs</td>
+    <td style="white-space: nowrap; text-align: right">5 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">113.74 K</td>
+    <td style="white-space: nowrap; text-align: right">8.79 μs</td>
+    <td style="white-space: nowrap; text-align: right">±394.84%</td>
+    <td style="white-space: nowrap; text-align: right">8 μs</td>
+    <td style="white-space: nowrap; text-align: right">17 μs</td>
+  </tr>
+</table>
+
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">299.50 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">113.74 K</td>
+    <td style="white-space: nowrap; text-align: right">2.63x</td>
+  </tr>
+</table>
+
+
+<hr/>
+
+__Input: user.json__
+
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">362.22 K</td>
+    <td style="white-space: nowrap; text-align: right">2.76 μs</td>
+    <td style="white-space: nowrap; text-align: right">±1632.02%</td>
+    <td style="white-space: nowrap; text-align: right">2 μs</td>
+    <td style="white-space: nowrap; text-align: right">5 μs</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">135.05 K</td>
+    <td style="white-space: nowrap; text-align: right">7.40 μs</td>
+    <td style="white-space: nowrap; text-align: right">±478.22%</td>
+    <td style="white-space: nowrap; text-align: right">7 μs</td>
+    <td style="white-space: nowrap; text-align: right">16 μs</td>
+  </tr>
+</table>
+
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">362.22 K</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">135.05 K</td>
+    <td style="white-space: nowrap; text-align: right">2.68x</td>
+  </tr>
+</table>
+
+
+<hr/>
+
+__Input: users.json__
+
+Run Time
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Average</th>
+    <th style="text-align: right">Devitation</th>
+    <th style="text-align: right">Median</th>
+    <th style="text-align: right">99th&nbsp;%</th>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">28.37</td>
+    <td style="white-space: nowrap; text-align: right">35.24 ms</td>
+    <td style="white-space: nowrap; text-align: right">±4.88%</td>
+    <td style="white-space: nowrap; text-align: right">34.83 ms</td>
+    <td style="white-space: nowrap; text-align: right">40.84 ms</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">11.31</td>
+    <td style="white-space: nowrap; text-align: right">88.42 ms</td>
+    <td style="white-space: nowrap; text-align: right">±5.67%</td>
+    <td style="white-space: nowrap; text-align: right">86.93 ms</td>
+    <td style="white-space: nowrap; text-align: right">114.74 ms</td>
+  </tr>
+</table>
+
+Comparsion
+<table style="width: 1%">
+  <tr>
+    <th>Name</th>
+    <th style="text-align: right">IPS</th>
+    <th style="text-align: right">Slower</th>
+  <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap;text-align: right">28.37</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">11.31</td>
+    <td style="white-space: nowrap; text-align: right">2.51x</td>
+  </tr>
+</table>
+
+
+<hr/>
+

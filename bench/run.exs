@@ -50,8 +50,8 @@ defmodule Bench do
       inputs: inputs,
       print: [fast_warning: false],
       formatters: [
-        # {Benchee.Formatters.HTML,
-        #  file: Path.expand("output/bench.html", __DIR__)},
+        {Benchee.Formatters.Markdown,
+           file: Path.expand("README.md", __DIR__)},
         Benchee.Formatters.Console
       ],
       formatter_options: [
