@@ -1,0 +1,30 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Person",
+
+  "type": "object",
+  "properties": {
+    "users": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/user"}
+    }
+  },
+
+  "definitions": {
+    "user": {
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

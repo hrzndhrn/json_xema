@@ -1,0 +1,7 @@
+{
+  "email": "foo@bar.com",
+  "date-time": "1972-11-13T02:22:25Z",
+  "hostname": "www.example.com",
+  "ipv4": "127.0.0.1",
+  "ipv6": "::1"
+}
