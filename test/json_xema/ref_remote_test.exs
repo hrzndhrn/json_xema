@@ -5,10 +5,10 @@ defmodule JsonXema.RefRemoteTest do
 
   alias Jason.DecodeError
   alias Xema.SchemaError
+  alias Xema.ValidationError
 
   test "http server" do
-    assert %{body: body} =
-             HTTPoison.get!("http://localhost:1234/folder/folderInteger.json")
+    assert %{body: body} = HTTPoison.get!("http://localhost:1234/folder/folderInteger.json")
 
     assert body == File.read!("test/support/remote/folder/folderInteger.json")
   end
@@ -25,8 +25,7 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "404" do
-      expected =
-        "Remote schema 'http://localhost:1234/not-found.json' not found."
+      expected = "Remote schema 'http://localhost:1234/not-found.json' not found."
 
       assert_raise SchemaError, expected, fn ->
         ~s|{"$ref": "http://localhost:1234/not-found.json"}|
@@ -47,12 +46,12 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with a valid value", %{schema: schema} do
-      assert JsonXema.validate(schema, 1) == :ok
+      assert validate(schema, 1) == :ok
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert JsonXema.validate(schema, "1") ==
-               {:error, %{type: "integer", value: "1"}}
+      assert {:error, error} = validate(schema, "1")
+      assert error == %ValidationError{reason: %{type: "integer", value: "1"}}
     end
   end
 
@@ -71,7 +70,8 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, "1") == {:error, %{type: "integer", value: "1"}}
+      assert {:error, error} = validate(schema, "1")
+      assert error == %ValidationError{reason: %{type: "integer", value: "1"}}
     end
   end
 
@@ -90,7 +90,8 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, "1") == {:error, %{type: "integer", value: "1"}}
+      assert {:error, error} = validate(schema, "1")
+      assert error == %ValidationError{reason: %{type: "integer", value: "1"}}
     end
   end
 
@@ -126,13 +127,15 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{"list" => ["1"]}) ==
-               {:error,
-                %{
-                  properties: %{
-                    "list" => %{items: [{0, %{type: "integer", value: "1"}}]}
-                  }
-                }}
+      assert {:error, error} = validate(schema, %{"list" => ["1"]})
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "list" => %{items: [{0, %{type: "integer", value: "1"}}]}
+                 }
+               }
+             }
     end
   end
 
@@ -160,19 +163,21 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{"name" => 1}) ==
-               {:error,
-                %{
-                  properties: %{
-                    "name" => %{
-                      anyOf: [
-                        %{type: "null", value: 1},
-                        %{type: "string", value: 1}
-                      ],
-                      value: 1
-                    }
-                  }
-                }}
+      assert {:error, error} = validate(schema, %{"name" => 1})
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "name" => %{
+                     anyOf: [
+                       %{type: "null", value: 1},
+                       %{type: "string", value: 1}
+                     ],
+                     value: 1
+                   }
+                 }
+               }
+             }
     end
   end
 
@@ -200,19 +205,21 @@ defmodule JsonXema.RefRemoteTest do
     end
 
     test "validate/2 with an invalid value", %{schema: schema} do
-      assert validate(schema, %{"name" => 1}) ==
-               {:error,
-                %{
-                  properties: %{
-                    "name" => %{
-                      anyOf: [
-                        %{type: "null", value: 1},
-                        %{type: "string", value: 1}
-                      ],
-                      value: 1
-                    }
-                  }
-                }}
+      assert {:error, error} = validate(schema, %{"name" => 1})
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "name" => %{
+                     anyOf: [
+                       %{type: "null", value: 1},
+                       %{type: "string", value: 1}
+                     ],
+                     value: 1
+                   }
+                 }
+               }
+             }
     end
   end
 

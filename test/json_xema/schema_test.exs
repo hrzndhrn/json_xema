@@ -3,6 +3,8 @@ defmodule Xema.SchemaTest do
 
   import JsonXema, only: [validate: 2]
 
+  alias Xema.ValidationError
+
   describe "validat/2 whith schema draft04" do
     setup do
       %{
@@ -24,30 +26,32 @@ defmodule Xema.SchemaTest do
           {"type": "foo"}
         """)
 
-      assert validate(schema, data) ==
-               {:error,
-                %{
-                  properties: %{
-                    "type" => %{
-                      anyOf: [
-                        %{
-                          enum: [
-                            "array",
-                            "boolean",
-                            "integer",
-                            "null",
-                            "number",
-                            "object",
-                            "string"
-                          ],
-                          value: "foo"
-                        },
-                        %{type: "array", value: "foo"}
-                      ],
-                      value: "foo"
-                    }
-                  }
-                }}
+      assert {:error, error} = validate(schema, data)
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "type" => %{
+                     anyOf: [
+                       %{
+                         enum: [
+                           "array",
+                           "boolean",
+                           "integer",
+                           "null",
+                           "number",
+                           "object",
+                           "string"
+                         ],
+                         value: "foo"
+                       },
+                       %{type: "array", value: "foo"}
+                     ],
+                     value: "foo"
+                   }
+                 }
+               }
+             }
     end
   end
 
@@ -72,30 +76,32 @@ defmodule Xema.SchemaTest do
           {"type": "foo"}
         """)
 
-      assert validate(schema, data) ==
-               {:error,
-                %{
-                  properties: %{
-                    "type" => %{
-                      anyOf: [
-                        %{
-                          enum: [
-                            "array",
-                            "boolean",
-                            "integer",
-                            "null",
-                            "number",
-                            "object",
-                            "string"
-                          ],
-                          value: "foo"
-                        },
-                        %{type: "array", value: "foo"}
-                      ],
-                      value: "foo"
-                    }
-                  }
-                }}
+      assert {:error, error} = validate(schema, data)
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "type" => %{
+                     anyOf: [
+                       %{
+                         enum: [
+                           "array",
+                           "boolean",
+                           "integer",
+                           "null",
+                           "number",
+                           "object",
+                           "string"
+                         ],
+                         value: "foo"
+                       },
+                       %{type: "array", value: "foo"}
+                     ],
+                     value: "foo"
+                   }
+                 }
+               }
+             }
     end
   end
 
@@ -120,30 +126,32 @@ defmodule Xema.SchemaTest do
           {"type": "foo"}
         """)
 
-      assert validate(schema, data) ==
-               {:error,
-                %{
-                  properties: %{
-                    "type" => %{
-                      anyOf: [
-                        %{
-                          enum: [
-                            "array",
-                            "boolean",
-                            "integer",
-                            "null",
-                            "number",
-                            "object",
-                            "string"
-                          ],
-                          value: "foo"
-                        },
-                        %{type: "array", value: "foo"}
-                      ],
-                      value: "foo"
-                    }
-                  }
-                }}
+      assert {:error, error} = validate(schema, data)
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "type" => %{
+                     anyOf: [
+                       %{
+                         enum: [
+                           "array",
+                           "boolean",
+                           "integer",
+                           "null",
+                           "number",
+                           "object",
+                           "string"
+                         ],
+                         value: "foo"
+                       },
+                       %{type: "array", value: "foo"}
+                     ],
+                     value: "foo"
+                   }
+                 }
+               }
+             }
     end
   end
 end

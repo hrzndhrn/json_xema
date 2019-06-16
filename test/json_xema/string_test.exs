@@ -3,6 +3,8 @@ defmodule JsonXema.StringTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
+  alias Xema.ValidationError
+
   describe "string schema:" do
     setup do
       %{schema: ~s({"type": "string"}) |> Jason.decode!() |> JsonXema.new()}
@@ -13,15 +15,13 @@ defmodule JsonXema.StringTest do
     end
 
     test "validate/2 with a number", %{schema: schema} do
-      expected = {:error, %{type: "string", value: 1}}
-
-      assert validate(schema, 1) == expected
+      assert {:error, error} = validate(schema, 1)
+      assert error == %ValidationError{reason: %{type: "string", value: 1}}
     end
 
     test "validate/2 with nil", %{schema: schema} do
-      expected = {:error, %{type: "string", value: nil}}
-
-      assert validate(schema, nil) == expected
+      assert {:error, error} = validate(schema, nil)
+      assert error == %ValidationError{reason: %{type: "string", value: nil}}
     end
 
     test "valid?/2 with a valid value", %{schema: schema} do
@@ -49,12 +49,13 @@ defmodule JsonXema.StringTest do
     end
 
     test "validate/2 with a too short string", %{schema: schema} do
-      assert validate(schema, "f") == {:error, %{minLength: 3, value: "f"}}
+      assert {:error, error} = validate(schema, "f")
+      assert error == %ValidationError{reason: %{minLength: 3, value: "f"}}
     end
 
     test "validate/2 with a too long string", %{schema: schema} do
-      assert validate(schema, "foobar") ==
-               {:error, %{maxLength: 4, value: "foobar"}}
+      assert {:error, error} = validate(schema, "foobar")
+      assert error == %ValidationError{reason: %{maxLength: 4, value: "foobar"}}
     end
   end
 
@@ -73,8 +74,8 @@ defmodule JsonXema.StringTest do
     end
 
     test "validate/2 with a none matching string", %{schema: schema} do
-      assert validate(schema, "a to a") ==
-               {:error, %{value: "a to a", pattern: ~r/^.+match.+$/}}
+      assert {:error, error} = validate(schema, "a to a")
+      assert error == %ValidationError{reason: %{value: "a to a", pattern: ~r/^.+match.+$/}}
     end
   end
 
@@ -93,9 +94,8 @@ defmodule JsonXema.StringTest do
     end
 
     test "validate/2 with a value that is not in the enum", %{schema: schema} do
-      expected = {:error, %{enum: ["one", "two"], value: "foo"}}
-
-      assert validate(schema, "foo") == expected
+      assert {:error, error} = validate(schema, "foo")
+      assert error == %ValidationError{reason: %{enum: ["one", "two"], value: "foo"}}
     end
   end
 end

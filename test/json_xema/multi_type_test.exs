@@ -4,6 +4,7 @@ defmodule Xema.MultiTypeTest do
   import JsonXema, only: [validate: 2]
 
   alias JsonXema.SchemaError
+  alias Xema.ValidationError
 
   test "&new/1 called with a wrong type list raised an exception" do
     assert_raise SchemaError, fn ->
@@ -24,7 +25,8 @@ defmodule Xema.MultiTypeTest do
     end
 
     test "with an invalid string", %{schema: schema} do
-      assert validate(schema, "foo") == {:error, %{minLength: 5, value: "foo"}}
+      assert {:error, error} = validate(schema, "foo")
+      assert error == %ValidationError{reason: %{minLength: 5, value: "foo"}}
     end
 
     test "with nil", %{schema: schema} do
@@ -32,8 +34,8 @@ defmodule Xema.MultiTypeTest do
     end
 
     test "with integer", %{schema: schema} do
-      assert validate(schema, 42) ==
-               {:error, %{type: ["string", "null"], value: 42}}
+      assert {:error, error} = validate(schema, 42)
+      assert error == %ValidationError{reason: %{type: ["string", "null"], value: 42}}
     end
   end
 
@@ -55,13 +57,15 @@ defmodule Xema.MultiTypeTest do
     end
 
     test "with a string", %{schema: schema} do
-      assert validate(schema, %{"foo" => "foo"}) ==
-               {:error,
-                %{
-                  properties: %{
-                    "foo" => %{type: ["number", "null"], value: "foo"}
-                  }
-                }}
+      assert {:error, error} = validate(schema, %{"foo" => "foo"})
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "foo" => %{type: ["number", "null"], value: "foo"}
+                 }
+               }
+             }
     end
   end
 end

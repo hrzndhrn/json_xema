@@ -18,6 +18,7 @@ defmodule JsonXema.MixProject do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
+        "coveralls.travis": :test,
         "coveralls.html": :test
       ],
       docs: [
@@ -29,7 +30,8 @@ defmodule JsonXema.MixProject do
         ]
       ],
       dialyzer: [
-        ignore_warnings: "dialyzer.ignore-warnings"
+        ignore_warnings: ".dialyzer_ignore.exs",
+        plt_file: {:no_warn, "test/support/plts/dialyzer.plt"}
       ]
     ]
   end
@@ -49,8 +51,8 @@ defmodule JsonXema.MixProject do
 
   defp deps do
     [
-      {:benchee, "~> 0.14", only: :dev},
-      {:benchee_markdown, "~> 0.1", only: :dev},
+      {:benchee, "~> 1.0", only: :dev},
+      {:benchee_markdown, "~> 0.2", only: :dev},
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.2", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
@@ -61,7 +63,7 @@ defmodule JsonXema.MixProject do
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
       {:jason, "~> 1.0", only: [:dev, :test]},
-      {:xema, "~> 0.8"}
+      {:xema, "~> 0.9"}
     ]
   end
 

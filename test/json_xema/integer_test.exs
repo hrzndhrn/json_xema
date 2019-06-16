@@ -17,7 +17,8 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with a float", %{schema: schema} do
-      assert validate(schema, 2.3) == {:error, %{type: "integer", value: 2.3}}
+      assert {:error, error} = validate(schema, 2.3)
+      assert error == %ValidationError{reason: %{type: "integer", value: 2.3}}
     end
 
     test "validate!/2 with a float", %{schema: schema} do
@@ -25,13 +26,13 @@ defmodule JsonXema.IntegerTest do
     rescue
       error ->
         assert %ValidationError{} = error
-        assert error.message == "Validation failed!"
         assert error.reason == %{type: "integer", value: 2.3}
+        assert Exception.message(error) == ~s|Expected "integer", got 2.3.|
     end
 
     test "validate/2 with a string", %{schema: schema} do
-      assert validate(schema, "foo") ==
-               {:error, %{type: "integer", value: "foo"}}
+      assert {:error, error} = validate(schema, "foo")
+      assert error == %ValidationError{reason: %{type: "integer", value: "foo"}}
     end
 
     test "valid?/2 with a valid value", %{schema: schema} do
@@ -61,15 +62,13 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with a too small integer", %{schema: schema} do
-      expected = {:error, %{value: 1, minimum: 2}}
-
-      assert validate(schema, 1) == expected
+      assert {:error, error} = validate(schema, 1)
+      assert error == %ValidationError{reason: %{value: 1, minimum: 2}}
     end
 
     test "validate/2 with a too big integer", %{schema: schema} do
-      expected = {:error, %{value: 5, maximum: 4}}
-
-      assert validate(schema, 5) == expected
+      assert {:error, error} = validate(schema, 5)
+      assert error == %ValidationError{reason: %{value: 5, maximum: 4}}
     end
   end
 
@@ -91,27 +90,23 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with a too small integer", %{schema: schema} do
-      expected = {:error, %{value: 1, minimum: 2, exclusiveMinimum: true}}
-
-      assert validate(schema, 1) == expected
+      assert {:error, error} = validate(schema, 1)
+      assert error == %ValidationError{reason: %{value: 1, minimum: 2, exclusiveMinimum: true}}
     end
 
     test "validate/2 with a minimum integer", %{schema: schema} do
-      expected = {:error, %{minimum: 2, exclusiveMinimum: true, value: 2}}
-
-      assert validate(schema, 2) == expected
+      assert {:error, error} = validate(schema, 2)
+      assert error == %ValidationError{reason: %{minimum: 2, exclusiveMinimum: true, value: 2}}
     end
 
     test "validate/2 with a maximum integer", %{schema: schema} do
-      expected = {:error, %{value: 4, maximum: 4, exclusiveMaximum: true}}
-
-      assert validate(schema, 4) == expected
+      assert {:error, error} = validate(schema, 4)
+      assert error == %ValidationError{reason: %{value: 4, maximum: 4, exclusiveMaximum: true}}
     end
 
     test "validate/2 with a too big integer", %{schema: schema} do
-      expected = {:error, %{value: 5, maximum: 4, exclusiveMaximum: true}}
-
-      assert validate(schema, 5) == expected
+      assert {:error, error} = validate(schema, 5)
+      assert error == %ValidationError{reason: %{value: 5, maximum: 4, exclusiveMaximum: true}}
     end
   end
 
@@ -128,8 +123,8 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "validate/2 with an invalid integer", %{schema: schema} do
-      expected = {:error, %{value: 7, multipleOf: 2}}
-      assert validate(schema, 7) == expected
+      assert {:error, error} = validate(schema, 7)
+      assert error == %ValidationError{reason: %{value: 7, multipleOf: 2}}
     end
   end
 
@@ -146,9 +141,8 @@ defmodule JsonXema.IntegerTest do
     end
 
     test "with a value that is not in the enum", %{schema: schema} do
-      expected = {:error, %{enum: [1, 3], value: 2}}
-
-      assert validate(schema, 2) == expected
+      assert {:error, error} = validate(schema, 2)
+      assert error == %ValidationError{reason: %{enum: [1, 3], value: 2}}
     end
   end
 end

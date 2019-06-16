@@ -52,9 +52,6 @@ defmodule Bench do
       formatters: [
         {Benchee.Formatters.Markdown, file: Path.expand("README.md", __DIR__)},
         Benchee.Formatters.Console
-      ],
-      formatter_options: [
-        html: []
       ]
     )
   end

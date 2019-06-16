@@ -1,6 +1,6 @@
 # Benchmark
 
-Benchmark run from 2019-03-10 17:23:43.745812Z UTC
+Benchmark run from 2019-06-16 09:12:35.192997Z UTC
 
 ## System
 
@@ -21,10 +21,10 @@ Benchmark suite executing on the following system:
     <td style="white-space: nowrap">16 GB</td>
   </tr><tr>
     <th style="white-space: nowrap">Elixir Version</th>
-    <td style="white-space: nowrap">1.8.1</td>
+    <td style="white-space: nowrap">1.8.2</td>
   </tr><tr>
     <th style="white-space: nowrap">Erlang Version</th>
-    <td style="white-space: nowrap">21.1</td>
+    <td style="white-space: nowrap">22.0</td>
   </tr>
 </table>
 
@@ -63,23 +63,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">48.52 K</td>
-    <td style="white-space: nowrap; text-align: right">20.61 μs</td>
-    <td style="white-space: nowrap; text-align: right">±99.75%</td>
-    <td style="white-space: nowrap; text-align: right">19 μs</td>
-    <td style="white-space: nowrap; text-align: right">40 μs</td>
+    <td style="white-space: nowrap; text-align: right">43.80 K</td>
+    <td style="white-space: nowrap; text-align: right">22.83 μs</td>
+    <td style="white-space: nowrap; text-align: right">±85.68%</td>
+    <td style="white-space: nowrap; text-align: right">21 μs</td>
+    <td style="white-space: nowrap; text-align: right">54 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">26.86 K</td>
-    <td style="white-space: nowrap; text-align: right">37.23 μs</td>
-    <td style="white-space: nowrap; text-align: right">±53.04%</td>
-    <td style="white-space: nowrap; text-align: right">34 μs</td>
-    <td style="white-space: nowrap; text-align: right">183 μs</td>
+    <td style="white-space: nowrap; text-align: right">26.11 K</td>
+    <td style="white-space: nowrap; text-align: right">38.31 μs</td>
+    <td style="white-space: nowrap; text-align: right">±52.00%</td>
+    <td style="white-space: nowrap; text-align: right">35 μs</td>
+    <td style="white-space: nowrap; text-align: right">178 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -87,13 +87,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">48.52 K</td>
+    <td style="white-space: nowrap;text-align: right">43.80 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">26.86 K</td>
-    <td style="white-space: nowrap; text-align: right">1.81x</td>
+    <td style="white-space: nowrap; text-align: right">26.11 K</td>
+    <td style="white-space: nowrap; text-align: right">1.68x</td>
   </tr>
 </table>
 
@@ -114,23 +114,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">394.66 K</td>
-    <td style="white-space: nowrap; text-align: right">2.53 μs</td>
-    <td style="white-space: nowrap; text-align: right">±1213.96%</td>
-    <td style="white-space: nowrap; text-align: right">2 μs</td>
+    <td style="white-space: nowrap; text-align: right">298.23 K</td>
+    <td style="white-space: nowrap; text-align: right">3.35 μs</td>
+    <td style="white-space: nowrap; text-align: right">±1075.22%</td>
     <td style="white-space: nowrap; text-align: right">3 μs</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">150.00 K</td>
-    <td style="white-space: nowrap; text-align: right">6.67 μs</td>
-    <td style="white-space: nowrap; text-align: right">±490.18%</td>
+    <td style="white-space: nowrap; text-align: right">142.22 K</td>
+    <td style="white-space: nowrap; text-align: right">7.03 μs</td>
+    <td style="white-space: nowrap; text-align: right">±415.71%</td>
     <td style="white-space: nowrap; text-align: right">6 μs</td>
-    <td style="white-space: nowrap; text-align: right">10 μs</td>
+    <td style="white-space: nowrap; text-align: right">16 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -138,13 +138,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">394.66 K</td>
+    <td style="white-space: nowrap;text-align: right">298.23 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">150.00 K</td>
-    <td style="white-space: nowrap; text-align: right">2.63x</td>
+    <td style="white-space: nowrap; text-align: right">142.22 K</td>
+    <td style="white-space: nowrap; text-align: right">2.1x</td>
   </tr>
 </table>
 
@@ -165,23 +165,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">2.37 K</td>
-    <td style="white-space: nowrap; text-align: right">421.12 μs</td>
-    <td style="white-space: nowrap; text-align: right">±29.07%</td>
-    <td style="white-space: nowrap; text-align: right">397 μs</td>
-    <td style="white-space: nowrap; text-align: right">608 μs</td>
+    <td style="white-space: nowrap; text-align: right">2.27 K</td>
+    <td style="white-space: nowrap; text-align: right">440.78 μs</td>
+    <td style="white-space: nowrap; text-align: right">±16.89%</td>
+    <td style="white-space: nowrap; text-align: right">419 μs</td>
+    <td style="white-space: nowrap; text-align: right">701.15 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">1.40 K</td>
-    <td style="white-space: nowrap; text-align: right">714.11 μs</td>
-    <td style="white-space: nowrap; text-align: right">±18.06%</td>
-    <td style="white-space: nowrap; text-align: right">650 μs</td>
-    <td style="white-space: nowrap; text-align: right">1124.42 μs</td>
+    <td style="white-space: nowrap; text-align: right">1.47 K</td>
+    <td style="white-space: nowrap; text-align: right">681.31 μs</td>
+    <td style="white-space: nowrap; text-align: right">±11.97%</td>
+    <td style="white-space: nowrap; text-align: right">681 μs</td>
+    <td style="white-space: nowrap; text-align: right">949 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -189,13 +189,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">2.37 K</td>
+    <td style="white-space: nowrap;text-align: right">2.27 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">1.40 K</td>
-    <td style="white-space: nowrap; text-align: right">1.7x</td>
+    <td style="white-space: nowrap; text-align: right">1.47 K</td>
+    <td style="white-space: nowrap; text-align: right">1.55x</td>
   </tr>
 </table>
 
@@ -216,23 +216,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">256.05 K</td>
-    <td style="white-space: nowrap; text-align: right">3.91 μs</td>
-    <td style="white-space: nowrap; text-align: right">±745.37%</td>
+    <td style="white-space: nowrap; text-align: right">238.73 K</td>
+    <td style="white-space: nowrap; text-align: right">4.19 μs</td>
+    <td style="white-space: nowrap; text-align: right">±809.24%</td>
     <td style="white-space: nowrap; text-align: right">4 μs</td>
-    <td style="white-space: nowrap; text-align: right">5 μs</td>
+    <td style="white-space: nowrap; text-align: right">8 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">153.09 K</td>
-    <td style="white-space: nowrap; text-align: right">6.53 μs</td>
-    <td style="white-space: nowrap; text-align: right">±515.14%</td>
-    <td style="white-space: nowrap; text-align: right">6 μs</td>
-    <td style="white-space: nowrap; text-align: right">16 μs</td>
+    <td style="white-space: nowrap; text-align: right">171.88 K</td>
+    <td style="white-space: nowrap; text-align: right">5.82 μs</td>
+    <td style="white-space: nowrap; text-align: right">±528.21%</td>
+    <td style="white-space: nowrap; text-align: right">5 μs</td>
+    <td style="white-space: nowrap; text-align: right">14 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -240,13 +240,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">256.05 K</td>
+    <td style="white-space: nowrap;text-align: right">238.73 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">153.09 K</td>
-    <td style="white-space: nowrap; text-align: right">1.67x</td>
+    <td style="white-space: nowrap; text-align: right">171.88 K</td>
+    <td style="white-space: nowrap; text-align: right">1.39x</td>
   </tr>
 </table>
 
@@ -267,23 +267,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">51.66 K</td>
-    <td style="white-space: nowrap; text-align: right">19.36 μs</td>
-    <td style="white-space: nowrap; text-align: right">±117.56%</td>
+    <td style="white-space: nowrap; text-align: right">51.01 K</td>
+    <td style="white-space: nowrap; text-align: right">19.60 μs</td>
+    <td style="white-space: nowrap; text-align: right">±94.97%</td>
     <td style="white-space: nowrap; text-align: right">18 μs</td>
-    <td style="white-space: nowrap; text-align: right">30 μs</td>
+    <td style="white-space: nowrap; text-align: right">33 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">49.84 K</td>
-    <td style="white-space: nowrap; text-align: right">20.06 μs</td>
-    <td style="white-space: nowrap; text-align: right">±63.87%</td>
-    <td style="white-space: nowrap; text-align: right">19 μs</td>
-    <td style="white-space: nowrap; text-align: right">31 μs</td>
+    <td style="white-space: nowrap; text-align: right">47.55 K</td>
+    <td style="white-space: nowrap; text-align: right">21.03 μs</td>
+    <td style="white-space: nowrap; text-align: right">±152.48%</td>
+    <td style="white-space: nowrap; text-align: right">20 μs</td>
+    <td style="white-space: nowrap; text-align: right">34 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -291,13 +291,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap;text-align: right">51.66 K</td>
+    <td style="white-space: nowrap;text-align: right">51.01 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">49.84 K</td>
-    <td style="white-space: nowrap; text-align: right">1.04x</td>
+    <td style="white-space: nowrap; text-align: right">47.55 K</td>
+    <td style="white-space: nowrap; text-align: right">1.07x</td>
   </tr>
 </table>
 
@@ -318,23 +318,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">190.49 K</td>
-    <td style="white-space: nowrap; text-align: right">5.25 μs</td>
-    <td style="white-space: nowrap; text-align: right">±501.66%</td>
-    <td style="white-space: nowrap; text-align: right">5 μs</td>
+    <td style="white-space: nowrap; text-align: right">126.31 K</td>
+    <td style="white-space: nowrap; text-align: right">7.92 μs</td>
+    <td style="white-space: nowrap; text-align: right">±306.09%</td>
     <td style="white-space: nowrap; text-align: right">8 μs</td>
+    <td style="white-space: nowrap; text-align: right">17 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">115.30 K</td>
-    <td style="white-space: nowrap; text-align: right">8.67 μs</td>
-    <td style="white-space: nowrap; text-align: right">±380.85%</td>
-    <td style="white-space: nowrap; text-align: right">7 μs</td>
-    <td style="white-space: nowrap; text-align: right">17 μs</td>
+    <td style="white-space: nowrap; text-align: right">95.27 K</td>
+    <td style="white-space: nowrap; text-align: right">10.50 μs</td>
+    <td style="white-space: nowrap; text-align: right">±249.10%</td>
+    <td style="white-space: nowrap; text-align: right">9 μs</td>
+    <td style="white-space: nowrap; text-align: right">20 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -342,13 +342,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">190.49 K</td>
+    <td style="white-space: nowrap;text-align: right">126.31 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">115.30 K</td>
-    <td style="white-space: nowrap; text-align: right">1.65x</td>
+    <td style="white-space: nowrap; text-align: right">95.27 K</td>
+    <td style="white-space: nowrap; text-align: right">1.33x</td>
   </tr>
 </table>
 
@@ -369,23 +369,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">317.56 K</td>
-    <td style="white-space: nowrap; text-align: right">3.15 μs</td>
-    <td style="white-space: nowrap; text-align: right">±1267.46%</td>
-    <td style="white-space: nowrap; text-align: right">3 μs</td>
+    <td style="white-space: nowrap; text-align: right">263.09 K</td>
+    <td style="white-space: nowrap; text-align: right">3.80 μs</td>
+    <td style="white-space: nowrap; text-align: right">±775.17%</td>
     <td style="white-space: nowrap; text-align: right">4 μs</td>
+    <td style="white-space: nowrap; text-align: right">5 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">138.67 K</td>
-    <td style="white-space: nowrap; text-align: right">7.21 μs</td>
-    <td style="white-space: nowrap; text-align: right">±443.76%</td>
+    <td style="white-space: nowrap; text-align: right">158.20 K</td>
+    <td style="white-space: nowrap; text-align: right">6.32 μs</td>
+    <td style="white-space: nowrap; text-align: right">±487.51%</td>
     <td style="white-space: nowrap; text-align: right">6 μs</td>
-    <td style="white-space: nowrap; text-align: right">16 μs</td>
+    <td style="white-space: nowrap; text-align: right">15 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -393,13 +393,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">317.56 K</td>
+    <td style="white-space: nowrap;text-align: right">263.09 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">138.67 K</td>
-    <td style="white-space: nowrap; text-align: right">2.29x</td>
+    <td style="white-space: nowrap; text-align: right">158.20 K</td>
+    <td style="white-space: nowrap; text-align: right">1.66x</td>
   </tr>
 </table>
 
@@ -420,23 +420,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">318.75 K</td>
-    <td style="white-space: nowrap; text-align: right">3.14 μs</td>
-    <td style="white-space: nowrap; text-align: right">±1148.93%</td>
-    <td style="white-space: nowrap; text-align: right">3 μs</td>
+    <td style="white-space: nowrap; text-align: right">259.82 K</td>
+    <td style="white-space: nowrap; text-align: right">3.85 μs</td>
+    <td style="white-space: nowrap; text-align: right">±859.50%</td>
     <td style="white-space: nowrap; text-align: right">4 μs</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">112.00 K</td>
-    <td style="white-space: nowrap; text-align: right">8.93 μs</td>
-    <td style="white-space: nowrap; text-align: right">±263.91%</td>
+    <td style="white-space: nowrap; text-align: right">116.16 K</td>
+    <td style="white-space: nowrap; text-align: right">8.61 μs</td>
+    <td style="white-space: nowrap; text-align: right">±375.21%</td>
     <td style="white-space: nowrap; text-align: right">8 μs</td>
     <td style="white-space: nowrap; text-align: right">18 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -444,13 +444,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">318.75 K</td>
+    <td style="white-space: nowrap;text-align: right">259.82 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">112.00 K</td>
-    <td style="white-space: nowrap; text-align: right">2.85x</td>
+    <td style="white-space: nowrap; text-align: right">116.16 K</td>
+    <td style="white-space: nowrap; text-align: right">2.24x</td>
   </tr>
 </table>
 
@@ -471,23 +471,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">389.12 K</td>
-    <td style="white-space: nowrap; text-align: right">2.57 μs</td>
-    <td style="white-space: nowrap; text-align: right">±1532.62%</td>
-    <td style="white-space: nowrap; text-align: right">2 μs</td>
+    <td style="white-space: nowrap; text-align: right">321.49 K</td>
+    <td style="white-space: nowrap; text-align: right">3.11 μs</td>
+    <td style="white-space: nowrap; text-align: right">±1021.84%</td>
     <td style="white-space: nowrap; text-align: right">3 μs</td>
+    <td style="white-space: nowrap; text-align: right">4 μs</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">137.94 K</td>
-    <td style="white-space: nowrap; text-align: right">7.25 μs</td>
-    <td style="white-space: nowrap; text-align: right">±313.71%</td>
-    <td style="white-space: nowrap; text-align: right">7 μs</td>
-    <td style="white-space: nowrap; text-align: right">10 μs</td>
+    <td style="white-space: nowrap; text-align: right">137.27 K</td>
+    <td style="white-space: nowrap; text-align: right">7.29 μs</td>
+    <td style="white-space: nowrap; text-align: right">±456.99%</td>
+    <td style="white-space: nowrap; text-align: right">6 μs</td>
+    <td style="white-space: nowrap; text-align: right">17 μs</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -495,13 +495,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">389.12 K</td>
+    <td style="white-space: nowrap;text-align: right">321.49 K</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">137.94 K</td>
-    <td style="white-space: nowrap; text-align: right">2.82x</td>
+    <td style="white-space: nowrap; text-align: right">137.27 K</td>
+    <td style="white-space: nowrap; text-align: right">2.34x</td>
   </tr>
 </table>
 
@@ -522,23 +522,23 @@ Run Time
   </tr>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">30.02</td>
-    <td style="white-space: nowrap; text-align: right">33.31 ms</td>
-    <td style="white-space: nowrap; text-align: right">±4.54%</td>
-    <td style="white-space: nowrap; text-align: right">33.11 ms</td>
-    <td style="white-space: nowrap; text-align: right">38.09 ms</td>
+    <td style="white-space: nowrap; text-align: right">24.87</td>
+    <td style="white-space: nowrap; text-align: right">40.21 ms</td>
+    <td style="white-space: nowrap; text-align: right">±3.54%</td>
+    <td style="white-space: nowrap; text-align: right">39.96 ms</td>
+    <td style="white-space: nowrap; text-align: right">47.86 ms</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">11.30</td>
-    <td style="white-space: nowrap; text-align: right">88.47 ms</td>
-    <td style="white-space: nowrap; text-align: right">±5.19%</td>
-    <td style="white-space: nowrap; text-align: right">87.08 ms</td>
-    <td style="white-space: nowrap; text-align: right">113.37 ms</td>
+    <td style="white-space: nowrap; text-align: right">11.09</td>
+    <td style="white-space: nowrap; text-align: right">90.21 ms</td>
+    <td style="white-space: nowrap; text-align: right">±3.87%</td>
+    <td style="white-space: nowrap; text-align: right">89.18 ms</td>
+    <td style="white-space: nowrap; text-align: right">111.05 ms</td>
   </tr>
 </table>
 
-Comparsion
+Comparison
 <table style="width: 1%">
   <tr>
     <th>Name</th>
@@ -546,13 +546,13 @@ Comparsion
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap;text-align: right">30.02</td>
+    <td style="white-space: nowrap;text-align: right">24.87</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">11.30</td>
-    <td style="white-space: nowrap; text-align: right">2.66x</td>
+    <td style="white-space: nowrap; text-align: right">11.09</td>
+    <td style="white-space: nowrap; text-align: right">2.24x</td>
   </tr>
 </table>
 
