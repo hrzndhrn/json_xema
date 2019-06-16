@@ -49,8 +49,8 @@ defmodule JsonXema.MixProject do
 
   defp deps do
     [
-      {:benchee, "~> 0.14", only: :dev},
-      {:benchee_markdown, "~> 0.1", only: :dev},
+      {:benchee, "~> 1.0", only: :dev},
+      {:benchee_markdown, "~> 0.2", only: :dev},
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.2", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
