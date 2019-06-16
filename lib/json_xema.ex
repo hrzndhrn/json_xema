@@ -81,15 +81,16 @@ defmodule JsonXema do
       do: schema(bool)
 
   def init(map) when is_map(map) do
-    with {:ok, data} <- validate(map) do
-      try do
-        data
-        |> Map.put_new("type", "any")
-        |> schema()
-      rescue
-        _ -> reraise SchemaError, "Can't build schema!", __STACKTRACE__
-      end
-    else
+    case validate(map) do
+      {:ok, data} ->
+        try do
+          data
+          |> Map.put_new("type", "any")
+          |> schema()
+        rescue
+          _ -> reraise SchemaError, "Can't build schema!", __STACKTRACE__
+        end
+
       {:error, reason} ->
         raise SchemaError, reason
     end
