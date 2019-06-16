@@ -39,7 +39,9 @@ false
 ...> JsonXema.valid?(schema, %{"name" => "Peter", "old" => 55})
 false
 ...> JsonXema.validate(schema, %{"name" => "Peter", "age" => -55})
-{:error, %{properties: %{"age" => %{minimum: 0, value: -55}}}}
+{:error, %Xema.ValidationError{
+  reason: %{properties: %{"age" => %{minimum: 0, value: -55}}}}}
 ...> JsonXema.validate(schema, %{"name" => "Peter", "old" => 55})
-{:error, %{properties: %{"old" => %{additionalProperties: false}}}}
+{:error, %Xema.ValidationError{
+  reason: %{properties: %{"old" => %{additionalProperties: false}}}}}
 ```

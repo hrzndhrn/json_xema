@@ -3,6 +3,8 @@ defmodule Xema.NilTest do
 
   import JsonXema, only: [validate: 2]
 
+  alias Xema.ValidationError
+
   describe "'nil' schema" do
     setup do
       %{schema: ~s({"type": "null"}) |> Jason.decode!() |> JsonXema.new()}
@@ -13,9 +15,8 @@ defmodule Xema.NilTest do
     end
 
     test "validate/2 with non-nil value", %{schema: schema} do
-      expected = {:error, %{type: "null", value: 1}}
-
-      assert validate(schema, 1) == expected
+      assert {:error, error} = validate(schema, 1)
+      assert error == %ValidationError{reason: %{type: "null", value: 1}}
     end
   end
 end

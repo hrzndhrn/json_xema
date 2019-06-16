@@ -12,6 +12,7 @@ defmodule JsonXema do
   alias JsonXema.SchemaValidator
   alias Xema.Format
   alias Xema.Schema
+  alias Xema.ValidationError
 
   @type_map %{
     "any" => :any,
@@ -109,7 +110,7 @@ defmodule JsonXema do
   # Maps keywords from snake case to camel case.
   @doc false
   @spec on_error(map) :: map
-  def on_error(error), do: map_error(error)
+  def on_error(error), do: ValidationError.exception(reason: map_error(error))
 
   @doc """
   Converts `%JsonXema{}` to `%Xema{}`.

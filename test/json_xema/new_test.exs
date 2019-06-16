@@ -2,6 +2,7 @@ defmodule JsonXema.NewTest do
   use ExUnit.Case, async: true
 
   alias JsonXema.SchemaError
+  alias Xema.ValidationError
 
   describe "new/1" do
     test "raised a SchemaError for an invalid type" do
@@ -35,25 +36,27 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{
-                 "type" => %{
-                   any_of: [
-                     %{
-                       enum: [
-                         "array",
-                         "boolean",
-                         "integer",
-                         "null",
-                         "number",
-                         "object",
-                         "string"
-                       ],
-                       value: "foo"
-                     },
-                     %{type: :list, value: "foo"}
-                   ],
-                   value: "foo"
+      assert error.reason == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "type" => %{
+                     any_of: [
+                       %{
+                         enum: [
+                           "array",
+                           "boolean",
+                           "integer",
+                           "null",
+                           "number",
+                           "object",
+                           "string"
+                         ],
+                         value: "foo"
+                       },
+                       %{type: :list, value: "foo"}
+                     ],
+                     value: "foo"
+                   }
                  }
                }
              }
@@ -73,8 +76,8 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{"properties" => %{type: :map, value: "foo"}}
+      assert error.reason == %ValidationError{
+               reason: %{properties: %{"properties" => %{type: :map, value: "foo"}}}
              }
     end
 
@@ -92,9 +95,11 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{
-                 "exclusiveMaximum" => %{type: :boolean, value: 100}
+      assert error.reason == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "exclusiveMaximum" => %{type: :boolean, value: 100}
+                 }
                }
              }
     end
@@ -114,25 +119,27 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{
-                 "type" => %{
-                   any_of: [
-                     %{
-                       enum: [
-                         "array",
-                         "boolean",
-                         "integer",
-                         "null",
-                         "number",
-                         "object",
-                         "string"
-                       ],
-                       value: "foo"
-                     },
-                     %{type: :list, value: "foo"}
-                   ],
-                   value: "foo"
+      assert error.reason == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "type" => %{
+                     any_of: [
+                       %{
+                         enum: [
+                           "array",
+                           "boolean",
+                           "integer",
+                           "null",
+                           "number",
+                           "object",
+                           "string"
+                         ],
+                         value: "foo"
+                       },
+                       %{type: :list, value: "foo"}
+                     ],
+                     value: "foo"
+                   }
                  }
                }
              }
@@ -152,8 +159,8 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{"properties" => %{type: :map, value: "foo"}}
+      assert error.reason == %ValidationError{
+               reason: %{properties: %{"properties" => %{type: :map, value: "foo"}}}
              }
     end
 
@@ -171,9 +178,11 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{
-                 "exclusiveMaximum" => %{type: :number, value: true}
+      assert error.reason == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "exclusiveMaximum" => %{type: :number, value: true}
+                 }
                }
              }
     end
@@ -193,25 +202,27 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{
-                 "type" => %{
-                   any_of: [
-                     %{
-                       enum: [
-                         "array",
-                         "boolean",
-                         "integer",
-                         "null",
-                         "number",
-                         "object",
-                         "string"
-                       ],
-                       value: "foo"
-                     },
-                     %{type: :list, value: "foo"}
-                   ],
-                   value: "foo"
+      assert error.reason == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "type" => %{
+                     any_of: [
+                       %{
+                         enum: [
+                           "array",
+                           "boolean",
+                           "integer",
+                           "null",
+                           "number",
+                           "object",
+                           "string"
+                         ],
+                         value: "foo"
+                       },
+                       %{type: :list, value: "foo"}
+                     ],
+                     value: "foo"
+                   }
                  }
                }
              }
@@ -231,8 +242,8 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{"properties" => %{type: :map, value: "foo"}}
+      assert error.reason == %ValidationError{
+               reason: %{properties: %{"properties" => %{type: :map, value: "foo"}}}
              }
     end
 
@@ -250,9 +261,11 @@ defmodule JsonXema.NewTest do
 
       assert error.message =~ "Can't build schema! Reason:"
 
-      assert error.reason == %{
-               properties: %{
-                 "exclusiveMaximum" => %{type: :number, value: true}
+      assert error.reason == %ValidationError{
+               reason: %{
+                 properties: %{
+                   "exclusiveMaximum" => %{type: :number, value: true}
+                 }
                }
              }
     end

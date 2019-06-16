@@ -3,6 +3,8 @@ defmodule Xema.NumberTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
+  alias Xema.ValidationError
+
   describe "number schema:" do
     setup do
       %{schema: ~s({"type": "number"}) |> Jason.decode!() |> JsonXema.new()}
@@ -17,9 +19,8 @@ defmodule Xema.NumberTest do
     end
 
     test "validate/2 with a string", %{schema: schema} do
-      expected = {:error, %{type: "number", value: "foo"}}
-
-      assert validate(schema, "foo") == expected
+      assert {:error, error} = validate(schema, "foo")
+      assert error == %ValidationError{reason: %{type: "number", value: "foo"}}
     end
 
     test "valid?/2 with a valid value", %{schema: schema} do
@@ -45,15 +46,13 @@ defmodule Xema.NumberTest do
     end
 
     test "validate/2 with a too small number", %{schema: schema} do
-      expected = {:error, %{minimum: 2, value: 1.0}}
-
-      assert validate(schema, 1.0) == expected
+      assert {:error, error} = validate(schema, 1.0)
+      assert error == %ValidationError{reason: %{minimum: 2, value: 1.0}}
     end
 
     test "validate/2 with a too big number", %{schema: schema} do
-      expected = {:error, %{value: 5.0, maximum: 4}}
-
-      assert validate(schema, 5.0) == expected
+      assert {:error, error} = validate(schema, 5.0)
+      assert error = %ValidationError{reason: %{value: 5.0, maximum: 4}}
     end
   end
 
@@ -77,27 +76,23 @@ defmodule Xema.NumberTest do
     end
 
     test "validate/2 with a too small number", %{schema: schema} do
-      expected = {:error, %{exclusiveMinimum: true, minimum: 2, value: 1.0}}
-
-      assert validate(schema, 1.0) == expected
+      assert {:error, error} = validate(schema, 1.0)
+      assert error == %ValidationError{reason: %{exclusiveMinimum: true, minimum: 2, value: 1.0}}
     end
 
     test "validate/2 with a minimum number", %{schema: schema} do
-      expected = {:error, %{minimum: 2, exclusiveMinimum: true, value: 2.0}}
-
-      assert validate(schema, 2.0) == expected
+      assert {:error, error} = validate(schema, 2.0)
+      assert error == %ValidationError{reason: %{minimum: 2, exclusiveMinimum: true, value: 2.0}}
     end
 
     test "validate/2 with a maximum number", %{schema: schema} do
-      expected = {:error, %{value: 4.0, maximum: 4, exclusiveMaximum: true}}
-
-      assert validate(schema, 4.0) == expected
+      assert {:error, error} = validate(schema, 4.0)
+      assert error == %ValidationError{reason: %{value: 4.0, maximum: 4, exclusiveMaximum: true}}
     end
 
     test "validate/2 with a too big number", %{schema: schema} do
-      expected = {:error, %{value: 5.0, maximum: 4, exclusiveMaximum: true}}
-
-      assert validate(schema, 5.0) == expected
+      assert {:error, error} = validate(schema, 5.0)
+      assert error == %ValidationError{reason: %{value: 5.0, maximum: 4, exclusiveMaximum: true}}
     end
   end
 
@@ -119,27 +114,23 @@ defmodule Xema.NumberTest do
     end
 
     test "validate/2 with a too small number", %{schema: schema} do
-      expected = {:error, %{exclusiveMinimum: 2, value: 1.0}}
-
-      assert validate(schema, 1.0) == expected
+      assert {:error, error} = validate(schema, 1.0)
+      assert error == %ValidationError{reason: %{exclusiveMinimum: 2, value: 1.0}}
     end
 
     test "validate/2 with a minimum number", %{schema: schema} do
-      expected = {:error, %{exclusiveMinimum: 2, value: 2.0}}
-
-      assert validate(schema, 2.0) == expected
+      assert {:error, error} = validate(schema, 2.0)
+      assert error == %ValidationError{reason: %{exclusiveMinimum: 2, value: 2.0}}
     end
 
     test "validate/2 with a maximum number", %{schema: schema} do
-      expected = {:error, %{value: 4.0, exclusiveMaximum: 4}}
-
-      assert validate(schema, 4.0) == expected
+      assert {:error, error} = validate(schema, 4.0)
+      assert error == %ValidationError{reason: %{value: 4.0, exclusiveMaximum: 4}}
     end
 
     test "validate/2 with a too big number", %{schema: schema} do
-      expected = {:error, %{value: 5.0, exclusiveMaximum: 4}}
-
-      assert validate(schema, 5.0) == expected
+      assert {:error, error} = validate(schema, 5.0)
+      assert error == %ValidationError{reason: %{value: 5.0, exclusiveMaximum: 4}}
     end
   end
 
@@ -155,9 +146,8 @@ defmodule Xema.NumberTest do
     end
 
     test "validate/2 with an invalid number", %{schema: schema} do
-      expected = {:error, %{value: 6.2, multipleOf: 1.2}}
-
-      assert validate(schema, 6.2) == expected
+      assert {:error, error} = validate(schema, 6.2)
+      assert error == %ValidationError{reason: %{value: 6.2, multipleOf: 1.2}}
     end
   end
 
@@ -173,9 +163,8 @@ defmodule Xema.NumberTest do
     end
 
     test "with a value that is not in the enum", %{schema: schema} do
-      expected = {:error, %{enum: [1.2, 1.3, 3.3], value: 2}}
-
-      assert validate(schema, 2) == expected
+      assert {:error, error} = validate(schema, 2)
+      assert error == %ValidationError{reason: %{enum: [1.2, 1.3, 3.3], value: 2}}
     end
   end
 end

@@ -3,6 +3,8 @@ defmodule Xema.BooleanSchemaTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
+  alias Xema.ValidationError
+
   describe "true schema:" do
     setup do
       %{schema: "true" |> Jason.decode!() |> JsonXema.new()}
@@ -39,19 +41,18 @@ defmodule Xema.BooleanSchemaTest do
     end
 
     test "validate/2 returns always {:error, %{type: false}}", %{schema: schema} do
-      assert(validate(schema, true) == {:error, %{type: false}})
-      assert(validate(schema, 42) == {:error, %{type: false}})
-      assert(validate(schema, "foo") == {:error, %{type: false}})
-      assert(validate(schema, []) == {:error, %{type: false}})
-      assert(validate(schema, %{}) == {:error, %{type: false}})
+      assert(validate(schema, true) == {:error, %ValidationError{reason: %{type: false}}})
+      assert(validate(schema, 42) == {:error, %ValidationError{reason: %{type: false}}})
+      assert(validate(schema, "foo") == {:error, %ValidationError{reason: %{type: false}}})
+      assert(validate(schema, []) == {:error, %ValidationError{reason: %{type: false}}})
+      assert(validate(schema, %{}) == {:error, %ValidationError{reason: %{type: false}}})
     end
   end
 
   describe "all_of with boolean schemas, all true:" do
     setup do
       %{
-        schema:
-          ~s({"all_of": [true, true]}) |> Jason.decode!() |> JsonXema.new()
+        schema: ~s({"all_of": [true, true]}) |> Jason.decode!() |> JsonXema.new()
       }
     end
 

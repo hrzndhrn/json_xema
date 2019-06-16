@@ -3,6 +3,8 @@ defmodule Xema.NestedTest do
 
   import JsonXema, only: [validate: 2]
 
+  alias Xema.ValidationError
+
   describe "list of objects in one schema:" do
     setup do
       %{
@@ -58,19 +60,21 @@ defmodule Xema.NestedTest do
 
       error = {
         :error,
-        %{
-          properties: %{
-            "items" => %{
-              items: [
-                {
-                  1,
-                  %{
-                    properties: %{
-                      "num" => %{value: -2, minimum: 0}
+        %ValidationError{
+          reason: %{
+            properties: %{
+              "items" => %{
+                items: [
+                  {
+                    1,
+                    %{
+                      properties: %{
+                        "num" => %{value: -2, minimum: 0}
+                      }
                     }
                   }
-                }
-              ]
+                ]
+              }
             }
           }
         }

@@ -13,8 +13,7 @@ defmodule Draft7.Optional.BignumTest do
     end
 
     test "a bignum is an integer", %{schema: schema} do
-      data =
-        12_345_678_910_111_213_141_516_171_819_202_122_232_425_262_728_293_031
+      data = 12_345_678_910_111_213_141_516_171_819_202_122_232_425_262_728_293_031
 
       assert valid?(schema, data)
     end
@@ -30,8 +29,7 @@ defmodule Draft7.Optional.BignumTest do
     end
 
     test "a bignum is a number", %{schema: schema} do
-      data =
-        98_249_283_749_234_923_498_293_171_823_948_729_348_710_298_301_928_331
+      data = 98_249_283_749_234_923_498_293_171_823_948_729_348_710_298_301_928_331
 
       assert valid?(schema, data)
     end
@@ -47,8 +45,7 @@ defmodule Draft7.Optional.BignumTest do
     end
 
     test "a negative bignum is an integer", %{schema: schema} do
-      data =
-        -12_345_678_910_111_213_141_516_171_819_202_122_232_425_262_728_293_031
+      data = -12_345_678_910_111_213_141_516_171_819_202_122_232_425_262_728_293_031
 
       assert valid?(schema, data)
     end
@@ -64,8 +61,7 @@ defmodule Draft7.Optional.BignumTest do
     end
 
     test "a negative bignum is a number", %{schema: schema} do
-      data =
-        -98_249_283_749_234_923_498_293_171_823_948_729_348_710_298_301_928_331
+      data = -98_249_283_749_234_923_498_293_171_823_948_729_348_710_298_301_928_331
 
       assert valid?(schema, data)
     end
@@ -81,8 +77,7 @@ defmodule Draft7.Optional.BignumTest do
     end
 
     test "a bignum is not a string", %{schema: schema} do
-      data =
-        98_249_283_749_234_923_498_293_171_823_948_729_348_710_298_301_928_331
+      data = 98_249_283_749_234_923_498_293_171_823_948_729_348_710_298_301_928_331
 
       refute valid?(schema, data)
     end

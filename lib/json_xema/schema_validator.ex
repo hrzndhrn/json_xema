@@ -31,8 +31,7 @@ defmodule JsonXema.SchemaValidator do
                       "string"
                     ]
                   ],
-                  "stringArray" =>
-                    {:list, [items: :string, min_items: 1, unique_items: true]}
+                  "stringArray" => {:list, [items: :string, min_items: 1, unique_items: true]}
                 },
                 dependencies: %{
                   "exclusiveMaximum" => ["maximum"],
@@ -44,15 +43,13 @@ defmodule JsonXema.SchemaValidator do
                   "uniqueItems" => {:boolean, [default: false]},
                   "maximum" => :number,
                   "title" => :string,
-                  "multipleOf" =>
-                    {:number, [exclusive_minimum: true, minimum: 0]},
+                  "multipleOf" => {:number, [exclusive_minimum: true, minimum: 0]},
                   "anyOf" => {:ref, "#/definitions/schemaArray"},
                   "format" => :string,
                   "exclusiveMinimum" => {:boolean, [default: false]},
                   "id" => :string,
                   "minimum" => :number,
-                  "definitions" =>
-                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "definitions" => {:map, [additional_properties: {:ref, "#"}, default: %{}]},
                   "minItems" => {:ref, "#/definitions/positiveIntegerDefault0"},
                   "additionalProperties" => [
                     any_of: [:boolean, {:ref, "#"}],
@@ -80,8 +77,7 @@ defmodule JsonXema.SchemaValidator do
                      ]},
                   "$schema" => :string,
                   "maxProperties" => {:ref, "#/definitions/positiveInteger"},
-                  "properties" =>
-                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "properties" => {:map, [additional_properties: {:ref, "#"}, default: %{}]},
                   "additionalItems" => [
                     any_of: [:boolean, {:ref, "#"}],
                     default: %{}
@@ -96,14 +92,12 @@ defmodule JsonXema.SchemaValidator do
                   "required" => {:ref, "#/definitions/stringArray"},
                   "description" => :string,
                   "allOf" => {:ref, "#/definitions/schemaArray"},
-                  "minLength" =>
-                    {:ref, "#/definitions/positiveIntegerDefault0"},
+                  "minLength" => {:ref, "#/definitions/positiveIntegerDefault0"},
                   "pattern" => {:string, [format: :regex]},
                   "enum" => {:list, [min_items: 1, unique_items: true]},
                   "exclusiveMaximum" => {:boolean, [default: false]},
                   "maxLength" => {:ref, "#/definitions/positiveInteger"},
-                  "minProperties" =>
-                    {:ref, "#/definitions/positiveIntegerDefault0"}
+                  "minProperties" => {:ref, "#/definitions/positiveIntegerDefault0"}
                 },
                 schema: "http://json-schema.org/draft-04/schema#"
               ]}
@@ -133,8 +127,7 @@ defmodule JsonXema.SchemaValidator do
                       "string"
                     ]
                   ],
-                  "stringArray" =>
-                    {:list, [default: [], items: :string, unique_items: true]}
+                  "stringArray" => {:list, [default: [], items: :string, unique_items: true]}
                 },
                 id: "http://json-schema.org/draft-06/schema#",
                 properties: %{
@@ -149,10 +142,8 @@ defmodule JsonXema.SchemaValidator do
                   "examples" => {:list, [items: :any]},
                   "minimum" => :number,
                   "contains" => {:ref, "#"},
-                  "definitions" =>
-                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
-                  "minItems" =>
-                    {:ref, "#/definitions/nonNegativeIntegerDefault0"},
+                  "definitions" => {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "minItems" => {:ref, "#/definitions/nonNegativeIntegerDefault0"},
                   "additionalProperties" => {:ref, "#"},
                   "patternProperties" =>
                     {:map, [additional_properties: {:ref, "#"}, default: %{}]},
@@ -177,8 +168,7 @@ defmodule JsonXema.SchemaValidator do
                   "const" => :any,
                   "$schema" => {:string, [format: :uri]},
                   "maxProperties" => {:ref, "#/definitions/nonNegativeInteger"},
-                  "properties" =>
-                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "properties" => {:map, [additional_properties: {:ref, "#"}, default: %{}]},
                   "additionalItems" => {:ref, "#"},
                   "items" => [
                     any_of: [ref: "#", ref: "#/definitions/schemaArray"],
@@ -191,15 +181,13 @@ defmodule JsonXema.SchemaValidator do
                   "required" => {:ref, "#/definitions/stringArray"},
                   "description" => :string,
                   "allOf" => {:ref, "#/definitions/schemaArray"},
-                  "minLength" =>
-                    {:ref, "#/definitions/nonNegativeIntegerDefault0"},
+                  "minLength" => {:ref, "#/definitions/nonNegativeIntegerDefault0"},
                   "pattern" => {:string, [format: :regex]},
                   "$ref" => {:string, [format: :uri_reference]},
                   "enum" => {:list, [min_items: 1, unique_items: true]},
                   "exclusiveMaximum" => :number,
                   "maxLength" => {:ref, "#/definitions/nonNegativeInteger"},
-                  "minProperties" =>
-                    {:ref, "#/definitions/nonNegativeIntegerDefault0"}
+                  "minProperties" => {:ref, "#/definitions/nonNegativeIntegerDefault0"}
                 },
                 schema: "http://json-schema.org/draft-06/schema#",
                 title: "Core schema meta-schema"
@@ -230,8 +218,7 @@ defmodule JsonXema.SchemaValidator do
                       "string"
                     ]
                   ],
-                  "stringArray" =>
-                    {:list, [default: [], items: :string, unique_items: true]}
+                  "stringArray" => {:list, [default: [], items: :string, unique_items: true]}
                 },
                 id: "http://json-schema.org/draft-07/schema#",
                 properties: %{
@@ -246,10 +233,8 @@ defmodule JsonXema.SchemaValidator do
                   "examples" => {:list, [items: true]},
                   "minimum" => :number,
                   "contains" => {:ref, "#"},
-                  "definitions" =>
-                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
-                  "minItems" =>
-                    {:ref, "#/definitions/nonNegativeIntegerDefault0"},
+                  "definitions" => {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "minItems" => {:ref, "#/definitions/nonNegativeIntegerDefault0"},
                   "additionalProperties" => {:ref, "#"},
                   "patternProperties" =>
                     {:map,
@@ -283,8 +268,7 @@ defmodule JsonXema.SchemaValidator do
                   "const" => true,
                   "$schema" => {:string, [format: :uri]},
                   "maxProperties" => {:ref, "#/definitions/nonNegativeInteger"},
-                  "properties" =>
-                    {:map, [additional_properties: {:ref, "#"}, default: %{}]},
+                  "properties" => {:map, [additional_properties: {:ref, "#"}, default: %{}]},
                   "additionalItems" => {:ref, "#"},
                   "items" => [
                     any_of: [ref: "#", ref: "#/definitions/schemaArray"],
@@ -299,17 +283,14 @@ defmodule JsonXema.SchemaValidator do
                   "required" => {:ref, "#/definitions/stringArray"},
                   "description" => :string,
                   "allOf" => {:ref, "#/definitions/schemaArray"},
-                  "minLength" =>
-                    {:ref, "#/definitions/nonNegativeIntegerDefault0"},
+                  "minLength" => {:ref, "#/definitions/nonNegativeIntegerDefault0"},
                   "pattern" => {:string, [format: :regex]},
                   "$ref" => {:string, [format: :uri_reference]},
-                  "enum" =>
-                    {:list, [items: true, min_items: 1, unique_items: true]},
+                  "enum" => {:list, [items: true, min_items: 1, unique_items: true]},
                   "contentEncoding" => :string,
                   "exclusiveMaximum" => :number,
                   "maxLength" => {:ref, "#/definitions/nonNegativeInteger"},
-                  "minProperties" =>
-                    {:ref, "#/definitions/nonNegativeIntegerDefault0"}
+                  "minProperties" => {:ref, "#/definitions/nonNegativeIntegerDefault0"}
                 },
                 schema: "http://json-schema.org/draft-07/schema#",
                 title: "Core schema meta-schema"
