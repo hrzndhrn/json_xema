@@ -5,7 +5,7 @@ defmodule JsonXema.RefRemoteTest do
 
   alias Jason.DecodeError
   alias Xema.SchemaError
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   test "http server" do
     assert %{body: body} = HTTPoison.get!("http://localhost:1234/folder/folderInteger.json")

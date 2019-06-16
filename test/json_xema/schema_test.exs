@@ -3,7 +3,7 @@ defmodule Xema.SchemaTest do
 
   import JsonXema, only: [validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "validat/2 whith schema draft04" do
     setup do

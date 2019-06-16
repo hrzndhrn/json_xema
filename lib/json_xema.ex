@@ -12,7 +12,7 @@ defmodule JsonXema do
   alias JsonXema.SchemaValidator
   alias Xema.Format
   alias Xema.Schema
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   @type_map %{
     "any" => :any,

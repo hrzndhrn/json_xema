@@ -3,7 +3,7 @@ defmodule JsonXema.StringTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "string schema:" do
     setup do
@@ -56,6 +56,7 @@ defmodule JsonXema.StringTest do
     test "validate/2 with a too long string", %{schema: schema} do
       assert {:error, error} = validate(schema, "foobar")
       assert error == %ValidationError{reason: %{maxLength: 4, value: "foobar"}}
+      assert Exception.message(error) == ~s|Expected maximum length of 4, got "foobar".|
     end
   end
 

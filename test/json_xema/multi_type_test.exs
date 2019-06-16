@@ -4,7 +4,7 @@ defmodule Xema.MultiTypeTest do
   import JsonXema, only: [validate: 2]
 
   alias JsonXema.SchemaError
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   test "&new/1 called with a wrong type list raised an exception" do
     assert_raise SchemaError, fn ->

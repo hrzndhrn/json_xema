@@ -3,7 +3,7 @@ defmodule Xema.NumberTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "number schema:" do
     setup do

@@ -3,7 +3,7 @@ defmodule JsonXema.IntegerTest do
 
   import JsonXema, only: [valid?: 2, validate: 2, validate!: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "'integer' schema" do
     setup do

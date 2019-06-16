@@ -4,7 +4,7 @@ defmodule JsonXema.RefTest do
   import JsonXema, only: [validate: 2]
 
   alias Xema.Schema
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "schema with root pointer" do
     setup do
