@@ -23,3 +23,7 @@ erl_crash.dump
 json_xema-*.tar
 
 /bench/output/
+
+# dialyzer plt
+/test/support/plts/*.plt
+/test/support/plts/*.plt.hash
