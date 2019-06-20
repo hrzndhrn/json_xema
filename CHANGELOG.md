@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0
+## 0.3.0 2019/06/20
 
 + update `xema` to 0.9.1
 + Change error tuple returned by `JsonXema.validate/2`. The function returns
