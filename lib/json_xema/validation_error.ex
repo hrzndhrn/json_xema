@@ -1,6 +1,13 @@
 defmodule JsonXema.ValidationError do
   @moduledoc """
   Raised when a validation fails.
+
+  ## Example
+
+      iex> schema = JsonXema.new(%{"type" => "string"})
+      iex> {:error, error} = JsonXema.validate(schema, 6)
+      iex> Exception.message(error)
+      ~s|Expected "string", got 6.|
   """
 
   @type path :: [atom | integer | String.t()]
