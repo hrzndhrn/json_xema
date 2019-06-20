@@ -100,20 +100,20 @@ defmodule JsonXema.ValidationError do
 
   def travers_errors(error, acc, fun, opts), do: fun.(error, opts[:path], acc)
 
+  defp format_error(%{exclusiveMinimum: minimum, value: value}, path, acc)
+       when minimum == value do
+    msg = "Value #{inspect(minimum)} equals exclusive minimum value of #{inspect(minimum)}"
+    [msg <> at_path(path) | acc]
+  end
+
   defp format_error(%{minimum: minimum, exclusiveMinimum: true, value: value}, path, acc)
        when minimum == value do
-    # The guard is used to match values of different types (integer, float).
     msg = "Value #{inspect(value)} equals exclusive minimum value of #{inspect(minimum)}"
     [msg <> at_path(path) | acc]
   end
 
   defp format_error(%{minimum: minimum, exclusiveMinimum: true, value: value}, path, acc) do
     msg = "Value #{inspect(value)} is less than minimum value of #{inspect(minimum)}"
-    [msg <> at_path(path) | acc]
-  end
-
-  defp format_error(%{exclusiveMinimum: minimum, value: minimum}, path, acc) do
-    msg = "Value #{inspect(minimum)} equals exclusive minimum value of #{inspect(minimum)}"
     [msg <> at_path(path) | acc]
   end
 
@@ -127,20 +127,20 @@ defmodule JsonXema.ValidationError do
     [msg <> at_path(path) | acc]
   end
 
+  defp format_error(%{exclusiveMaximum: maximum, value: value}, path, acc)
+       when maximum == value do
+    msg = "Value #{inspect(maximum)} equals exclusive maximum value of #{inspect(maximum)}"
+    [msg <> at_path(path) | acc]
+  end
+
   defp format_error(%{maximum: maximum, exclusiveMaximum: true, value: value}, path, acc)
        when maximum == value do
-    # The guard is used to match values of different types (integer, float).
     msg = "Value #{inspect(value)} equals exclusive maximum value of #{inspect(maximum)}"
     [msg <> at_path(path) | acc]
   end
 
   defp format_error(%{maximum: maximum, exclusiveMaximum: true, value: value}, path, acc) do
     msg = "Value #{inspect(value)} exceeds maximum value of #{inspect(maximum)}"
-    [msg <> at_path(path) | acc]
-  end
-
-  defp format_error(%{exclusiveMaximum: maximum, value: maximum}, path, acc) do
-    msg = "Value #{inspect(maximum)} equals exclusive maximum value of #{inspect(maximum)}"
     [msg <> at_path(path) | acc]
   end
 
@@ -171,11 +171,6 @@ defmodule JsonXema.ValidationError do
 
   defp format_error(%{enum: _enum, value: value}, path, acc) do
     msg = "Value #{inspect(value)} is not defined in enum"
-    [msg <> at_path(path) | acc]
-  end
-
-  defp format_error(%{keys: keys, value: value}, path, acc) do
-    msg = "Expected #{inspect(keys)} as key, got #{inspect(value)}"
     [msg <> at_path(path) | acc]
   end
 
@@ -360,16 +355,6 @@ defmodule JsonXema.ValidationError do
 
   defp format_error(%{pattern: pattern, value: value}, path, acc) do
     msg = "Pattern #{inspect(pattern)} does not match value #{inspect(value)}"
-    [msg <> at_path(path) | acc]
-  end
-
-  defp format_error(%{module: module, value: value}, path, acc) do
-    msg = "Expected #{inspect(module)}, got #{inspect(value)}"
-    [msg <> at_path(path) | acc]
-  end
-
-  defp format_error(%{validator: validator, value: value}, path, acc) do
-    msg = "Validator fails with #{inspect(validator)} for value #{inspect(value)}"
     [msg <> at_path(path) | acc]
   end
 

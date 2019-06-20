@@ -47,6 +47,11 @@ defmodule Xema.BooleanSchemaTest do
       assert(validate(schema, []) == {:error, %ValidationError{reason: %{type: false}}})
       assert(validate(schema, %{}) == {:error, %ValidationError{reason: %{type: false}}})
     end
+
+    test "error message", %{schema: schema} do
+      assert {:error, error} = validate(schema, "foo")
+      assert Exception.message(error) == "Schema always fails validation."
+    end
   end
 
   describe "all_of with boolean schemas, all true:" do

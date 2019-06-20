@@ -27,6 +27,7 @@ defmodule Xema.MultiTypeTest do
     test "with an invalid string", %{schema: schema} do
       assert {:error, error} = validate(schema, "foo")
       assert error == %ValidationError{reason: %{minLength: 5, value: "foo"}}
+      assert Exception.message(error) == ~s|Expected minimum length of 5, got "foo".|
     end
 
     test "with nil", %{schema: schema} do
@@ -36,6 +37,7 @@ defmodule Xema.MultiTypeTest do
     test "with integer", %{schema: schema} do
       assert {:error, error} = validate(schema, 42)
       assert error == %ValidationError{reason: %{type: ["string", "null"], value: 42}}
+      assert Exception.message(error) == ~s|Expected ["string", "null"], got 42.|
     end
   end
 
@@ -66,6 +68,8 @@ defmodule Xema.MultiTypeTest do
                  }
                }
              }
+
+      assert Exception.message(error) == ~s|Expected ["number", "null"], got "foo", at ["foo"].|
     end
   end
 end
