@@ -86,8 +86,6 @@ defmodule JsonXema.ValidationError do
   def travers_errors({:error, %__MODULE__{reason: reason}}, acc, fun, opts),
     do: travers_errors(reason, acc, fun, opts)
 
-  def travers_errors({:error, error}, acc, fun, opts), do: travers_errors(error, acc, fun, opts)
-
   def travers_errors(error, acc, fun, []), do: travers_errors(error, acc, fun, path: [])
 
   def travers_errors(%{properties: properties} = error, acc, fun, opts),
