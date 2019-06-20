@@ -33,6 +33,46 @@ defmodule JsonXema.ValidationErrorTest do
     end
   end
 
+  describe "travers_errors/2" do
+    test "return custom error message" do
+      fun = fn _error, path, acc ->
+        ["Error at " <> inspect(path) | acc]
+      end
+
+      schema =
+        JsonXema.new(%{
+          "properties" => %{
+            "int" => %{"type" => "integer"},
+            "names" => %{
+              "type" => "array",
+              "items" => %{"type" => "string"}
+            },
+            "num" => %{
+              "anyOf" => [
+                %{"type" => "integer"},
+                %{"type" => "number"}
+              ]
+            }
+          }
+        })
+
+      data = %{"int" => "x", "names" => [1, "x", 5], "num" => :foo}
+
+      expected = [
+        ~s|Error at ["num"]|,
+        ~s|Error at ["names", 2]|,
+        ~s|Error at ["names", 0]|,
+        ~s|Error at ["names"]|,
+        ~s|Error at ["int"]|,
+        ~s|Error at []|
+      ]
+
+      assert {:error, error} = exception = JsonXema.validate(schema, data)
+      assert ValidationError.travers_errors(error.reason, [], fun) == expected
+      assert ValidationError.travers_errors(exception, [], fun) == expected
+    end
+  end
+
   describe "exception/1" do
     test "returns unexpected error for unexpected reason" do
       error = ValidationError.exception(reason: "foo")
