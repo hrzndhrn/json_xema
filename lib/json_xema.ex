@@ -85,7 +85,7 @@ defmodule JsonXema do
           |> Map.put_new("type", "any")
           |> schema()
         rescue
-          _ -> reraise SchemaError, "Can't build schema!", __STACKTRACE__
+          error -> reraise SchemaError, error, __STACKTRACE__
         end
 
       {:error, reason} ->
@@ -170,7 +170,7 @@ defmodule JsonXema do
        when type in @types,
        do: Map.get(@type_map, type)
 
-  defp get_type(_), do: raise(ArgumentError)
+  defp get_type(type), do: raise(ArgumentError, message: "unknown type #{inspect(type)}")
 
   defp update_key(key) when is_atom(key), do: key
 

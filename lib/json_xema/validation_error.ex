@@ -24,15 +24,15 @@ defmodule JsonXema.ValidationError do
 
   ## Example
 
-  ```elixir
-  iex> schema = Xema.new(:integer)
-  iex> schema
-  ...>   |> Xema.Validator.validate(1.1)
-  ...>   |> JsonXema.ValidationError.format_error()
-  "Expected :integer, got 1.1."
-  ```
+      iex> schema = JsonXema.new(%{"type" => "integer"})
+      iex> schema
+      ...>   |> JsonXema.validate(1.1)
+      ...>   |> JsonXema.ValidationError.format_error()
+      ~s|Expected "integer", got 1.1.|
   """
   @spec format_error({:error, map} | map) :: String.t()
+  def format_error({:error, %__MODULE__{reason: reason}}), do: format_error(reason)
+
   def format_error({:error, error}), do: format_error(error)
 
   def format_error(error),
@@ -47,36 +47,44 @@ defmodule JsonXema.ValidationError do
 
   ## Example
 
-  ```elixir
-  iex> fun = fn _error, path, acc ->
-  ...>   ["Error at " <> inspect(path) | acc]
-  ...> end
-  iex>
-  iex> schema = Xema.new(
-  ...>   properties: %{
-  ...>     int: :integer,
-  ...>     names: {:list, items: :string},
-  ...>     num: [any_of: [:integer, :float]]
-  ...>   }
-  ...> )
-  iex>
-  iex> data = %{int: "x", names: [1, "x", 5], num: :foo}
-  iex>
-  iex> schema
-  ...>   |> Xema.Validator.validate(data)
-  ...>   |> JsonXema.ValidationError.travers_errors([], fun)
-  [
-    "Error at [:num]",
-    "Error at [:names, 2]",
-    "Error at [:names, 0]",
-    "Error at [:names]",
-    "Error at [:int]",
-    "Error at []"
-  ]
+      iex> fun = fn _error, path, acc ->
+      ...>   ["Error at " <> inspect(path) | acc]
+      ...> end
+      iex>
+      iex> schema = JsonXema.new(%{
+      ...>   "properties" => %{
+      ...>     "int" => %{"type" => "integer"},
+      ...>     "names" => %{
+      ...>       "type" => "array",
+      ...>       "items" => %{"type" => "string"}
+      ...>     },
+      ...>     "num" => %{"anyOf" => [
+      ...>       %{"type" => "integer"},
+      ...>       %{"type" => "number"}
+      ...>     ]}
+      ...>   }
+      ...> })
+      iex>
+      iex> data = %{"int" => "x", "names" => [1, "x", 5], "num" => :foo}
+      iex>
+      iex> schema
+      ...>   |> JsonXema.validate(data)
+      ...>   |> JsonXema.ValidationError.travers_errors([], fun)
+      [
+        ~s|Error at ["num"]|,
+        ~s|Error at ["names", 2]|,
+        ~s|Error at ["names", 0]|,
+        ~s|Error at ["names"]|,
+        ~s|Error at ["int"]|,
+        ~s|Error at []|
+      ]
   """
   @spec travers_errors({:error, map} | map, acc, (map, path, acc -> acc), opts) :: acc
         when acc: any
   def travers_errors(error, acc, fun, opts \\ [])
+
+  def travers_errors({:error, %__MODULE__{reason: reason}}, acc, fun, opts),
+    do: travers_errors(reason, acc, fun, opts)
 
   def travers_errors({:error, error}, acc, fun, opts), do: travers_errors(error, acc, fun, opts)
 

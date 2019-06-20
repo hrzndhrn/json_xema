@@ -6,7 +6,9 @@ defmodule JsonXema.NewTest do
 
   describe "new/1" do
     test "raised a SchemaError for an invalid type" do
-      assert_raise SchemaError, "Can't build schema!", fn ->
+      message = ~s|Can't build schema! Reason: unknown type "foo"|
+
+      assert_raise SchemaError, message, fn ->
         ~s({"type": "foo"})
         |> Jason.decode!()
         |> JsonXema.new()
@@ -271,7 +273,7 @@ defmodule JsonXema.NewTest do
     end
   end
 
-  describe "new/1 with unknown $schema" do
+  test "new/1 with unknown $schema" do
     message = "Unknown $schema http://json-schema.org/draft-unsupported#."
 
     assert_raise SchemaError, message, fn ->
@@ -280,6 +282,30 @@ defmodule JsonXema.NewTest do
       })
       |> Jason.decode!()
       |> JsonXema.new()
+    end
+  end
+
+  describe "new/1 without schema" do
+    @tag :only
+    test "invalid data" do
+      input = %{
+        "properties" => %{
+          "int" => %{"type" => "integer"},
+          "names" => %{"type" => "array", "items" => %{"type" => "string"}},
+          "num" => %{
+            "anyOf" => [
+              %{"type" => "integer"},
+              %{"type" => "float"}
+            ]
+          }
+        }
+      }
+
+      message = ~s|Can't build schema! Reason: unknown type "float"|
+
+      assert_raise SchemaError, message, fn ->
+        JsonXema.new(input)
+      end
     end
   end
 end
