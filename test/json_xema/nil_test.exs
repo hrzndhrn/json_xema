@@ -3,7 +3,7 @@ defmodule Xema.NilTest do
 
   import JsonXema, only: [validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "'nil' schema" do
     setup do

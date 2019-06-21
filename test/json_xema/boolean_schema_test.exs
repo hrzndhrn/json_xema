@@ -3,7 +3,7 @@ defmodule Xema.BooleanSchemaTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "true schema:" do
     setup do
@@ -46,6 +46,11 @@ defmodule Xema.BooleanSchemaTest do
       assert(validate(schema, "foo") == {:error, %ValidationError{reason: %{type: false}}})
       assert(validate(schema, []) == {:error, %ValidationError{reason: %{type: false}}})
       assert(validate(schema, %{}) == {:error, %ValidationError{reason: %{type: false}}})
+    end
+
+    test "error message", %{schema: schema} do
+      assert {:error, error} = validate(schema, "foo")
+      assert Exception.message(error) == "Schema always fails validation."
     end
   end
 

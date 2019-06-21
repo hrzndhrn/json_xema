@@ -22,7 +22,7 @@ First, add JsonXema to your `mix.exs` dependencies:
 ```elixir
 def deps do
   [
-    {:json_xema, "~> 0.1"}
+    {:json_xema, "~> 0.3"}
   ]
 end
 ```

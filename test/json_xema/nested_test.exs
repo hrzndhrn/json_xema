@@ -3,7 +3,7 @@ defmodule Xema.NestedTest do
 
   import JsonXema, only: [validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "list of objects in one schema:" do
     setup do

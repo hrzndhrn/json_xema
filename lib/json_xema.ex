@@ -8,11 +8,8 @@ defmodule JsonXema do
   import ConvCase
 
   alias Jason
-  alias JsonXema.SchemaError
-  alias JsonXema.SchemaValidator
-  alias Xema.Format
-  alias Xema.Schema
-  alias Xema.ValidationError
+  alias JsonXema.{SchemaError, SchemaValidator, ValidationError}
+  alias Xema.{Format, Schema}
 
   @type_map %{
     "any" => :any,
@@ -88,7 +85,7 @@ defmodule JsonXema do
           |> Map.put_new("type", "any")
           |> schema()
         rescue
-          _ -> reraise SchemaError, "Can't build schema!", __STACKTRACE__
+          error -> reraise SchemaError, error, __STACKTRACE__
         end
 
       {:error, reason} ->
@@ -173,7 +170,7 @@ defmodule JsonXema do
        when type in @types,
        do: Map.get(@type_map, type)
 
-  defp get_type(_), do: raise(ArgumentError)
+  defp get_type(type), do: raise(ArgumentError, message: "unknown type #{inspect(type)}")
 
   defp update_key(key) when is_atom(key), do: key
 
@@ -310,8 +307,11 @@ defmodule JsonXema do
 
   defp map_error(%{__struct__: _} = struct), do: struct
 
-  defp map_error(error) when is_map(error),
-    do: for({key, value} <- error, into: %{}, do: map_error(key, value))
+  defp map_error(error) when is_map(error) do
+    for {key, value} <- error,
+        into: %{},
+        do: map_error(key, value)
+  end
 
   defp map_error(error) when is_list(error),
     do: Enum.map(error, &map_error/1)
@@ -330,7 +330,7 @@ defmodule JsonXema do
     do: {:properties, map_values(value, &map_error/1)}
 
   defp map_error(:format, value),
-    do: {"format", value |> to_string() |> ConvCase.to_kebab_case()}
+    do: {:format, value |> to_string() |> ConvCase.to_kebab_case()}
 
   defp map_error(:type, value)
        when is_boolean(value),
@@ -347,7 +347,9 @@ defmodule JsonXema do
           end)}
 
   defp map_error(:type, value),
-    do: {:type, @type_map_reverse |> Map.get(value)}
+    do: {:type, Map.get(@type_map_reverse, value)}
+
+  defp map_error(:value, value), do: {:value, value}
 
   defp map_error(key, value),
     do: {ConvCase.to_camel_case(key), map_error(value)}

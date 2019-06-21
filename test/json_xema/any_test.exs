@@ -3,7 +3,7 @@ defmodule JsonXema.AnyTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "'any' schema" do
     setup do
@@ -63,6 +63,7 @@ defmodule JsonXema.AnyTest do
     test "validate/2 with a value that is not in the enum", %{schema: schema} do
       assert {:error, error} = validate(schema, 2)
       assert error == %ValidationError{reason: %{value: 2, enum: [1, 1.2, [1], "foo"]}}
+      assert Exception.message(error) == ~s|Value 2 is not defined in enum.|
     end
 
     test "valid?/2 with a valid value", %{schema: schema} do
@@ -91,6 +92,7 @@ defmodule JsonXema.AnyTest do
     test "validate/2 with an invalid value", %{schema: schema} do
       assert {:error, error} = validate(schema, 1)
       assert error == %ValidationError{reason: %{not: :ok, value: 1}}
+      assert Exception.message(error) == ~s|Value is valid against schema from not, got 1.|
     end
   end
 
@@ -123,6 +125,9 @@ defmodule JsonXema.AnyTest do
       assert error == %ValidationError{
                reason: %{properties: %{"foo" => %{not: :ok, value: "foo"}}}
              }
+
+      assert Exception.message(error) ==
+               ~s|Value is valid against schema from not, got "foo", at ["foo"].|
     end
   end
 
@@ -147,6 +152,9 @@ defmodule JsonXema.AnyTest do
     test "validate/2 with an imvalid value", %{schema: schema} do
       assert {:error, error} = validate(schema, -1)
       assert error == %ValidationError{reason: %{allOf: [%{minimum: 0, value: -1}], value: -1}}
+
+      assert Exception.message(error) ==
+               ~s|No match of all schema.\n  Value -1 is less than minimum value of 0.|
     end
   end
 
@@ -179,6 +187,12 @@ defmodule JsonXema.AnyTest do
                  value: "foo"
                }
              }
+
+      assert Exception.message(error) == """
+             No match of any schema.
+               Expected "null", got "foo".
+               Expected "integer", got "foo".\
+             """
     end
   end
 
@@ -207,6 +221,7 @@ defmodule JsonXema.AnyTest do
     test "validate/2 with an invalid value", %{schema: schema} do
       assert {:error, error} = validate(schema, 15)
       assert error == %ValidationError{reason: %{oneOf: {:ok, [0, 1]}, value: 15}}
+      assert Exception.message(error) == ~s|More as one schema matches (indexes: [0, 1]).|
 
       assert {:error, error} = validate(schema, 4)
 
@@ -221,6 +236,12 @@ defmodule JsonXema.AnyTest do
                  value: 4
                }
              }
+
+      assert Exception.message(error) == """
+             No match of any schema.
+               Value 4 is not a multiple of 3.
+               Value 4 is not a multiple of 5.\
+             """
     end
   end
 
@@ -248,6 +269,7 @@ defmodule JsonXema.AnyTest do
     test "validate/2 with an invalid value", %{schema: schema} do
       assert {:error, error} = validate(schema, 15)
       assert error == %ValidationError{reason: %{oneOf: {:ok, [0, 1]}, value: 15}}
+      assert Exception.message(error) == ~s|More as one schema matches (indexes: [0, 1]).|
 
       assert {:error, error} = validate(schema, 4)
 
@@ -264,6 +286,12 @@ defmodule JsonXema.AnyTest do
                     value: 4
                   }}
              }
+
+      assert Exception.message(error) == """
+             No match of any schema.
+               Value 4 is not a multiple of 3.
+               Value 4 is not a multiple of 5.\
+             """
     end
   end
 end

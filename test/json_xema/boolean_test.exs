@@ -3,7 +3,7 @@ defmodule JsonXema.BooleanTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "'boolean' schema" do
     setup do
@@ -37,6 +37,7 @@ defmodule JsonXema.BooleanTest do
     test "validate/2 with non boolean value", %{schema: schema} do
       assert {:error, error} = validate(schema, "true")
       assert error == %ValidationError{reason: %{type: "boolean", value: "true"}}
+      assert Exception.message(error) == ~s|Expected "boolean", got "true".|
     end
   end
 end

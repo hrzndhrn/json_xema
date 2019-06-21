@@ -3,7 +3,7 @@ defmodule JsonXema.ObjectTest do
 
   import JsonXema, only: [valid?: 2, validate: 2]
 
-  alias Xema.ValidationError
+  alias JsonXema.ValidationError
 
   describe "empty object schema:" do
     setup do
@@ -17,6 +17,7 @@ defmodule JsonXema.ObjectTest do
     test "validate/2 with a string", %{schema: schema} do
       assert {:error, error} = validate(schema, "foo")
       assert error == %ValidationError{reason: %{type: "object", value: "foo"}}
+      assert Exception.message(error) == ~s|Expected "object", got "foo".|
     end
 
     test "valid?/2 with a valid value", %{schema: schema} do
@@ -64,6 +65,8 @@ defmodule JsonXema.ObjectTest do
                }
              }
 
+      assert Exception.message(error) == ~s|Expected "number", got "foo", at ["foo"].|
+
       assert {:error, error} = validate(schema, %{"foo" => "foo", "bar" => 2})
 
       assert error == %ValidationError{
@@ -74,6 +77,11 @@ defmodule JsonXema.ObjectTest do
                  }
                }
              }
+
+      assert Exception.message(error) == """
+             Expected "string", got 2, at ["bar"].
+             Expected "number", got "foo", at ["foo"].\
+             """
     end
 
     test "validate/2 with invalid values (string keys)", %{schema: schema} do
@@ -86,6 +94,8 @@ defmodule JsonXema.ObjectTest do
                  }
                }
              }
+
+      assert Exception.message(error) == ~s|Expected "number", got "foo", at ["foo"].|
     end
   end
 
@@ -103,6 +113,7 @@ defmodule JsonXema.ObjectTest do
     test "validate/2 with too less properties", %{schema: schema} do
       assert {:error, error} = validate(schema, %{foo: 42})
       assert error == %ValidationError{reason: %{minProperties: 2, value: %{foo: 42}}}
+      assert Exception.message(error) == ~s|Expected at least 2 properties, got %{foo: 42}.|
     end
 
     test "validate/2 with valid amount of properties", %{schema: schema} do
@@ -115,6 +126,9 @@ defmodule JsonXema.ObjectTest do
       assert error == %ValidationError{
                reason: %{maxProperties: 3, value: %{a: 1, b: 2, c: 3, d: 4}}
              }
+
+      assert Exception.message(error) ==
+               ~s|Expected at most 3 properties, got %{a: 1, b: 2, c: 3, d: 4}.|
     end
   end
 
@@ -147,6 +161,8 @@ defmodule JsonXema.ObjectTest do
                  }
                }
              }
+
+      assert Exception.message(error) == ~s|Expected only defined properties, got key ["add"].|
     end
 
     test "validate/2 with additional properties", %{schema: schema} do
@@ -160,6 +176,11 @@ defmodule JsonXema.ObjectTest do
                  }
                }
              }
+
+      assert Exception.message(error) == """
+             Expected only defined properties, got key ["add"].
+             Expected only defined properties, got key ["plus"].\
+             """
     end
   end
 
@@ -193,6 +214,8 @@ defmodule JsonXema.ObjectTest do
                  properties: %{"add" => %{type: "integer", value: "invalid"}}
                }
              }
+
+      assert Exception.message(error) == ~s|Expected "integer", got "invalid", at ["add"].|
     end
 
     test "validate/2 with invalid additional properties", %{schema: schema} do
@@ -211,6 +234,11 @@ defmodule JsonXema.ObjectTest do
                  }
                }
              }
+
+      assert Exception.message(error) == """
+             Expected "integer", got "invalid", at ["add"].
+             Expected "integer", got "+", at ["plus"].\
+             """
     end
   end
 
@@ -245,6 +273,8 @@ defmodule JsonXema.ObjectTest do
                  required: ["foo"]
                }
              }
+
+      assert Exception.message(error) == ~s|Required properties are missing: ["foo"].|
     end
   end
 
@@ -277,6 +307,8 @@ defmodule JsonXema.ObjectTest do
                  required: ["a", "c"]
                }
              }
+
+      assert Exception.message(error) == ~s|Required properties are missing: ["a", "c"].|
     end
   end
 
@@ -312,6 +344,8 @@ defmodule JsonXema.ObjectTest do
                  }
                }
              }
+
+      assert Exception.message(error) == ~s|Expected only defined properties, got key ["x_1"].|
     end
   end
 
@@ -367,6 +401,9 @@ defmodule JsonXema.ObjectTest do
                  :dependencies => %{"b" => "c"}
                }
              }
+
+      assert Exception.message(error) ==
+               ~s|Dependencies for "b" failed. Missing required key "c".|
     end
   end
 
@@ -408,6 +445,11 @@ defmodule JsonXema.ObjectTest do
                  dependencies: %{"b" => %{required: ["c"]}}
                }
              }
+
+      assert Exception.message(error) == """
+             Dependencies for "b" failed.
+               Required properties are missing: ["c"].\
+             """
     end
   end
 
@@ -438,6 +480,43 @@ defmodule JsonXema.ObjectTest do
     test "a penny", %{schema: schema} do
       assert {:error, error} = validate(schema, %{"penny" => 1})
       assert error == %ValidationError{reason: %{dependencies: %{"penny" => "pound"}}}
+
+      assert Exception.message(error) ==
+               ~s|Dependencies for "penny" failed. Missing required key "pound".|
+    end
+  end
+
+  describe "propertyNames validation" do
+    setup do
+      %{schema: ~s(
+        {
+          "propertyNames": {
+            "maxLength": 3
+          }
+        }
+        ) |> Jason.decode!() |> JsonXema.new()}
+    end
+
+    test "all property names valid", %{schema: schema} do
+      data = %{"f" => %{}, "foo" => %{}}
+      assert validate(schema, data) == :ok
+    end
+
+    test "some property names invalid", %{schema: schema} do
+      data = %{"foo" => %{}, "foobar" => %{}}
+      assert {:error, error} = validate(schema, data)
+
+      assert error == %ValidationError{
+               reason: %{
+                 propertyNames: [{"foobar", %{maxLength: 3, value: "foobar"}}],
+                 value: ["foo", "foobar"]
+               }
+             }
+
+      assert Exception.message(error) == """
+             Invalid property names.
+               "foobar" : Expected maximum length of 3, got "foobar".\
+             """
     end
   end
 end
