@@ -519,4 +519,41 @@ defmodule JsonXema.ObjectTest do
              """
     end
   end
+
+  describe "object schema with required property in snake case:" do
+    setup do
+      %{
+        schema: ~s({
+          "type": "object",
+          "properties": {
+            "foo_bar": {"type": "integer"}
+          },
+          "required": ["foo_bar"]
+        }) |> Jason.decode!() |> JsonXema.new()
+      }
+    end
+
+    test "with valid data", %{schema: schema} do
+      assert validate(schema, %{"foo_bar" => 5}) == :ok
+    end
+
+    test "with invalid data", %{schema: schema} do
+      assert {:error, error} = validate(schema, %{"foo_bar" => "baz"})
+
+      assert error == %ValidationError{
+               reason: %{
+                 properties: %{"foo_bar" => %{type: "integer", value: "baz"}}
+               }
+             }
+    end
+
+    test "with an empty map", %{schema: schema} do
+      assert {:error, error} = validate(schema, %{})
+
+      assert error == %ValidationError{
+               message: nil,
+               reason: %{required: ["foo_bar"]}
+             }
+    end
+  end
 end
