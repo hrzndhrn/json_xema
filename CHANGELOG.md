@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 -
+
++ Bugfix for https://github.com/hrzndhrn/json_xema/issues/19
+
 ## 0.3.0 2019/06/21
 
 + update `xema` to 0.9.1
