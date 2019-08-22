@@ -58,7 +58,7 @@ defmodule JsonXema.MixProject do
       {:credo, "~> 1.0", only: [:dev, :test]},
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:ex_json_schema, "~> 0.5"},
+      {:ex_json_schema, "~> 0.5", only: :dev},
       {:excoveralls, "~> 0.8", only: :test},
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
