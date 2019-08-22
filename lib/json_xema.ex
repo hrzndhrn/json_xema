@@ -68,7 +68,7 @@ defmodule JsonXema do
       ...> |> JsonXema.new()
       %JsonXema{refs: %{}, schema: %Xema.Schema{type: :string}}
   """
-  @spec new(boolean | map, keyword) :: %JsonXema{}
+  @spec new(boolean | map, keyword) :: JsonXema.t()
   def new(schema, opts)
 
   @doc false

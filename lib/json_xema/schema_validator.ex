@@ -3,8 +3,6 @@ defmodule JsonXema.SchemaValidator do
   # This module contains validators to check schemas against the official
   # JSON Schemas.
 
-  @dialyzer {:nowarn_function, validate: 2}
-
   alias JsonXema.SchemaError
 
   @draft04 Xema.new(
