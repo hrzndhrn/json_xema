@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2 2019/08/25
+
++ Update deps.
+
 ## 0.3.2 2019/08/22
 
 + Update specs.
