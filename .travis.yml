@@ -3,11 +3,12 @@ language: elixir
 elixir:
   - 1.7.4
   - 1.8.2
+  - 1.9.2
 
 otp_release:
   - 20.3
   - 21.3
-  - 22.0
+  - 22.1
 
 before_script:
   - mix do deps.get, deps.compile
@@ -15,7 +16,7 @@ before_script:
   - travis_wait mix dialyzer --plt
 
 script:
-  - if [[ "$TRAVIS_ELIXIR_VERSION" == "1.8"* ]]; then mix format --check-formatted ;fi
+  - if [[ "$TRAVIS_ELIXIR_VERSION" == "1.9"* ]]; then mix format --check-formatted ;fi
   - mix credo --strict
   - mix coveralls.travis
   - mix dialyzer --halt-exit-status

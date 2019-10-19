@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.3.3",
+      version: "0.4.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -19,7 +19,8 @@ defmodule JsonXema.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.travis": :test,
-        "coveralls.html": :test
+        "coveralls.html": :test,
+        "gen.test_suite": :test
       ],
       docs: [
         extras: [
@@ -63,7 +64,7 @@ defmodule JsonXema.MixProject do
       {:httpoison, "~> 1.0", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
       {:jason, "~> 1.0", only: [:dev, :test]},
-      {:xema, "~> 0.9"}
+      {:xema, "~> 0.11"}
     ]
   end
 

@@ -72,12 +72,12 @@ defmodule JsonXema do
   def new(schema, opts)
 
   @doc false
-  @spec init(boolean | map) :: Schema.t()
-  def init(bool)
+  @spec init(boolean | map, keyword) :: Schema.t()
+  def init(bool, _)
       when is_boolean(bool),
       do: schema(bool)
 
-  def init(map) when is_map(map) do
+  def init(map, opts) when is_map(map) do
     case validate(map) do
       {:ok, data} ->
         try do

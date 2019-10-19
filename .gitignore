@@ -27,3 +27,6 @@ json_xema-*.tar
 # dialyzer plt
 /test/support/plts/*.plt
 /test/support/plts/*.plt.hash
+
+# JSON-Schema Test Suite
+/JSON-Schema-Test-Suite/
