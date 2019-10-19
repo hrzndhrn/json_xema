@@ -77,7 +77,7 @@ defmodule JsonXema do
       when is_boolean(bool),
       do: schema(bool)
 
-  def init(map, opts) when is_map(map) do
+  def init(map, _) when is_map(map) do
     case validate(map) do
       {:ok, data} ->
         try do
