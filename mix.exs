@@ -31,7 +31,6 @@ defmodule JsonXema.MixProject do
         ]
       ],
       dialyzer: [
-        ignore_warnings: ".dialyzer_ignore.exs",
         plt_file: {:no_warn, "test/support/plts/dialyzer.plt"}
       ]
     ]
