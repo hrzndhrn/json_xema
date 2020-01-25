@@ -12,6 +12,9 @@ defmodule Test.RemoteLoader do
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:error, "Remote schema '#{uri}' not found."}
 
+      {:ok, %HTTPoison.Response{status_code: 301, headers: headers}} ->
+        fetch(headers |> Enum.into(%{}) |> Map.get("Location") |> URI.parse())
+
       {:ok, %HTTPoison.Response{status_code: code}} ->
         {:error, "HTTP Error - code: #{code}"}
 
