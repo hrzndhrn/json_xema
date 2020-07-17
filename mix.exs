@@ -56,7 +56,7 @@ defmodule JsonXema.MixProject do
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.2", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
-      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:ex_json_schema, "~> 0.5", only: :dev},
       {:excoveralls, "~> 0.8", only: :test},
@@ -80,7 +80,8 @@ defmodule JsonXema.MixProject do
         "docs/readme.md",
         "docs/usage.md",
         "docs/loader.md",
-        "docs/unsupported.md"
+        "docs/unsupported.md",
+        "CANGELOG.md"
       ]
     ]
   end
