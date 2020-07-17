@@ -113,6 +113,25 @@ defmodule JsonXema.ValidationError do
 
   def travers_errors(error, acc, fun, opts), do: fun.(error, opts[:path], acc)
 
+  @spec to_jsonable({:error, map} | map) :: map()
+  def to_jsonable({:error, %__MODULE__{reason: reason}}), do: to_jsonable(reason)
+
+  def to_jsonable({:error, error}), do: to_jsonable(error)
+
+  def to_jsonable(error), do: do_to_jsonable(error)
+
+  # Helpers
+
+  defp do_to_jsonable(%{properties: properties}) do
+    %{properties: Enum.into(properties, %{}, fn {key, error} -> {key, do_to_jsonable(error)} end)}
+  end
+
+  defp do_to_jsonable(%{items: items}) do
+    %{items: Enum.into(items, %{}, fn {index, error} -> {index, do_to_jsonable(error)} end)}
+  end
+
+  defp do_to_jsonable(error), do: error
+
   defp format_error(%{exclusiveMinimum: minimum, value: value}, path, acc)
        when minimum == value do
     msg = "Value #{inspect(minimum)} equals exclusive minimum value of #{inspect(minimum)}"

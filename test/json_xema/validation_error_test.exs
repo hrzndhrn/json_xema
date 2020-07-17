@@ -73,6 +73,63 @@ defmodule JsonXema.ValidationErrorTest do
     end
   end
 
+  describe "to_jsonable/1" do
+    test "returns json for a tiny schema" do
+      schema = JsonXema.new(%{"type" => "number"})
+
+      data = "data"
+
+      expected = %{type: "number", value: "data"}
+
+      assert {:error, error} = exception = JsonXema.validate(schema, data)
+      assert ValidationError.to_jsonable(error.reason) == expected
+      assert ValidationError.to_jsonable(exception) == expected
+      assert {:ok, _json} = ValidationError.to_jsonable(exception) |> Jason.encode()
+    end
+
+    test "returns json for schema" do
+      schema =
+        JsonXema.new(%{
+          "properties" => %{
+            "int" => %{"type" => "integer"},
+            "names" => %{
+              "type" => "array",
+              "items" => %{"type" => "string"}
+            },
+            "num" => %{
+              "anyOf" => [
+                %{"type" => "integer"},
+                %{"type" => "number"}
+              ]
+            }
+          }
+        })
+
+      data = %{"int" => "x", "names" => [1, "x", 5], "num" => :foo}
+
+      expected = %{
+        properties: %{
+          "int" => %{type: "integer", value: "x"},
+          "names" => %{
+            items: %{0 => %{type: "string", value: 1}, 2 => %{type: "string", value: 5}}
+          },
+          "num" => %{
+            anyOf: [
+              %{type: "integer", value: :foo},
+              %{type: "number", value: :foo}
+            ],
+            value: :foo
+          }
+        }
+      }
+
+      assert {:error, error} = exception = JsonXema.validate(schema, data)
+      assert ValidationError.to_jsonable(error.reason) == expected
+      assert ValidationError.to_jsonable(exception) == expected
+      assert {:ok, _json} = ValidationError.to_jsonable(exception) |> Jason.encode()
+    end
+  end
+
   describe "exception/1" do
     test "returns unexpected error for unexpected reason" do
       error = ValidationError.exception(reason: "foo")
