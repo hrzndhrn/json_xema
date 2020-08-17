@@ -90,18 +90,19 @@ defmodule JsonXema.StringTest do
       %{
         schema: ~s({
           "type": "string",
-          "enum": ["one", "two"]
+          "enum": ["one", "two", "foo_bar"]
         }) |> Jason.decode!() |> JsonXema.new()
       }
     end
 
     test "validate/2 with a value from the enum", %{schema: schema} do
       assert validate(schema, "two") == :ok
+      assert validate(schema, "foo_bar") == :ok
     end
 
     test "validate/2 with a value that is not in the enum", %{schema: schema} do
       assert {:error, error} = validate(schema, "foo")
-      assert error == %ValidationError{reason: %{enum: ["one", "two"], value: "foo"}}
+      assert error == %ValidationError{reason: %{enum: ["one", "two", "foo_bar"], value: "foo"}}
       assert Exception.message(error) == ~s|Value "foo" is not defined in enum.|
     end
   end

@@ -332,6 +332,9 @@ defmodule JsonXema do
   defp map_error(:required, value),
     do: {:required, value}
 
+  defp map_error(:enum, value),
+    do: {:enum, value}
+
   defp map_error(:format, value),
     do: {:format, value |> to_string() |> ConvCase.to_kebab_case()}
 
