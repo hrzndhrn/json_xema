@@ -2,6 +2,10 @@
 
 ## 0.4.0 2019/10/19
 
++ Fix conversion of letter case for enum.
+
+## 0.4.0 2019/10/19
+
 + Update `xema` to 0.11.
 
 ## 0.3.3 2019/08/25

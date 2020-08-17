@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.4.0",
+      version: "0.4.1",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -54,13 +54,13 @@ defmodule JsonXema.MixProject do
       {:benchee, "~> 1.0", only: :dev},
       {:benchee_markdown, "~> 0.2", only: :dev},
       {:conv_case, "~> 0.2"},
-      {:cowboy, "~> 2.2", only: :test},
+      {:cowboy, "== 2.7.0", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
-      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:ex_json_schema, "~> 0.5", only: :dev},
       {:excoveralls, "~> 0.8", only: :test},
-      {:httpoison, "~> 1.0", only: :test},
+      {:httpoison, "== 1.6.2", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
       {:jason, "~> 1.0", only: [:dev, :test]},
       {:xema, "~> 0.11"}
@@ -80,7 +80,8 @@ defmodule JsonXema.MixProject do
         "docs/readme.md",
         "docs/usage.md",
         "docs/loader.md",
-        "docs/unsupported.md"
+        "docs/unsupported.md",
+        "CHANGELOG.md"
       ]
     ]
   end
