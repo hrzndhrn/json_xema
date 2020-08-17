@@ -81,7 +81,7 @@ defmodule JsonXema.MixProject do
         "docs/usage.md",
         "docs/loader.md",
         "docs/unsupported.md",
-        "CANGELOG.md"
+        "CHANGELOG.md"
       ]
     ]
   end
