@@ -8,7 +8,6 @@ defmodule JsonSchemaTestSuite.Draft4.DefinitionsTest do
       %{schema: JsonXema.new(%{"$ref" => "http://json-schema.org/draft-04/schema#"})}
     end
 
-    @tag :only
     test "valid definition schema", %{schema: schema} do
       assert valid?(schema, %{"definitions" => %{"foo" => %{"type" => "integer"}}})
     end
