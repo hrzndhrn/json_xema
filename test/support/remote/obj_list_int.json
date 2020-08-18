@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "properties": {
+    "int": {"ref": "int.json"},
+    "another_int": {"ref": "int.json"},
+    "ints": {"ref": "list_int.json"}
+  }
+}
