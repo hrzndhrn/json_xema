@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.4.0 2019/10/19
+## 0.4.2 2019/08/18
+
++ Minor changes.
+
+## 0.4.1 2020/08/17
 
 + Fix conversion of letter case for enum.
 

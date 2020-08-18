@@ -265,7 +265,6 @@ defmodule JsonXema.AnyTest do
       assert validate(schema, 10) == :ok
     end
 
-    @tag :only
     test "validate/2 with an invalid value", %{schema: schema} do
       assert {:error, error} = validate(schema, 15)
       assert error == %ValidationError{reason: %{oneOf: {:ok, [0, 1]}, value: 15}}

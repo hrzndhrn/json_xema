@@ -26,16 +26,16 @@ defmodule JsonXema do
 
   @types Map.keys(@type_map)
 
-  defp json_keywords,
-    do:
-      %Schema{}
-      |> Map.delete(:data)
-      |> Map.delete(:__struct__)
-      |> Map.keys()
-      |> Enum.map(&Atom.to_string/1)
-      |> Enum.map(&to_camel_case/1)
-      |> Enum.concat(["$ref"])
-      |> MapSet.new()
+  defp json_keywords do
+    %Schema{}
+    |> Map.delete(:data)
+    |> Map.delete(:__struct__)
+    |> Map.keys()
+    |> Enum.map(&Atom.to_string/1)
+    |> Enum.map(&to_camel_case/1)
+    |> Enum.concat(["$ref"])
+    |> MapSet.new()
+  end
 
   @on_load :load_atoms
   @doc false
@@ -73,9 +73,7 @@ defmodule JsonXema do
 
   @doc false
   @spec init(boolean | map, keyword) :: Schema.t()
-  def init(bool, _)
-      when is_boolean(bool),
-      do: schema(bool)
+  def init(bool, _) when is_boolean(bool), do: schema(bool)
 
   def init(map, _) when is_map(map) do
     case validate(map) do

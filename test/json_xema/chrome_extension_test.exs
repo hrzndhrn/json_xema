@@ -18,7 +18,6 @@ defmodule JsonXema.ChromeExtensionTest do
       %{schema: JsonXema.new(schema(), inline: false)}
     end
 
-    @tag :only
     test "with valid data", %{schema: schema} do
       assert validate(schema, data()) == :ok
     end

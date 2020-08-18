@@ -228,11 +228,11 @@ defmodule JsonXema.RefRemoteTest do
       %{
         schema:
           ~s({
-          "type": "object",
-          "properties": {
-            "int": {"ref": "integer.json"}
-          }
-        })
+            "type": "object",
+            "properties": {
+              "int": {"ref": "integer.json"}
+            }
+          })
           |> Jason.decode!()
           |> JsonXema.new(loader: Test.FileLoader)
       }
@@ -240,6 +240,204 @@ defmodule JsonXema.RefRemoteTest do
 
     test "valid data", %{schema: schema} do
       assert validate(schema, %{"int" => 66})
+    end
+  end
+
+  describe "file circular ref with ref" do
+    setup do
+      %{
+        schema:
+          ~s({"ref": "circular.json"})
+          |> Jason.decode!()
+          |> JsonXema.new(loader: Test.FileLoader)
+      }
+    end
+
+    test "check schema", %{schema: schema} do
+      assert schema ==
+               %JsonXema{
+                 refs: %{
+                   "circular.json" => %JsonXema{
+                     schema: %Xema.Schema{
+                       properties: %{
+                         "bar" => %Xema.Schema{type: :integer},
+                         "foo" => %Xema.Schema{
+                           ref: %Xema.Ref{
+                             pointer: "circular.json",
+                             uri: %URI{
+                               authority: nil,
+                               fragment: nil,
+                               host: nil,
+                               path: "circular.json",
+                               port: nil,
+                               query: nil,
+                               scheme: nil,
+                               userinfo: nil
+                             }
+                           }
+                         }
+                       },
+                       type: :map
+                     },
+                     refs: %{}
+                   }
+                 },
+                 schema: %Xema.Schema{
+                   ref: %Xema.Ref{
+                     pointer: "circular.json",
+                     uri: %URI{
+                       authority: nil,
+                       fragment: nil,
+                       host: nil,
+                       path: "circular.json",
+                       port: nil,
+                       query: nil,
+                       scheme: nil,
+                       userinfo: nil
+                     }
+                   }
+                 }
+               }
+    end
+
+    test "validate/2 with valid data", %{schema: schema} do
+      assert validate(schema, %{"foo" => %{"bar" => 1}, "bar" => 2}) == :ok
+    end
+  end
+
+  describe "file ref with refs" do
+    setup do
+      %{
+        schema:
+          ~s({"ref": "obj_list_int.json"})
+          |> Jason.decode!()
+          |> JsonXema.new(loader: Test.FileLoader)
+      }
+    end
+
+    test "check schema", %{schema: schema} do
+      assert schema == %JsonXema{
+               refs: %{},
+               schema: %Xema.Schema{
+                 properties: %{
+                   "another_int" => %Xema.Schema{type: :integer},
+                   "int" => %Xema.Schema{type: :integer},
+                   "ints" => %Xema.Schema{items: %Xema.Schema{type: :integer}, type: :list}
+                 },
+                 type: :map
+               }
+             }
+    end
+  end
+
+  describe "file ref with refs (inline: false)" do
+    setup do
+      %{
+        schema:
+          ~s({"ref": "obj_list_int.json"})
+          |> Jason.decode!()
+          |> JsonXema.new(loader: Test.FileLoader, inline: false)
+      }
+    end
+
+    test "schema", %{schema: schema} do
+      assert schema == %JsonXema{
+               refs: %{
+                 "int.json" => %JsonXema{
+                   refs: %{},
+                   schema: %Xema.Schema{type: :integer}
+                 },
+                 "list_int.json" => %JsonXema{
+                   refs: %{},
+                   schema: %Xema.Schema{
+                     items: %Xema.Schema{
+                       ref: %Xema.Ref{
+                         pointer: "int.json",
+                         uri: %URI{
+                           authority: nil,
+                           fragment: nil,
+                           host: nil,
+                           path: "int.json",
+                           port: nil,
+                           query: nil,
+                           scheme: nil,
+                           userinfo: nil
+                         }
+                       }
+                     },
+                     type: :list
+                   }
+                 },
+                 "obj_list_int.json" => %JsonXema{
+                   refs: %{},
+                   schema: %Xema.Schema{
+                     properties: %{
+                       "another_int" => %Xema.Schema{
+                         ref: %Xema.Ref{
+                           pointer: "int.json",
+                           uri: %URI{
+                             authority: nil,
+                             fragment: nil,
+                             host: nil,
+                             path: "int.json",
+                             port: nil,
+                             query: nil,
+                             scheme: nil,
+                             userinfo: nil
+                           }
+                         }
+                       },
+                       "int" => %Xema.Schema{
+                         ref: %Xema.Ref{
+                           pointer: "int.json",
+                           uri: %URI{
+                             authority: nil,
+                             fragment: nil,
+                             host: nil,
+                             path: "int.json",
+                             port: nil,
+                             query: nil,
+                             scheme: nil,
+                             userinfo: nil
+                           }
+                         }
+                       },
+                       "ints" => %Xema.Schema{
+                         ref: %Xema.Ref{
+                           pointer: "list_int.json",
+                           uri: %URI{
+                             authority: nil,
+                             fragment: nil,
+                             host: nil,
+                             path: "list_int.json",
+                             port: nil,
+                             query: nil,
+                             scheme: nil,
+                             userinfo: nil
+                           }
+                         }
+                       }
+                     },
+                     type: :map
+                   }
+                 }
+               },
+               schema: %Xema.Schema{
+                 ref: %Xema.Ref{
+                   pointer: "obj_list_int.json",
+                   uri: %URI{
+                     authority: nil,
+                     fragment: nil,
+                     host: nil,
+                     path: "obj_list_int.json",
+                     port: nil,
+                     query: nil,
+                     scheme: nil,
+                     userinfo: nil
+                   }
+                 }
+               }
+             }
     end
   end
 end
