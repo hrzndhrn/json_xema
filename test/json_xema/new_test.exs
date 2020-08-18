@@ -286,7 +286,6 @@ defmodule JsonXema.NewTest do
   end
 
   describe "new/1 without schema" do
-    @tag :only
     test "invalid data" do
       input = %{
         "properties" => %{

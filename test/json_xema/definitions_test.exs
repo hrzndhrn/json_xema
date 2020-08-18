@@ -32,7 +32,6 @@ defmodule JsonXema.DefinitionsTest do
         ) |> Jason.decode!() |> JsonXema.new(inline: false)}
     end
 
-    @tag :only
     test "with valid definition", %{schema: schema} do
       data = %{"definitions" => %{"foo" => %{"type" => "integer"}}}
       assert valid?(schema, data)
