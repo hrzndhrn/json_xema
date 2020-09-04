@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.5.0 2020/08/27
+
++ Update xema.
+
+### Breaking changes
+
++ The error data structure for `array` `items` has changed from a `list` of
+  `tuple`s to a `map`. This change allows you to convert `reason` directly to
+  JSON.
+
+since: 0.5.0
+```elixir
+iex> schema = ~s({"type" : "array", "items" : {"type" : "string" }})
+...>   |> Jason.decode!()
+...>   |> JsonXema.new()
+iex> validate(schema, [1, 2, "foo"])
+%ValidationError{
+  reason: %{
+    items: %{2 => %{type: "integer", value: "foo"}}
+  }
+}
+```
+
+before: 0.5.0
+```elixir
+iex> schema = ~s({"type" : "array", "items" : {"type" : "string" }})
+...>   |> Jason.decode!()
+...>   |> JsonXema.new()
+iex> validate(schema, [1, 2, "foo"])
+%ValidationError{
+  reason: %{
+    items: [{2, %{type: "integer", value: "foo"}}]
+  }
+}
+```
+
 ## 0.4.3 2020/08/26
 
 + Update deps.
