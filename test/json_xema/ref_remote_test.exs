@@ -132,7 +132,7 @@ defmodule JsonXema.RefRemoteTest do
       assert error == %ValidationError{
                reason: %{
                  properties: %{
-                   "list" => %{items: [{0, %{type: "integer", value: "1"}}]}
+                   "list" => %{items: %{0 => %{type: "integer", value: "1"}}}
                  }
                }
              }

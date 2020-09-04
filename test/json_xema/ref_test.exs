@@ -265,10 +265,10 @@ defmodule JsonXema.RefTest do
 
     test "validate/2 with invalid value", %{schema: schema} do
       assert {:error, error} = validate(schema, [1, "2"])
-      assert error == %ValidationError{reason: %{items: [{1, %{type: "integer", value: "2"}}]}}
+      assert error == %ValidationError{reason: %{items: %{1 => %{type: "integer", value: "2"}}}}
 
       assert {:error, error} = validate(schema, [1, 2, "3"])
-      assert error == %ValidationError{reason: %{items: [{2, %{type: "integer", value: "3"}}]}}
+      assert error == %ValidationError{reason: %{items: %{2 => %{type: "integer", value: "3"}}}}
     end
   end
 
@@ -466,27 +466,25 @@ defmodule JsonXema.RefTest do
                  reason: %{
                    properties: %{
                      "nodes" => %{
-                       items: [
-                         {0,
-                          %{
-                            properties: %{
-                              "subtree" => %{
-                                properties: %{
-                                  "nodes" => %{
-                                    items: [
-                                      {1,
-                                       %{
-                                         properties: %{
-                                           "subtree" => %{required: ["nodes"]}
-                                         }
-                                       }}
-                                    ]
-                                  }
-                                }
-                              }
-                            }
-                          }}
-                       ]
+                       items: %{
+                         0 => %{
+                           properties: %{
+                             "subtree" => %{
+                               properties: %{
+                                 "nodes" => %{
+                                   items: %{
+                                     1 => %{
+                                       properties: %{
+                                         "subtree" => %{required: ["nodes"]}
+                                       }
+                                     }
+                                   }
+                                 }
+                               }
+                             }
+                           }
+                         }
+                       }
                      }
                    }
                  }

@@ -87,7 +87,13 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 integers with invalid list", %{integers: schema} do
       assert {:error, error} = validate(schema, [1, 2, "foo"])
-      assert error = %ValidationError{reason: %{items: [{2, %{type: "integer", value: "foo"}}]}}
+
+      assert error = %ValidationError{
+               reason: %{
+                 items: %{2 => %{type: "integer", value: "foo"}}
+               }
+             }
+
       assert Exception.message(error) == ~s|Expected "integer", got "foo", at [2].|
     end
 
@@ -162,17 +168,17 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 with invalid values", %{schema: schema} do
       assert {:error, error} = validate(schema, ["foo", "bar"])
-      assert error == %ValidationError{reason: %{items: [{1, %{type: "number", value: "bar"}}]}}
+      assert error == %ValidationError{reason: %{items: %{1 => %{type: "number", value: "bar"}}}}
       assert Exception.message(error) == ~s|Expected "number", got "bar", at [1].|
 
       assert {:error, error} = validate(schema, ["x", 33])
-      assert error == %ValidationError{reason: %{items: [{0, %{value: "x", minLength: 3}}]}}
+      assert error == %ValidationError{reason: %{items: %{0 => %{value: "x", minLength: 3}}}}
       assert Exception.message(error) == ~s|Expected minimum length of 3, got "x", at [0].|
     end
 
     test "validate/2 with invalid value and additional item", %{schema: schema} do
       assert {:error, error} = validate(schema, ["x", 33, 7])
-      assert error == %ValidationError{reason: %{items: [{0, %{value: "x", minLength: 3}}]}}
+      assert error == %ValidationError{reason: %{items: %{0 => %{value: "x", minLength: 3}}}}
       assert Exception.message(error) == ~s|Expected minimum length of 3, got "x", at [0].|
     end
 
@@ -207,7 +213,7 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 with additional item", %{schema: schema} do
       assert {:error, error} = validate(schema, ["foo", 42, "add"])
-      assert error == %ValidationError{reason: %{items: [{2, %{additionalItems: false}}]}}
+      assert error == %ValidationError{reason: %{items: %{2 => %{additionalItems: false}}}}
       assert Exception.message(error) == ~s|Unexpected additional item, at [2].|
     end
   end
@@ -236,7 +242,7 @@ defmodule JsonXema.ArrayTest do
 
     test "validate/2 with invalid additional item", %{schema: schema} do
       assert {:error, error} = validate(schema, [11, "twelve", 13])
-      assert error == %ValidationError{reason: %{items: [{2, %{type: "string", value: 13}}]}}
+      assert error == %ValidationError{reason: %{items: %{2 => %{type: "string", value: 13}}}}
       assert Exception.message(error) == ~s|Expected "string", got 13, at [2].|
     end
   end
