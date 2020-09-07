@@ -111,6 +111,14 @@ defmodule JsonXema.ValidationError do
         fn {key, value}, acc -> travers_errors(value, acc, fun, path: opts[:path] ++ [key]) end
       )
 
+  def travers_errors(errors, acc, fun, opts) when is_list(errors) do
+    errors
+    |> Enum.flat_map(fn error ->
+      travers_errors(error, [], fun, opts)
+    end)
+    |> Enum.concat(acc)
+  end
+
   def travers_errors(error, acc, fun, opts), do: fun.(error, opts[:path], acc)
 
   defp format_error(%{exclusiveMinimum: minimum, value: value}, path, acc)

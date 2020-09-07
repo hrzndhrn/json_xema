@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.5.0",
+      version: "0.6.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -15,6 +15,7 @@ defmodule JsonXema.MixProject do
       test_coverage: [tool: ExCoveralls],
       source_url: "https://github.com/hrzndhrn/json_xema",
       preferred_cli_env: [
+        carp: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
@@ -63,7 +64,7 @@ defmodule JsonXema.MixProject do
       {:httpoison, "== 1.6.2", only: :test},
       {:inch_ex, "~> 2.0.0-rc1", only: [:dev, :test]},
       {:jason, "~> 1.0", only: [:dev, :test]},
-      {:xema, "~> 0.12"}
+      {:xema, "~> 0.13"}
     ]
   end
 
@@ -87,6 +88,9 @@ defmodule JsonXema.MixProject do
   end
 
   defp aliases do
-    [bench: ["run bench/run.exs"]]
+    [
+      bench: ["run bench/run.exs"],
+      carp: "test --seed 0 --max-failures 1 --trace"
+    ]
   end
 end

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0 2020/09/07
+
++ Adding option `:fail` to `Xema.validate/3`.
+
 ## 0.5.0 2020/08/27
 
 + Update xema.
