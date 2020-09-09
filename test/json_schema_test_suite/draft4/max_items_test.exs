@@ -3,24 +3,24 @@ defmodule JsonSchemaTestSuite.Draft4.MaxItemsTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "maxItems validation" do
+  describe ~s|maxItems validation| do
     setup do
       %{schema: JsonXema.new(%{"maxItems" => 2})}
     end
 
-    test "shorter is valid", %{schema: schema} do
+    test ~s|shorter is valid|, %{schema: schema} do
       assert valid?(schema, [1])
     end
 
-    test "exact length is valid", %{schema: schema} do
+    test ~s|exact length is valid|, %{schema: schema} do
       assert valid?(schema, [1, 2])
     end
 
-    test "too long is invalid", %{schema: schema} do
+    test ~s|too long is invalid|, %{schema: schema} do
       refute valid?(schema, [1, 2, 3])
     end
 
-    test "ignores non-arrays", %{schema: schema} do
+    test ~s|ignores non-arrays|, %{schema: schema} do
       assert valid?(schema, "foobar")
     end
   end

@@ -3,32 +3,32 @@ defmodule JsonSchemaTestSuite.Draft4.MinPropertiesTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "minProperties validation" do
+  describe ~s|minProperties validation| do
     setup do
       %{schema: JsonXema.new(%{"minProperties" => 1})}
     end
 
-    test "longer is valid", %{schema: schema} do
+    test ~s|longer is valid|, %{schema: schema} do
       assert valid?(schema, %{"bar" => 2, "foo" => 1})
     end
 
-    test "exact length is valid", %{schema: schema} do
+    test ~s|exact length is valid|, %{schema: schema} do
       assert valid?(schema, %{"foo" => 1})
     end
 
-    test "too short is invalid", %{schema: schema} do
+    test ~s|too short is invalid|, %{schema: schema} do
       refute valid?(schema, %{})
     end
 
-    test "ignores arrays", %{schema: schema} do
+    test ~s|ignores arrays|, %{schema: schema} do
       assert valid?(schema, [])
     end
 
-    test "ignores strings", %{schema: schema} do
+    test ~s|ignores strings|, %{schema: schema} do
       assert valid?(schema, "")
     end
 
-    test "ignores other non-objects", %{schema: schema} do
+    test ~s|ignores other non-objects|, %{schema: schema} do
       assert valid?(schema, 12)
     end
   end

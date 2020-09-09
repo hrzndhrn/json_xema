@@ -3,41 +3,41 @@ defmodule JsonSchemaTestSuite.Draft4.PatternPropertiesTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "patternProperties validates properties matching a regex" do
+  describe ~s|patternProperties validates properties matching a regex| do
     setup do
       %{schema: JsonXema.new(%{"patternProperties" => %{"f.*o" => %{"type" => "integer"}}})}
     end
 
-    test "a single valid match is valid", %{schema: schema} do
+    test ~s|a single valid match is valid|, %{schema: schema} do
       assert valid?(schema, %{"foo" => 1})
     end
 
-    test "multiple valid matches is valid", %{schema: schema} do
+    test ~s|multiple valid matches is valid|, %{schema: schema} do
       assert valid?(schema, %{"foo" => 1, "foooooo" => 2})
     end
 
-    test "a single invalid match is invalid", %{schema: schema} do
+    test ~s|a single invalid match is invalid|, %{schema: schema} do
       refute valid?(schema, %{"foo" => "bar", "fooooo" => 2})
     end
 
-    test "multiple invalid matches is invalid", %{schema: schema} do
+    test ~s|multiple invalid matches is invalid|, %{schema: schema} do
       refute valid?(schema, %{"foo" => "bar", "foooooo" => "baz"})
     end
 
-    test "ignores arrays", %{schema: schema} do
+    test ~s|ignores arrays|, %{schema: schema} do
       assert valid?(schema, [])
     end
 
-    test "ignores strings", %{schema: schema} do
+    test ~s|ignores strings|, %{schema: schema} do
       assert valid?(schema, "")
     end
 
-    test "ignores other non-objects", %{schema: schema} do
+    test ~s|ignores other non-objects|, %{schema: schema} do
       assert valid?(schema, 12)
     end
   end
 
-  describe "multiple simultaneous patternProperties are validated" do
+  describe ~s|multiple simultaneous patternProperties are validated| do
     setup do
       %{
         schema:
@@ -47,32 +47,32 @@ defmodule JsonSchemaTestSuite.Draft4.PatternPropertiesTest do
       }
     end
 
-    test "a single valid match is valid", %{schema: schema} do
+    test ~s|a single valid match is valid|, %{schema: schema} do
       assert valid?(schema, %{"a" => 21})
     end
 
-    test "a simultaneous match is valid", %{schema: schema} do
+    test ~s|a simultaneous match is valid|, %{schema: schema} do
       assert valid?(schema, %{"aaaa" => 18})
     end
 
-    test "multiple matches is valid", %{schema: schema} do
+    test ~s|multiple matches is valid|, %{schema: schema} do
       assert valid?(schema, %{"a" => 21, "aaaa" => 18})
     end
 
-    test "an invalid due to one is invalid", %{schema: schema} do
+    test ~s|an invalid due to one is invalid|, %{schema: schema} do
       refute valid?(schema, %{"a" => "bar"})
     end
 
-    test "an invalid due to the other is invalid", %{schema: schema} do
+    test ~s|an invalid due to the other is invalid|, %{schema: schema} do
       refute valid?(schema, %{"aaaa" => 31})
     end
 
-    test "an invalid due to both is invalid", %{schema: schema} do
+    test ~s|an invalid due to both is invalid|, %{schema: schema} do
       refute valid?(schema, %{"aaa" => "foo", "aaaa" => 31})
     end
   end
 
-  describe "regexes are not anchored by default and are case sensitive" do
+  describe ~s|regexes are not anchored by default and are case sensitive| do
     setup do
       %{
         schema:
@@ -85,19 +85,19 @@ defmodule JsonSchemaTestSuite.Draft4.PatternPropertiesTest do
       }
     end
 
-    test "non recognized members are ignored", %{schema: schema} do
+    test ~s|non recognized members are ignored|, %{schema: schema} do
       assert valid?(schema, %{"answer 1" => "42"})
     end
 
-    test "recognized members are accounted for", %{schema: schema} do
+    test ~s|recognized members are accounted for|, %{schema: schema} do
       refute valid?(schema, %{"a31b" => nil})
     end
 
-    test "regexes are case sensitive", %{schema: schema} do
+    test ~s|regexes are case sensitive|, %{schema: schema} do
       assert valid?(schema, %{"a_x_3" => 3})
     end
 
-    test "regexes are case sensitive, 2", %{schema: schema} do
+    test ~s|regexes are case sensitive, 2|, %{schema: schema} do
       refute valid?(schema, %{"a_X_3" => 3})
     end
   end

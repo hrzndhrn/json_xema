@@ -3,33 +3,47 @@ defmodule JsonSchemaTestSuite.Draft4.MaxPropertiesTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "maxProperties validation" do
+  describe ~s|maxProperties validation| do
     setup do
       %{schema: JsonXema.new(%{"maxProperties" => 2})}
     end
 
-    test "shorter is valid", %{schema: schema} do
+    test ~s|shorter is valid|, %{schema: schema} do
       assert valid?(schema, %{"foo" => 1})
     end
 
-    test "exact length is valid", %{schema: schema} do
+    test ~s|exact length is valid|, %{schema: schema} do
       assert valid?(schema, %{"bar" => 2, "foo" => 1})
     end
 
-    test "too long is invalid", %{schema: schema} do
+    test ~s|too long is invalid|, %{schema: schema} do
       refute valid?(schema, %{"bar" => 2, "baz" => 3, "foo" => 1})
     end
 
-    test "ignores arrays", %{schema: schema} do
+    test ~s|ignores arrays|, %{schema: schema} do
       assert valid?(schema, [1, 2, 3])
     end
 
-    test "ignores strings", %{schema: schema} do
+    test ~s|ignores strings|, %{schema: schema} do
       assert valid?(schema, "foobar")
     end
 
-    test "ignores other non-objects", %{schema: schema} do
+    test ~s|ignores other non-objects|, %{schema: schema} do
       assert valid?(schema, 12)
+    end
+  end
+
+  describe ~s|maxProperties = 0 means the object is empty| do
+    setup do
+      %{schema: JsonXema.new(%{"maxProperties" => 0})}
+    end
+
+    test ~s|no properties is valid|, %{schema: schema} do
+      assert valid?(schema, %{})
+    end
+
+    test ~s|one property is invalid|, %{schema: schema} do
+      refute valid?(schema, %{"foo" => 1})
     end
   end
 end

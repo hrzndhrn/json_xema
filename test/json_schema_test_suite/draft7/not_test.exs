@@ -3,39 +3,39 @@ defmodule JsonSchemaTestSuite.Draft7.NotTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "not" do
+  describe ~s|not| do
     setup do
       %{schema: JsonXema.new(%{"not" => %{"type" => "integer"}})}
     end
 
-    test "allowed", %{schema: schema} do
+    test ~s|allowed|, %{schema: schema} do
       assert valid?(schema, "foo")
     end
 
-    test "disallowed", %{schema: schema} do
+    test ~s|disallowed|, %{schema: schema} do
       refute valid?(schema, 1)
     end
   end
 
-  describe "not multiple types" do
+  describe ~s|not multiple types| do
     setup do
       %{schema: JsonXema.new(%{"not" => %{"type" => ["integer", "boolean"]}})}
     end
 
-    test "valid", %{schema: schema} do
+    test ~s|valid|, %{schema: schema} do
       assert valid?(schema, "foo")
     end
 
-    test "mismatch", %{schema: schema} do
+    test ~s|mismatch|, %{schema: schema} do
       refute valid?(schema, 1)
     end
 
-    test "other mismatch", %{schema: schema} do
+    test ~s|other mismatch|, %{schema: schema} do
       refute valid?(schema, true)
     end
   end
 
-  describe "not more complex schema" do
+  describe ~s|not more complex schema| do
     setup do
       %{
         schema:
@@ -45,49 +45,49 @@ defmodule JsonSchemaTestSuite.Draft7.NotTest do
       }
     end
 
-    test "match", %{schema: schema} do
+    test ~s|match|, %{schema: schema} do
       assert valid?(schema, 1)
     end
 
-    test "other match", %{schema: schema} do
+    test ~s|other match|, %{schema: schema} do
       assert valid?(schema, %{"foo" => 1})
     end
 
-    test "mismatch", %{schema: schema} do
+    test ~s|mismatch|, %{schema: schema} do
       refute valid?(schema, %{"foo" => "bar"})
     end
   end
 
-  describe "forbidden property" do
+  describe ~s|forbidden property| do
     setup do
       %{schema: JsonXema.new(%{"properties" => %{"foo" => %{"not" => %{}}}})}
     end
 
-    test "property present", %{schema: schema} do
+    test ~s|property present|, %{schema: schema} do
       refute valid?(schema, %{"bar" => 2, "foo" => 1})
     end
 
-    test "property absent", %{schema: schema} do
+    test ~s|property absent|, %{schema: schema} do
       assert valid?(schema, %{"bar" => 1, "baz" => 2})
     end
   end
 
-  describe "not with boolean schema true" do
+  describe ~s|not with boolean schema true| do
     setup do
       %{schema: JsonXema.new(%{"not" => true})}
     end
 
-    test "any value is invalid", %{schema: schema} do
+    test ~s|any value is invalid|, %{schema: schema} do
       refute valid?(schema, "foo")
     end
   end
 
-  describe "not with boolean schema false" do
+  describe ~s|not with boolean schema false| do
     setup do
       %{schema: JsonXema.new(%{"not" => false})}
     end
 
-    test "any value is valid", %{schema: schema} do
+    test ~s|any value is valid|, %{schema: schema} do
       assert valid?(schema, "foo")
     end
   end
