@@ -3,69 +3,69 @@ defmodule JsonSchemaTestSuite.Draft7.IfThenElseTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "ignore if without then or else" do
+  describe ~s|ignore if without then or else| do
     setup do
       %{schema: JsonXema.new(%{"if" => %{"const" => 0}})}
     end
 
-    test "valid when valid against lone if", %{schema: schema} do
+    test ~s|valid when valid against lone if|, %{schema: schema} do
       assert valid?(schema, 0)
     end
 
-    test "valid when invalid against lone if", %{schema: schema} do
+    test ~s|valid when invalid against lone if|, %{schema: schema} do
       assert valid?(schema, "hello")
     end
   end
 
-  describe "ignore then without if" do
+  describe ~s|ignore then without if| do
     setup do
       %{schema: JsonXema.new(%{"then" => %{"const" => 0}})}
     end
 
-    test "valid when valid against lone then", %{schema: schema} do
+    test ~s|valid when valid against lone then|, %{schema: schema} do
       assert valid?(schema, 0)
     end
 
-    test "valid when invalid against lone then", %{schema: schema} do
+    test ~s|valid when invalid against lone then|, %{schema: schema} do
       assert valid?(schema, "hello")
     end
   end
 
-  describe "ignore else without if" do
+  describe ~s|ignore else without if| do
     setup do
       %{schema: JsonXema.new(%{"else" => %{"const" => 0}})}
     end
 
-    test "valid when valid against lone else", %{schema: schema} do
+    test ~s|valid when valid against lone else|, %{schema: schema} do
       assert valid?(schema, 0)
     end
 
-    test "valid when invalid against lone else", %{schema: schema} do
+    test ~s|valid when invalid against lone else|, %{schema: schema} do
       assert valid?(schema, "hello")
     end
   end
 
-  describe "if and then without else" do
+  describe ~s|if and then without else| do
     setup do
       %{
         schema: JsonXema.new(%{"if" => %{"exclusiveMaximum" => 0}, "then" => %{"minimum" => -10}})
       }
     end
 
-    test "valid through then", %{schema: schema} do
+    test ~s|valid through then|, %{schema: schema} do
       assert valid?(schema, -1)
     end
 
-    test "invalid through then", %{schema: schema} do
+    test ~s|invalid through then|, %{schema: schema} do
       refute valid?(schema, -100)
     end
 
-    test "valid when if test fails", %{schema: schema} do
+    test ~s|valid when if test fails|, %{schema: schema} do
       assert valid?(schema, 3)
     end
   end
 
-  describe "if and else without then" do
+  describe ~s|if and else without then| do
     setup do
       %{
         schema:
@@ -73,20 +73,20 @@ defmodule JsonSchemaTestSuite.Draft7.IfThenElseTest do
       }
     end
 
-    test "valid when if test passes", %{schema: schema} do
+    test ~s|valid when if test passes|, %{schema: schema} do
       assert valid?(schema, -1)
     end
 
-    test "valid through else", %{schema: schema} do
+    test ~s|valid through else|, %{schema: schema} do
       assert valid?(schema, 4)
     end
 
-    test "invalid through else", %{schema: schema} do
+    test ~s|invalid through else|, %{schema: schema} do
       refute valid?(schema, 3)
     end
   end
 
-  describe "validate against correct branch, then vs else" do
+  describe ~s|validate against correct branch, then vs else| do
     setup do
       %{
         schema:
@@ -98,24 +98,24 @@ defmodule JsonSchemaTestSuite.Draft7.IfThenElseTest do
       }
     end
 
-    test "valid through then", %{schema: schema} do
+    test ~s|valid through then|, %{schema: schema} do
       assert valid?(schema, -1)
     end
 
-    test "invalid through then", %{schema: schema} do
+    test ~s|invalid through then|, %{schema: schema} do
       refute valid?(schema, -100)
     end
 
-    test "valid through else", %{schema: schema} do
+    test ~s|valid through else|, %{schema: schema} do
       assert valid?(schema, 4)
     end
 
-    test "invalid through else", %{schema: schema} do
+    test ~s|invalid through else|, %{schema: schema} do
       refute valid?(schema, 3)
     end
   end
 
-  describe "non-interference across combined schemas" do
+  describe ~s|non-interference across combined schemas| do
     setup do
       %{
         schema:
@@ -129,12 +129,54 @@ defmodule JsonSchemaTestSuite.Draft7.IfThenElseTest do
       }
     end
 
-    test "valid, but would have been invalid through then", %{schema: schema} do
+    test ~s|valid, but would have been invalid through then|, %{schema: schema} do
       assert valid?(schema, -100)
     end
 
-    test "valid, but would have been invalid through else", %{schema: schema} do
+    test ~s|valid, but would have been invalid through else|, %{schema: schema} do
       assert valid?(schema, 3)
+    end
+  end
+
+  describe ~s|if with boolean schema true| do
+    setup do
+      %{
+        schema:
+          JsonXema.new(%{
+            "else" => %{"const" => "else"},
+            "if" => true,
+            "then" => %{"const" => "then"}
+          })
+      }
+    end
+
+    test ~s|boolean schema true in if always chooses the then path (valid)|, %{schema: schema} do
+      assert valid?(schema, "then")
+    end
+
+    test ~s|boolean schema true in if always chooses the then path (invalid)|, %{schema: schema} do
+      refute valid?(schema, "else")
+    end
+  end
+
+  describe ~s|if with boolean schema false| do
+    setup do
+      %{
+        schema:
+          JsonXema.new(%{
+            "else" => %{"const" => "else"},
+            "if" => false,
+            "then" => %{"const" => "then"}
+          })
+      }
+    end
+
+    test ~s|boolean schema false in if always chooses the else path (invalid)|, %{schema: schema} do
+      refute valid?(schema, "then")
+    end
+
+    test ~s|boolean schema false in if always chooses the else path (valid)|, %{schema: schema} do
+      assert valid?(schema, "else")
     end
   end
 end

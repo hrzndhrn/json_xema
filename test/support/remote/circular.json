@@ -1,7 +1,0 @@
-{
-  "type": "object",
-  "properties": {
-    "foo": {"$ref": "circular.json"},
-    "bar": {"$ref": "int.json"}
-  }
-}

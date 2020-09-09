@@ -3,16 +3,16 @@ defmodule JsonSchemaTestSuite.Draft7.Optional.Format.RegexTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "validation of regular expressions" do
+  describe ~s|validation of regular expressions| do
     setup do
       %{schema: JsonXema.new(%{"format" => "regex"})}
     end
 
-    test "a valid regular expression", %{schema: schema} do
+    test ~s|a valid regular expression|, %{schema: schema} do
       assert valid?(schema, "([abc])+\\s+$")
     end
 
-    test "a regular expression with unclosed parens is invalid", %{schema: schema} do
+    test ~s|a regular expression with unclosed parens is invalid|, %{schema: schema} do
       refute valid?(schema, "^(abc]")
     end
   end

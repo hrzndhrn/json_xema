@@ -3,105 +3,105 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
 
   import JsonXema, only: [valid?: 2]
 
-  describe "a schema given for items" do
+  describe ~s|a schema given for items| do
     setup do
       %{schema: JsonXema.new(%{"items" => %{"type" => "integer"}})}
     end
 
-    test "valid items", %{schema: schema} do
+    test ~s|valid items|, %{schema: schema} do
       assert valid?(schema, [1, 2, 3])
     end
 
-    test "wrong type of items", %{schema: schema} do
+    test ~s|wrong type of items|, %{schema: schema} do
       refute valid?(schema, [1, "x"])
     end
 
-    test "ignores non-arrays", %{schema: schema} do
+    test ~s|ignores non-arrays|, %{schema: schema} do
       assert valid?(schema, %{"foo" => "bar"})
     end
 
-    test "JavaScript pseudo-array is valid", %{schema: schema} do
+    test ~s|JavaScript pseudo-array is valid|, %{schema: schema} do
       assert valid?(schema, %{"0" => "invalid", "length" => 1})
     end
   end
 
-  describe "an array of schemas for items" do
+  describe ~s|an array of schemas for items| do
     setup do
       %{schema: JsonXema.new(%{"items" => [%{"type" => "integer"}, %{"type" => "string"}]})}
     end
 
-    test "correct types", %{schema: schema} do
+    test ~s|correct types|, %{schema: schema} do
       assert valid?(schema, [1, "foo"])
     end
 
-    test "wrong types", %{schema: schema} do
+    test ~s|wrong types|, %{schema: schema} do
       refute valid?(schema, ["foo", 1])
     end
 
-    test "incomplete array of items", %{schema: schema} do
+    test ~s|incomplete array of items|, %{schema: schema} do
       assert valid?(schema, [1])
     end
 
-    test "array with additional items", %{schema: schema} do
+    test ~s|array with additional items|, %{schema: schema} do
       assert valid?(schema, [1, "foo", true])
     end
 
-    test "empty array", %{schema: schema} do
+    test ~s|empty array|, %{schema: schema} do
       assert valid?(schema, [])
     end
 
-    test "JavaScript pseudo-array is valid", %{schema: schema} do
+    test ~s|JavaScript pseudo-array is valid|, %{schema: schema} do
       assert valid?(schema, %{"0" => "invalid", "1" => "valid", "length" => 2})
     end
   end
 
-  describe "items with boolean schema (true)" do
+  describe ~s|items with boolean schema (true)| do
     setup do
       %{schema: JsonXema.new(%{"items" => true})}
     end
 
-    test "any array is valid", %{schema: schema} do
+    test ~s|any array is valid|, %{schema: schema} do
       assert valid?(schema, [1, "foo", true])
     end
 
-    test "empty array is valid", %{schema: schema} do
+    test ~s|empty array is valid|, %{schema: schema} do
       assert valid?(schema, [])
     end
   end
 
-  describe "items with boolean schema (false)" do
+  describe ~s|items with boolean schema (false)| do
     setup do
       %{schema: JsonXema.new(%{"items" => false})}
     end
 
-    test "any non-empty array is invalid", %{schema: schema} do
+    test ~s|any non-empty array is invalid|, %{schema: schema} do
       refute valid?(schema, [1, "foo", true])
     end
 
-    test "empty array is valid", %{schema: schema} do
+    test ~s|empty array is valid|, %{schema: schema} do
       assert valid?(schema, [])
     end
   end
 
-  describe "items with boolean schemas" do
+  describe ~s|items with boolean schemas| do
     setup do
       %{schema: JsonXema.new(%{"items" => [true, false]})}
     end
 
-    test "array with one item is valid", %{schema: schema} do
+    test ~s|array with one item is valid|, %{schema: schema} do
       assert valid?(schema, [1])
     end
 
-    test "array with two items is invalid", %{schema: schema} do
+    test ~s|array with two items is invalid|, %{schema: schema} do
       refute valid?(schema, [1, "foo"])
     end
 
-    test "empty array is valid", %{schema: schema} do
+    test ~s|empty array is valid|, %{schema: schema} do
       assert valid?(schema, [])
     end
   end
 
-  describe "items and subitems" do
+  describe ~s|items and subitems| do
     setup do
       %{
         schema:
@@ -128,7 +128,7 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
       }
     end
 
-    test "valid items", %{schema: schema} do
+    test ~s|valid items|, %{schema: schema} do
       assert valid?(schema, [
                [%{"foo" => nil}, %{"foo" => nil}],
                [%{"foo" => nil}, %{"foo" => nil}],
@@ -136,7 +136,7 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
              ])
     end
 
-    test "too many items", %{schema: schema} do
+    test ~s|too many items|, %{schema: schema} do
       refute valid?(schema, [
                [%{"foo" => nil}, %{"foo" => nil}],
                [%{"foo" => nil}, %{"foo" => nil}],
@@ -145,7 +145,7 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
              ])
     end
 
-    test "too many sub-items", %{schema: schema} do
+    test ~s|too many sub-items|, %{schema: schema} do
       refute valid?(schema, [
                [%{"foo" => nil}, %{"foo" => nil}, %{"foo" => nil}],
                [%{"foo" => nil}, %{"foo" => nil}],
@@ -153,7 +153,7 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
              ])
     end
 
-    test "wrong item", %{schema: schema} do
+    test ~s|wrong item|, %{schema: schema} do
       refute valid?(schema, [
                %{"foo" => nil},
                [%{"foo" => nil}, %{"foo" => nil}],
@@ -161,7 +161,7 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
              ])
     end
 
-    test "wrong sub-item", %{schema: schema} do
+    test ~s|wrong sub-item|, %{schema: schema} do
       refute valid?(schema, [
                [%{}, %{"foo" => nil}],
                [%{"foo" => nil}, %{"foo" => nil}],
@@ -169,12 +169,12 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
              ])
     end
 
-    test "fewer items is valid", %{schema: schema} do
+    test ~s|fewer items is valid|, %{schema: schema} do
       assert valid?(schema, [[%{"foo" => nil}], [%{"foo" => nil}]])
     end
   end
 
-  describe "nested items" do
+  describe ~s|nested items| do
     setup do
       %{
         schema:
@@ -191,15 +191,15 @@ defmodule JsonSchemaTestSuite.Draft7.ItemsTest do
       }
     end
 
-    test "valid nested array", %{schema: schema} do
+    test ~s|valid nested array|, %{schema: schema} do
       assert valid?(schema, [[[[1]], [[2], [3]]], [[[4], [5], [6]]]])
     end
 
-    test "nested array with invalid type", %{schema: schema} do
+    test ~s|nested array with invalid type|, %{schema: schema} do
       refute valid?(schema, [[[["1"]], [[2], [3]]], [[[4], [5], [6]]]])
     end
 
-    test "not deep enough", %{schema: schema} do
+    test ~s|not deep enough|, %{schema: schema} do
       refute valid?(schema, [[[1], [2], [3]], [[4], [5], [6]]])
     end
   end

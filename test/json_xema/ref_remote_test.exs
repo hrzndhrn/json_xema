@@ -10,7 +10,7 @@ defmodule JsonXema.RefRemoteTest do
   test "http server" do
     assert %{body: body} = HTTPoison.get!("http://localhost:1234/folder/folderInteger.json")
 
-    assert body == File.read!("test/support/remote/folder/folderInteger.json")
+    assert body == File.read!("test/fixtures/remote/folder/folderInteger.json")
   end
 
   describe "invalid remote ref: " do

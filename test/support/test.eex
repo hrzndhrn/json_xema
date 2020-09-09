@@ -3,7 +3,7 @@ defmodule <%= @module %>Test do
 
   import JsonXema, only: [valid?: 2]
   <%= for %{"description" => desc, "schema" => schema, "tests" => tests} <- @test_cases do %>
-  describe "<%= desc %>" do
+  describe ~s|<%= desc %>| do
     setup do
       %{schema: JsonXema.new(
         <%= inspect schema %>
@@ -11,7 +11,7 @@ defmodule <%= @module %>Test do
     end
 
     <%= for %{"description" => description, "data" => data, "valid" => valid} <- tests do %>
-      test "<%= description %>", %{schema: schema} do
+      test ~s|<%= description %>|, %{schema: schema} do
         <%= if valid do %>assert<% else %>refute<% end %> valid?(schema, <%= inspect data %>)
       end
     <% end %>

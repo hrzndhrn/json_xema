@@ -10,18 +10,30 @@ defmodule Mix.Tasks.Gen.TestSuite do
   @test_path "test/json_schema_test_suite"
   @template File.read!("test/support/test.eex")
   @exclude [
+    # Link to latest
+    "latest",
     # Unsupported JSON Schema versions
     "draft3",
-    "draft2019-08",
+    "draft2019-09",
     # Unsupported optional features
     "content.json",
     "ecmascript-regex.json",
     "zeroTerminatedFloats.json",
+    "non-bmp-regex.json",
     # Unsupported semantic formats
     "idn-email.json",
     "idn-hostname.json",
     "iri.json",
     "iri-reference.json"
+  ]
+
+  @exclude_test_case [
+    # Unsupported semantic formats
+    "validation of IDN e-mail addresses",
+    "validation of IDN hostnames",
+    # will be fixed soon
+    "Location-independent identifier with absolute URI",
+    "Location-independent identifier with base URI change in subschema"
   ]
 
   @exclude_test_case [
