@@ -243,7 +243,7 @@ defmodule JsonXema.RefRemoteTest do
     end
   end
 
-  describe "file circular ref in sub schema" do
+  describe "file circular ref in sub schema [inline: false]" do
     setup do
       %{
         schema:
@@ -253,8 +253,13 @@ defmodule JsonXema.RefRemoteTest do
       }
     end
 
-    test "check schema", %{schema: schema} do
-      assert schema == :todo
+    test "check with valid data", %{schema: schema} do
+      assert JsonXema.valid?(schema, %{"a" => "a"}) == true
+      assert JsonXema.valid?(schema, %{"a" => "a", "b" => %{"a" => "next"}}) == true
+    end
+    test "check with invalid data", %{schema: schema} do
+      assert JsonXema.valid?(schema, %{"a" => 1}) == false
+      assert JsonXema.valid?(schema, %{"a" => "a", "b" => %{"a" => :next}}) == false
     end
   end
 
