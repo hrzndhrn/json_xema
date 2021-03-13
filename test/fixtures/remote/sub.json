@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref":    "#/definitions/self",
+    "definitions": {
+        "self": {
+            "type": "object",
+            "properties": {
+                "a": {"type": "string"},
+                "b": {"$ref": "#/definitions/self"}
+            }
+        }
+    }
+}

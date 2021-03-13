@@ -243,6 +243,21 @@ defmodule JsonXema.RefRemoteTest do
     end
   end
 
+  describe "file circular ref in sub schema" do
+    setup do
+      %{
+        schema:
+          ~s({"ref": "main.json"})
+          |> Jason.decode!()
+          |> JsonXema.new(loader: Test.FileLoader)
+      }
+    end
+
+    test "check schema", %{schema: schema} do
+      assert schema == :todo
+    end
+  end
+
   describe "file circular ref with ref" do
     setup do
       %{
