@@ -88,7 +88,7 @@ defmodule JsonXema.ArrayTest do
     test "validate/2 integers with invalid list", %{integers: schema} do
       assert {:error, error} = validate(schema, [1, 2, "foo"])
 
-      assert error = %ValidationError{
+      assert error == %ValidationError{
                reason: %{
                  items: %{2 => %{type: "integer", value: "foo"}}
                }
@@ -108,12 +108,9 @@ defmodule JsonXema.ArrayTest do
     test "validate/2 strings with invalid list", %{strings: schema} do
       assert {:error, error} = validate(schema, [1, 2, "foo"])
 
-      assert error = %ValidationError{
+      assert error == %ValidationError{
                reason: %{
-                 items: [
-                   {0, %{type: "string", value: 1}},
-                   {1, %{type: "string", value: 2}}
-                 ]
+                 items: %{0 => %{type: "string", value: 1}, 1 => %{type: "string", value: 2}}
                }
              }
 

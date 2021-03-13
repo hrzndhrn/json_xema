@@ -265,25 +265,20 @@ defmodule JsonXema.AnyTest do
       assert validate(schema, 10) == :ok
     end
 
-    test "validate/2 with an invalid value", %{schema: schema} do
+    test "validate/2 with an invalid value (15)", %{schema: schema} do
       assert {:error, error} = validate(schema, 15)
       assert error == %ValidationError{reason: %{oneOf: {:ok, [0, 1]}, value: 15}}
       assert Exception.message(error) == ~s|More as one schema matches (indexes: [0, 1]).|
+    end
 
+    test "validate/2 with an invalid value (4)", %{schema: schema} do
       assert {:error, error} = validate(schema, 4)
 
-      assert error = %ValidationError{
-               reason:
-                 {:error,
-                  %{
-                    oneOf:
-                      {:error,
-                       [
-                         %{multipleOf: 3, value: 4},
-                         %{multipleOf: 5, value: 4}
-                       ]},
-                    value: 4
-                  }}
+      assert error == %ValidationError{
+               reason: %{
+                 oneOf: {:error, [%{multipleOf: 3, value: 4}, %{multipleOf: 5, value: 4}]},
+                 value: 4
+               }
              }
 
       assert Exception.message(error) == """

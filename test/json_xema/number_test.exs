@@ -54,7 +54,7 @@ defmodule Xema.NumberTest do
 
     test "validate/2 with a too big number", %{schema: schema} do
       assert {:error, error} = validate(schema, 5.0)
-      assert error = %ValidationError{reason: %{value: 5.0, maximum: 4}}
+      assert error == %ValidationError{reason: %{value: 5.0, maximum: 4}}
       assert Exception.message(error) == ~s|Value 5.0 exceeds maximum value of 4.|
     end
   end
