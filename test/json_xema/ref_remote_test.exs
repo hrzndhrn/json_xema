@@ -5,6 +5,8 @@ defmodule JsonXema.RefRemoteTest do
 
   alias Jason.DecodeError
   alias JsonXema.ValidationError
+  alias Xema.Ref
+  alias Xema.Schema
   alias Xema.SchemaError
 
   test "http server" do
@@ -253,10 +255,38 @@ defmodule JsonXema.RefRemoteTest do
       }
     end
 
+    test "check schema", %{schema: schema} do
+      assert schema == %JsonXema{
+               refs: %{
+                 "#/definitions/self" => %Schema{
+                   properties: %{
+                     "a" => %Schema{type: :string},
+                     "b" => %Schema{ref: %Ref{pointer: "#/definitions/self"}}
+                   },
+                   type: :map
+                 }
+               },
+               schema: %Schema{
+                 definitions: %{
+                   "self" => %Schema{
+                     properties: %{
+                       "a" => %Schema{type: :string},
+                       "b" => %Schema{ref: %Ref{pointer: "#/definitions/self"}}
+                     },
+                     type: :map
+                   }
+                 },
+                 ref: %Ref{pointer: "#/definitions/self"},
+                 schema: "http://json-schema.org/draft-04/schema#"
+               }
+             }
+    end
+
     test "check with valid data", %{schema: schema} do
       assert JsonXema.valid?(schema, %{"a" => "a"}) == true
       assert JsonXema.valid?(schema, %{"a" => "a", "b" => %{"a" => "next"}}) == true
     end
+
     test "check with invalid data", %{schema: schema} do
       assert JsonXema.valid?(schema, %{"a" => 1}) == false
       assert JsonXema.valid?(schema, %{"a" => "a", "b" => %{"a" => :next}}) == false
@@ -278,11 +308,11 @@ defmodule JsonXema.RefRemoteTest do
                %JsonXema{
                  refs: %{
                    "circular.json" => %JsonXema{
-                     schema: %Xema.Schema{
+                     schema: %Schema{
                        properties: %{
-                         "bar" => %Xema.Schema{type: :integer},
-                         "foo" => %Xema.Schema{
-                           ref: %Xema.Ref{
+                         "bar" => %Schema{type: :integer},
+                         "foo" => %Schema{
+                           ref: %Ref{
                              pointer: "circular.json",
                              uri: %URI{
                                authority: nil,
@@ -302,8 +332,8 @@ defmodule JsonXema.RefRemoteTest do
                      refs: %{}
                    }
                  },
-                 schema: %Xema.Schema{
-                   ref: %Xema.Ref{
+                 schema: %Schema{
+                   ref: %Ref{
                      pointer: "circular.json",
                      uri: %URI{
                        authority: nil,
@@ -338,11 +368,11 @@ defmodule JsonXema.RefRemoteTest do
     test "check schema", %{schema: schema} do
       assert schema == %JsonXema{
                refs: %{},
-               schema: %Xema.Schema{
+               schema: %Schema{
                  properties: %{
-                   "another_int" => %Xema.Schema{type: :integer},
-                   "int" => %Xema.Schema{type: :integer},
-                   "ints" => %Xema.Schema{items: %Xema.Schema{type: :integer}, type: :list}
+                   "another_int" => %Schema{type: :integer},
+                   "int" => %Schema{type: :integer},
+                   "ints" => %Schema{items: %Schema{type: :integer}, type: :list}
                  },
                  type: :map
                }
@@ -365,13 +395,13 @@ defmodule JsonXema.RefRemoteTest do
                refs: %{
                  "int.json" => %JsonXema{
                    refs: %{},
-                   schema: %Xema.Schema{type: :integer}
+                   schema: %Schema{type: :integer}
                  },
                  "list_int.json" => %JsonXema{
                    refs: %{},
-                   schema: %Xema.Schema{
-                     items: %Xema.Schema{
-                       ref: %Xema.Ref{
+                   schema: %Schema{
+                     items: %Schema{
+                       ref: %Ref{
                          pointer: "int.json",
                          uri: %URI{
                            authority: nil,
@@ -390,10 +420,10 @@ defmodule JsonXema.RefRemoteTest do
                  },
                  "obj_list_int.json" => %JsonXema{
                    refs: %{},
-                   schema: %Xema.Schema{
+                   schema: %Schema{
                      properties: %{
-                       "another_int" => %Xema.Schema{
-                         ref: %Xema.Ref{
+                       "another_int" => %Schema{
+                         ref: %Ref{
                            pointer: "int.json",
                            uri: %URI{
                              authority: nil,
@@ -407,8 +437,8 @@ defmodule JsonXema.RefRemoteTest do
                            }
                          }
                        },
-                       "int" => %Xema.Schema{
-                         ref: %Xema.Ref{
+                       "int" => %Schema{
+                         ref: %Ref{
                            pointer: "int.json",
                            uri: %URI{
                              authority: nil,
@@ -422,8 +452,8 @@ defmodule JsonXema.RefRemoteTest do
                            }
                          }
                        },
-                       "ints" => %Xema.Schema{
-                         ref: %Xema.Ref{
+                       "ints" => %Schema{
+                         ref: %Ref{
                            pointer: "list_int.json",
                            uri: %URI{
                              authority: nil,
@@ -442,8 +472,8 @@ defmodule JsonXema.RefRemoteTest do
                    }
                  }
                },
-               schema: %Xema.Schema{
-                 ref: %Xema.Ref{
+               schema: %Schema{
+                 ref: %Ref{
                    pointer: "obj_list_int.json",
                    uri: %URI{
                      authority: nil,
