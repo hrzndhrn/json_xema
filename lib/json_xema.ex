@@ -120,63 +120,46 @@ defmodule JsonXema do
     )
   end
 
-  defp schema(bool)
-       when is_boolean(bool),
-       do: Schema.new(type: bool)
+  defp schema(bool) when is_boolean(bool), do: Schema.new(type: bool)
 
   # Creates a schema for a reference.
   defp schema(%{"$ref" => pointer} = map) do
     map |> Map.delete("$ref") |> Map.put("ref", pointer) |> schema()
   end
 
-  defp schema(map)
-       when is_map(map),
-       do:
-         map
-         |> map_keys(&update_meta/1)
-         |> update_data()
-         |> map_keys(&update_key/1)
-         |> map_keys(&key_to_existing_atom/1)
-         |> update_type()
-         |> update()
-         |> Map.to_list()
-         |> Schema.new()
+  defp schema(map) when is_map(map) do
+    map
+    |> map_keys(&update_meta/1)
+    |> update_data()
+    |> map_keys(&update_key/1)
+    |> map_keys(&key_to_existing_atom/1)
+    |> update_type()
+    |> update()
+    |> Map.to_list()
+    |> Schema.new()
+  end
 
-  defp schema(list)
-       when is_list(list),
-       do: Schema.new(type: update_type(list))
+  defp schema(list) when is_list(list), do: Schema.new(type: update_type(list))
 
   defp update_meta("$" <> key), do: key
 
   defp update_meta(key), do: key
 
-  defp update_type(map)
-       when is_map(map),
-       do:
-         map
-         |> Map.update(:type, :any, &update_type/1)
+  defp update_type(map) when is_map(map), do: Map.update(map, :type, :any, &update_type/1)
 
-  defp update_type(type)
-       when is_list(type),
-       do: Enum.map(type, &get_type/1)
+  defp update_type(type) when is_list(type), do: Enum.map(type, &get_type/1)
 
   defp update_type(type), do: get_type(type)
 
   defp get_type("null"), do: nil
 
-  defp get_type(type)
-       when type in @types,
-       do: Map.get(@type_map, type)
+  defp get_type(type) when type in @types, do: Map.get(@type_map, type)
 
   defp get_type(type), do: raise(ArgumentError, message: "unknown type #{inspect(type)}")
 
   defp update_key(key) when is_atom(key), do: key
 
-  defp update_key(key)
-       when is_binary(key),
-       do:
-         key
-         |> to_snake_case()
+  defp update_key(key) when is_binary(key), do: to_snake_case(key)
 
   defp key_to_existing_atom(string) when is_binary(string),
     do: String.to_existing_atom(string)
