@@ -61,7 +61,7 @@ defmodule JsonXema.MixProject do
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:ex_json_schema, "~> 0.5", only: :dev},
       {:excoveralls, "~> 0.8", only: :test},
-      {:httpoison, "~> 1.6.0", only: :test},
+      {:httpoison, "~> 1.8", only: :test},
       {:jason, "~> 1.0", only: [:dev, :test]},
       {:xema, "~> 0.13"}
     ]
