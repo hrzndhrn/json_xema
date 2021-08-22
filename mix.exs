@@ -55,7 +55,7 @@ defmodule JsonXema.MixProject do
       {:benchee, "~> 1.0", only: :dev},
       {:benchee_markdown, "~> 0.2", only: :dev},
       {:conv_case, "~> 0.2"},
-      {:cowboy, "~> 2.9", only: :test},
+      {:cowboy, "~> 2.7.0", only: :test},
       {:credo, "~> 1.5", only: [:dev, :test]},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.25", only: :dev, runtime: false},
