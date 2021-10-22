@@ -1,8 +1,8 @@
 # JsonXema
-[![Hex.pm](https://img.shields.io/hexpm/v/json_xema.svg)](https://hex.pm/packages/json_xema)
-![CI](https://github.com/hrzndhrn/json_xema/workflows/CI/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/hrzndhrn/json_xema/badge.svg?branch=master)](https://coveralls.io/github/hrzndhrn/json_xema?branch=master)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Hex.pm: version](https://img.shields.io/hexpm/v/json_xema.svg?style=flat-square)](https://hex.pm/packages/json_xema)
+[![GitHub: CI status](https://img.shields.io/github/workflow/status/hrzndhrn/json_xema/CI?style=flat-square)](https://github.com/hrzndhrn/json_xema/actions)
+[![Coveralls: coverage](https://img.shields.io/coveralls/github/hrzndhrn/json_xema?style=flat-square)](https://coveralls.io/github/hrzndhrn/json_xema)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://github.com/hrzndhrn/json_xema/blob/main/LICENSE.md)
 
 JsonXema is a [JSON Schema](http://json-schema.org) validator with support
 for draft 04, 06, and 07.
