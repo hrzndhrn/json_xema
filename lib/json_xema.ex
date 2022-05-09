@@ -180,7 +180,7 @@ defmodule JsonXema do
       |> Map.update(:contains, nil, &schema/1)
       |> Map.update(:all_of, nil, &schemas/1)
       |> Map.update(:any_of, nil, &schemas/1)
-      |> Map.update(:definitions, nil, &schemas/1)
+      |> Map.update(:definitions, nil, &definitions/1)
       |> Map.update(:dependencies, nil, &dependencies/1)
       |> Map.update(:else, nil, &schema/1)
       |> Map.update(:format, nil, &to_format_attribute/1)
@@ -266,6 +266,26 @@ defmodule JsonXema do
   defp schemas(list)
        when is_list(list),
        do: Enum.map(list, &schema/1)
+
+  @spec definitions(map) :: map
+  defp definitions(map)
+       when is_map(map),
+       do: map |> map_values(&definition/1) |> Enum.into(%{})
+
+  defp definition(map) when is_map(map) do
+    if is_nested_definition?(map) do
+      map |> map_values(&definition/1) |> Enum.into(%{})
+    else
+      schema(map)
+    end
+  end
+
+  defp definition(value), do: schema(value)
+
+  @spec is_nested_definition?(map) :: boolean
+  defp is_nested_definition?(map) when is_map(map) do
+    map |> Enum.all?(fn {k, v} -> is_binary(k) and is_map(v) end)
+  end
 
   @spec dependencies(map) :: map
   defp dependencies(map),

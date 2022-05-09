@@ -42,4 +42,24 @@ defmodule JsonXema.DefinitionsTest do
       refute valid?(schema, data)
     end
   end
+
+  describe "nested definition" do
+    setup do
+      %{schema: ~s(
+        {
+          "$ref": "http://json-schema.org/draft-07/schema#"
+        }
+        ) |> Jason.decode!() |> JsonXema.new()}
+    end
+
+    test "two level nested definition", %{schema: schema} do
+      data = %{"definition" => %{"foo" => %{"bar" => %{"type" => "integer"}}}}
+      assert valid?(schema, data)
+    end
+
+    test "three level nested definition", %{schema: schema} do
+      data = %{"definition" => %{"foo" => %{"bar" => %{"foo" => %{"type" => "integer"}}}}}
+      assert valid?(schema, data)
+    end
+  end
 end
