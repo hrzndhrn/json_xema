@@ -17,7 +17,7 @@ defmodule JsonXema.RefRemoteTest do
 
   describe "invalid remote ref: " do
     test "invalid json" do
-      expected = "unexpected byte at position 0: 0x41 ('A')"
+      expected = ~s|unexpected byte at position 0: 0x41 ("A")|
 
       assert_raise DecodeError, expected, fn ->
         ~s|{"$ref": "http://localhost:1234/invalid.json"}|
