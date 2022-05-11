@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1 2022/05/11
+
++ Update deps.
+
 ## 0.6.0 2020/09/07
 
 + Adding option `:fail` to `Xema.validate/3`.

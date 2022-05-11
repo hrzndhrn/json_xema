@@ -491,4 +491,38 @@ defmodule JsonXema.RefTest do
                }
     end
   end
+
+  describe "schema with ref path with none-keyword" do
+    setup do
+      schema =
+        """
+        {
+          "definitions": {
+            "common": {
+              "foo": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            }
+          },
+          "user": {
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/common/foo"
+              }
+            }
+          }
+        }
+        """
+        |> Jason.decode!()
+        |> JsonXema.new()
+
+      %{schema: schema}
+    end
+
+    test "validate/2 with a valid data", %{schema: schema} do
+      assert validate(schema, %{"user" => %{"id" => 555}}) == :ok
+    end
+  end
 end

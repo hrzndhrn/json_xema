@@ -111,7 +111,7 @@ defmodule JsonXema do
   @doc """
   Converts `%JsonXema{}` to `%Xema{}`.
   """
-  @spec to_xema(%JsonXema{}) :: %Xema{}
+  @spec to_xema(JsonXema.t()) :: Xema.t()
   def to_xema(%JsonXema{} = json_xema) do
     struct!(
       Xema,
