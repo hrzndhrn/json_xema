@@ -63,7 +63,7 @@ defmodule JsonXema.MixProject do
       {:excoveralls, "~> 0.8", only: :test},
       {:httpoison, "~> 1.8", only: :test},
       {:jason, "~> 1.0", only: [:dev, :test]},
-      {:xema, "~> 0.14"}
+      {:xema, "~> 0.16"}
     ]
   end
 
