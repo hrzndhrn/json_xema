@@ -52,18 +52,19 @@ defmodule JsonXema.MixProject do
 
   defp deps do
     [
-      {:benchee, "~> 1.0", only: :dev},
+      {:xema, "~> 0.16"},
+      # dev and test
+      {:benchee, "~> 1.1", only: :dev},
       {:benchee_markdown, "~> 0.2", only: :dev},
       {:conv_case, "~> 0.2"},
       {:cowboy, "~> 2.7.0", only: :test},
-      {:credo, "~> 1.5", only: [:dev, :test]},
+      {:credo, "~> 1.6", only: [:dev, :test]},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.25", only: :dev, runtime: false},
-      {:ex_json_schema, "~> 0.8", only: :dev},
-      {:excoveralls, "~> 0.8", only: :test},
+      {:ex_doc, "~> 0.28", only: :dev, runtime: false},
+      {:ex_json_schema, "~> 0.9", only: :dev},
+      {:excoveralls, "~> 0.14", only: :test},
       {:httpoison, "~> 1.8", only: :test},
-      {:jason, "~> 1.0", only: [:dev, :test]},
-      {:xema, "~> 0.16"}
+      {:jason, "~> 1.3", only: [:dev, :test]}
     ]
   end
 
