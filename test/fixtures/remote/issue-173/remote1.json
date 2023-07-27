@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "schema1": {
+            "$ref": "issue-173/remote2.json"
+        }
+    },
+    "$ref": "#/definitions/schema1"
+}
