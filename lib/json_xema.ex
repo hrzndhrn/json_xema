@@ -57,9 +57,8 @@ defmodule JsonXema do
 
   Possible options:
   + `:loader` - a loader for remote schemas. This option will overwrite the
-                  loader from the config. See
-                  [Configure a loader](loader.html) to how to define a
-                  loader.
+    loader from the config. See [Configure a loader](loader.html) to how to
+    define a loader.
 
   ## Examples
 

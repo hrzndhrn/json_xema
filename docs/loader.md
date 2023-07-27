@@ -68,13 +68,12 @@ defmodule My.Loader do
 
   @behaviour Xema.Loader
 
-  @spec fetch(URI.t()) :: {:ok, any} | {:error, any}
-  def fetch(uri),
-    do:
-      "path/to/schemas"
-      |> Path.join(uri.path)
-      |> File.read!()
-      |> Jason.decode()
-
+  @impl Xema.Loader
+  def fetch(uri) do
+    "path/to/schemas"
+    |> Path.join(uri.path)
+    |> File.read!()
+    |> Jason.decode()
+  end
 end
 ```
