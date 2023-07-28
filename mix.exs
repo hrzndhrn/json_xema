@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.6.1",
+      version: "0.6.2",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -19,7 +19,7 @@ defmodule JsonXema.MixProject do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
-        "coveralls.travis": :test,
+        "coveralls.github": :test,
         "coveralls.html": :test,
         "gen.test_suite": :test
       ],

@@ -490,4 +490,14 @@ defmodule JsonXema.RefRemoteTest do
              }
     end
   end
+
+  test "issue-173" do
+    assert xema =
+             "test/fixtures/remote/issue-173/root.json"
+             |> File.read!()
+             |> Jason.decode!()
+             |> JsonXema.new(loader: Test.FileLoader)
+
+    assert xema == %JsonXema{schema: %Xema.Schema{type: true}, refs: %{}}
+  end
 end

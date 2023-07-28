@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.2 2023/07/28
+
++ Fix docs.
+
 ## 0.6.1 2022/05/11
 
 + Update deps.

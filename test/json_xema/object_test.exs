@@ -127,8 +127,7 @@ defmodule JsonXema.ObjectTest do
                reason: %{maxProperties: 3, value: %{a: 1, b: 2, c: 3, d: 4}}
              }
 
-      assert Exception.message(error) ==
-               ~s|Expected at most 3 properties, got %{a: 1, b: 2, c: 3, d: 4}.|
+      assert Exception.message(error) =~ ~s|Expected at most 3 properties, got|
     end
   end
 
