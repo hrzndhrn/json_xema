@@ -17,7 +17,7 @@ defmodule Xema.SchemaTest do
     end
 
     test "returns :ok for empty object", %{draft04: schema} do
-      assert validate(schema, "{}" |> Jason.decode!()) == :ok
+      assert validate(schema, Jason.decode!("{}")) == :ok
     end
 
     test "returns an error for a wrong type", %{draft04: schema} do

@@ -50,7 +50,7 @@ defmodule Mix.Tasks.Gen.TestSuite do
         gen_test_suite(@test_suite_path)
 
       false ->
-        path = File.cwd!() |> Path.join(@test_suite_path)
+        path = Path.join(File.cwd!(), @test_suite_path)
 
         IO.puts(
           "Error: Can't find JSON Schema Test Suite at #{path}, " <>
@@ -88,7 +88,7 @@ defmodule Mix.Tasks.Gen.TestSuite do
   end
 
   defp write_test_file({file_name, code}) do
-    path = File.cwd!() |> Path.join(file_name)
+    path = Path.join(File.cwd!(), file_name)
     path |> Path.dirname() |> File.mkdir_p!()
     File.write!(path, code)
   end

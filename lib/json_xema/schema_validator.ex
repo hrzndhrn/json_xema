@@ -1,5 +1,6 @@
 defmodule JsonXema.SchemaValidator do
   @moduledoc false
+
   # This module contains validators to check schemas against the official
   # JSON Schemas.
 
