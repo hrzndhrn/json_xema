@@ -8,8 +8,11 @@ defmodule JsonXema do
   import ConvCase
 
   alias Jason
-  alias JsonXema.{SchemaError, SchemaValidator, ValidationError}
-  alias Xema.{Format, Schema}
+  alias JsonXema.SchemaError
+  alias JsonXema.SchemaValidator
+  alias JsonXema.ValidationError
+  alias Xema.Format
+  alias Xema.Schema
 
   @type_map %{
     "any" => :any,
@@ -326,8 +329,7 @@ defmodule JsonXema do
        when is_list(value),
        do:
          {:type,
-          value
-          |> Enum.map(fn type ->
+          Enum.map(value, fn type ->
             @type_map_reverse
             |> Map.get(type)
           end)}
