@@ -1,10 +1,11 @@
 defmodule JsonXema.ValidationErrorTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   doctest JsonXema.ValidationError
+  doctest JsonXema.ValidationError.Formatter
+  doctest JsonXema.ValidationError.DefaultFormatter
 
   alias JsonXema.ValidationError
-  alias Xema.Validator
 
   describe "Xema.validate!/2" do
     setup do
@@ -22,14 +23,31 @@ defmodule JsonXema.ValidationErrorTest do
     end
   end
 
-  describe "format_error/1" do
+  describe "format_error" do
     setup do
       %{schema: ~s|{"type": "integer"}| |> Jason.decode!() |> JsonXema.new()}
     end
 
-    test "returns a formated error for an error tuple", %{schema: schema} do
-      assert schema |> Validator.validate("foo") |> ValidationError.format_error() ==
-               ~s|Expected :integer, got \"foo\".|
+    test "returns an error message for an error", %{schema: schema} do
+      error = JsonXema.validate(schema, %{a: 1})
+
+      assert ValidationError.format_error(error) == """
+             Expected \"integer\", got %{a: 1}.\
+             """
+    end
+
+    test "returns an error message for an error with opts", %{schema: schema} do
+      error = JsonXema.validate(schema, %{a: 1})
+
+      inspect_fun = fn value, _opts ->
+        Jason.encode!(value, pretty: true)
+      end
+
+      assert ValidationError.format_error(error, inspect_fun: inspect_fun) == """
+             Expected \"integer\", got {
+               "a": 1
+             }.\
+             """
     end
   end
 
