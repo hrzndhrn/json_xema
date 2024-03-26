@@ -21,16 +21,16 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
 
   """
 
-  alias JsonXema.ValidationError
+  import JsonXema.ValidationError, only: [travers_errors: 3, travers_errors: 4]
 
   @behaviour JsonXema.ValidationError.Formatter
 
   @impl true
-  def format(%ValidationError{reason: error}, opts) do
+  def format(%JsonXema.ValidationError{reason: error}, opts) do
     opts = Keyword.merge(opts, opts())
 
     error
-    |> ValidationError.travers_errors([], format_error_fun(opts))
+    |> travers_errors([], format_error_fun(opts))
     |> Enum.reverse()
     |> Enum.join("\n")
   end
@@ -199,7 +199,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
 
     error =
       error
-      |> ValidationError.travers_errors([], format_error_fun(inspect_opts), path: path)
+      |> travers_errors([], format_error_fun(inspect_opts), path: path)
       |> indent()
 
     Enum.concat([error, msg, acc])
@@ -210,7 +210,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
 
     error =
       error
-      |> ValidationError.travers_errors([], format_error_fun(inspect_opts), path: path)
+      |> travers_errors([], format_error_fun(inspect_opts), path: path)
       |> indent()
 
     Enum.concat([error, msg, acc])
@@ -227,9 +227,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     errors =
       errors
       |> Enum.map(fn {index, reason} ->
-        ValidationError.travers_errors(reason, [], format_error_fun(inspect_opts),
-          path: path ++ [index]
-        )
+        travers_errors(reason, [], format_error_fun(inspect_opts), path: path ++ [index])
       end)
       |> Enum.reverse()
       |> indent()
@@ -244,7 +242,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
       errors
       |> Enum.flat_map(fn reason ->
         reason
-        |> ValidationError.travers_errors([], format_error_fun(inspect_opts), path: path)
+        |> travers_errors([], format_error_fun(inspect_opts), path: path)
         |> Enum.reverse()
       end)
       |> Enum.reverse()
@@ -259,7 +257,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     errors =
       errors
       |> Enum.map(fn reason ->
-        ValidationError.travers_errors(reason, [], format_error_fun(inspect_opts), path: path)
+        travers_errors(reason, [], format_error_fun(inspect_opts), path: path)
       end)
       |> Enum.reverse()
       |> indent()
@@ -273,7 +271,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     errors =
       errors
       |> Enum.map(fn reason ->
-        ValidationError.travers_errors(reason, [], format_error_fun(inspect_opts), path: path)
+        travers_errors(reason, [], format_error_fun(inspect_opts), path: path)
       end)
       |> Enum.reverse()
       |> indent()

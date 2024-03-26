@@ -39,8 +39,9 @@ defmodule JsonXema.ValidationError.Formatter do
 
   alias JsonXema.ValidationError.DefaultFormatter
 
-  @callback format(error :: JsonXema.ValidationError.t(), opts :: keyword()) :: String.t()
+  @callback format(error :: Exception.t(), opts :: keyword()) :: String.t()
 
+  @spec format(Exception.t(), keyword()) :: String.t()
   def format(error, opts), do: impl().format(error, opts)
 
   defp impl do
@@ -49,27 +50,3 @@ defmodule JsonXema.ValidationError.Formatter do
     |> Keyword.get(:formatter, DefaultFormatter)
   end
 end
-
-# ...>
-# ...>   @behaviour JsonXema.ValidationError.Formatter
-# ...>
-# ...>   @impl true
-# ...>   def format(error, _opts) do
-# ...>     error
-# ...>     |> ValidationError.travers_errors([], &format_error/3)
-# ...>     |> Enum.reverse()
-# ...>     |> Enum.join("\n")
-# ...>   end
-# ...>
-# ...>   def format_error(error, path, acc) do
-# ...>     [inspect([error: error, path: path], pretty: true) | acc]
-# ...>   end
-# ...> end
-# ...>
-# ...> schema = ~s|{"type": "integer"}| |> Jason.decode!() |> JsonXema.new()
-# ...>
-# ...> Application.put_env(:json_xema, ValidationError,
-# ...>   formatter: MyValidationErrorFormatter)
-# ...>
-# ...> JsonXema.validate!(schema, "one")
-# ""
