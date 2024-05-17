@@ -49,6 +49,27 @@ defmodule JsonXema.ValidationErrorTest do
              }.\
              """
     end
+
+    test "returns an error message for an error with path_fun" do
+      schema =
+        """
+        {"properties": {
+          "int": {"type": "array", "items": {"type": "integer"}}
+        }}
+        """
+        |> Jason.decode!()
+        |> JsonXema.new()
+
+      error = JsonXema.validate(schema, %{"int" => [1, "foo"]})
+
+      path_fun = fn path, _opts ->
+        "./" <> Enum.join(path, "/")
+      end
+
+      assert ValidationError.format_error(error, path_fun: path_fun) == """
+             Expected \"integer\", got "foo", at ./int/1.\
+             """
+    end
   end
 
   describe "travers_errors/2" do

@@ -48,7 +48,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     msg =
       "Value #{inspect(value, inspect_opts)} equals exclusive minimum value of #{inspect(minimum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(
@@ -61,7 +61,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     msg =
       "Value #{inspect(value, inspect_opts)} equals exclusive minimum value of #{inspect(minimum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(
@@ -73,21 +73,21 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     msg =
       "Value #{inspect(value, inspect_opts)} is less than minimum value of #{inspect(minimum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{exclusiveMinimum: minimum, value: value}, path, inspect_opts, acc) do
     msg =
       "Value #{inspect(value, inspect_opts)} is less than minimum value of #{inspect(minimum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{minimum: minimum, value: value}, path, inspect_opts, acc) do
     msg =
       "Value #{inspect(value, inspect_opts)} is less than minimum value of #{inspect(minimum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{exclusiveMaximum: maximum, value: value}, path, inspect_opts, acc)
@@ -95,7 +95,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     msg =
       "Value #{inspect(value, inspect_opts)} equals exclusive maximum value of #{inspect(maximum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(
@@ -108,7 +108,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     msg =
       "Value #{inspect(value, inspect_opts)} equals exclusive maximum value of #{inspect(maximum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(
@@ -120,61 +120,61 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     msg =
       "Value #{inspect(value, inspect_opts)} exceeds maximum value of #{inspect(maximum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{exclusiveMaximum: maximum, value: value}, path, inspect_opts, acc) do
     msg =
       "Value #{inspect(value, inspect_opts)} exceeds maximum value of #{inspect(maximum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{maximum: maximum, value: value}, path, inspect_opts, acc) do
     msg =
       "Value #{inspect(value, inspect_opts)} exceeds maximum value of #{inspect(maximum)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{maxLength: max, value: value}, path, inspect_opts, acc) do
     msg =
       "Expected maximum length of #{inspect(max)}, got #{inspect(value, inspect_opts)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{minLength: min, value: value}, path, inspect_opts, acc) do
     msg =
       "Expected minimum length of #{inspect(min)}, got #{inspect(value, inspect_opts)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{multipleOf: multiple_of, value: value}, path, inspect_opts, acc) do
     msg =
       "Value #{inspect(value, inspect_opts)} is not a multiple of #{inspect(multiple_of)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{enum: _enum, value: value}, path, inspect_opts, acc) do
     msg = "Value #{inspect(value, inspect_opts)} is not defined in enum"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{minProperties: min, value: value}, path, inspect_opts, acc) do
     msg =
       "Expected at least #{inspect(min)} properties, got #{inspect(value, inspect_opts)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{maxProperties: max, value: value}, path, inspect_opts, acc) do
     msg =
       "Expected at most #{inspect(max)} properties, got #{inspect(value, inspect_opts)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{additionalProperties: false}, path, _inspect_opts, acc) do
@@ -182,20 +182,20 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     [msg | acc]
   end
 
-  defp format_error(%{additionalItems: false}, path, _inspect_opts, acc) do
+  defp format_error(%{additionalItems: false}, path, inspect_opts, acc) do
     msg = "Unexpected additional item"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{format: format, value: value}, path, inspect_opts, acc) do
     msg =
       "String #{inspect(value, inspect_opts)} does not validate against format #{inspect(format)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{then: error}, path, inspect_opts, acc) do
-    msg = ["Schema for then does not match#{at_path(path)}"]
+    msg = ["Schema for then does not match#{at_path(path, inspect_opts)}"]
 
     error =
       error
@@ -206,7 +206,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
   end
 
   defp format_error(%{else: error}, path, inspect_opts, acc) do
-    msg = ["Schema for else does not match#{at_path(path)}"]
+    msg = ["Schema for else does not match#{at_path(path, inspect_opts)}"]
 
     error =
       error
@@ -218,11 +218,11 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
 
   defp format_error(%{not: :ok, value: value}, path, inspect_opts, acc) do
     msg = "Value is valid against schema from not, got #{inspect(value, inspect_opts)}"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{contains: errors}, path, inspect_opts, acc) do
-    msg = ["No items match contains#{at_path(path)}"]
+    msg = ["No items match contains#{at_path(path, inspect_opts)}"]
 
     errors =
       errors
@@ -236,7 +236,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
   end
 
   defp format_error(%{anyOf: errors}, path, inspect_opts, acc) do
-    msg = ["No match of any schema" <> at_path(path)]
+    msg = ["No match of any schema" <> at_path(path, inspect_opts)]
 
     errors =
       errors
@@ -252,7 +252,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
   end
 
   defp format_error(%{allOf: errors}, path, inspect_opts, acc) do
-    msg = ["No match of all schema#{at_path(path)}"]
+    msg = ["No match of all schema#{at_path(path, inspect_opts)}"]
 
     errors =
       errors
@@ -266,7 +266,7 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
   end
 
   defp format_error(%{oneOf: {:error, errors}}, path, inspect_opts, acc) do
-    msg = ["No match of any schema#{at_path(path)}"]
+    msg = ["No match of any schema#{at_path(path, inspect_opts)}"]
 
     errors =
       errors
@@ -281,16 +281,16 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
 
   defp format_error(%{oneOf: {:ok, success}}, path, inspect_opts, acc) do
     msg = "More as one schema matches (indexes: #{inspect(success, inspect_opts)})"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
-  defp format_error(%{required: required}, path, _inspect_opts, acc) do
+  defp format_error(%{required: required}, path, inspect_opts, acc) do
     msg = "Required properties are missing: #{inspect(required)}"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{propertyNames: errors, value: _value}, path, inspect_opts, acc) do
-    msg = ["Invalid property names#{at_path(path)}"]
+    msg = ["Invalid property names#{at_path(path, inspect_opts)}"]
 
     errors =
       errors
@@ -316,13 +316,13 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
             |> Enum.join("\n")
 
           [
-            "Dependencies for #{inspect(key)} failed#{at_path(path)}\n#{sub_msg}"
+            "Dependencies for #{inspect(key)} failed#{at_path(path, inspect_opts)}\n#{sub_msg}"
             | acc
           ]
 
         {key, reason}, acc ->
           [
-            "Dependencies for #{inspect(key)} failed#{at_path(path)}" <>
+            "Dependencies for #{inspect(key)} failed#{at_path(path, inspect_opts)}" <>
               " Missing required key #{inspect(reason)}."
             | acc
           ]
@@ -337,55 +337,58 @@ defmodule JsonXema.ValidationError.DefaultFormatter do
     msg =
       "Expected at least #{inspect(min)} items, got #{inspect(value, inspect_opts)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{maxItems: max, value: value}, path, inspect_opts, acc) do
     msg =
       "Expected at most #{inspect(max)} items, got #{inspect(value, inspect_opts)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{uniqueItems: true, value: value}, path, inspect_opts, acc) do
     msg = "Expected unique items, got #{inspect(value, inspect_opts)}"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{const: const, value: value}, path, inspect_opts, acc) do
     msg = "Expected #{inspect(const)}, got #{inspect(value, inspect_opts)}"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{pattern: pattern, value: value}, path, inspect_opts, acc) do
     msg =
       "Pattern #{inspect(pattern)} does not match value #{inspect(value, inspect_opts)}"
 
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{type: type, value: value}, path, inspect_opts, acc) do
     msg = "Expected #{inspect(type)}, got #{inspect(value, inspect_opts)}"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
-  defp format_error(%{type: false}, path, _inspect_opts, acc) do
+  defp format_error(%{type: false}, path, inspect_opts, acc) do
     msg = "Schema always fails validation"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
   defp format_error(%{properties: _}, _path, _inspect_opts, acc), do: acc
 
   defp format_error(%{items: _}, _path, _inspect_opts, acc), do: acc
 
-  defp format_error(_error, path, _inspect_opts, acc) do
+  defp format_error(_error, path, inspect_opts, acc) do
     msg = "Unexpected error"
-    [msg <> at_path(path) | acc]
+    [msg <> at_path(path, inspect_opts) | acc]
   end
 
-  defp at_path([]), do: "."
+  defp at_path([], _opts), do: "."
 
-  defp at_path(path), do: ", at #{inspect(path)}."
+  defp at_path(path, opts) do
+    fun = Keyword.get(opts, :path_fun, fn path, _opts -> inspect(path) end)
+    ", at #{fun.(path, opts)}."
+  end
 
   defp indent(list), do: Enum.map(list, fn str -> "  #{str}" end)
 end
