@@ -135,13 +135,13 @@ defmodule Xema.NumberTest do
     test "validate/2 with a minimum number", %{schema: schema} do
       assert {:error, error} = validate(schema, 2.0)
       assert error == %ValidationError{reason: %{exclusiveMinimum: 2, value: 2.0}}
-      assert Exception.message(error) == ~s|Value 2 equals exclusive minimum value of 2.|
+      assert Exception.message(error) == ~s|Value 2.0 equals exclusive minimum value of 2.|
     end
 
     test "validate/2 with a maximum number (float)", %{schema: schema} do
       assert {:error, error} = validate(schema, 4.0)
       assert error == %ValidationError{reason: %{value: 4.0, exclusiveMaximum: 4}}
-      assert Exception.message(error) == ~s|Value 4 equals exclusive maximum value of 4.|
+      assert Exception.message(error) == ~s|Value 4.0 equals exclusive maximum value of 4.|
     end
 
     test "validate/2 with a maximum number (integer)", %{schema: schema} do
