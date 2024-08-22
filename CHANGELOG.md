@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.3 2024/08/22
+
++ Fix matching of `$schema`.
+
 ## 0.6.2 2023/07/28
 
 + Fix docs.
