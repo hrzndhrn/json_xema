@@ -5,7 +5,7 @@ defmodule Xema.SchemaTest do
 
   alias JsonXema.ValidationError
 
-  describe "validat/2 whith schema draft04" do
+  describe "validat/2 with schema draft04" do
     setup do
       %{
         draft04:
@@ -17,7 +17,14 @@ defmodule Xema.SchemaTest do
     end
 
     test "returns :ok for empty object", %{draft04: schema} do
-      assert validate(schema, Jason.decode!("{}")) == :ok
+      assert validate(schema, %{}) == :ok
+
+      schema = Map.put(schema, "$schema", "http://json-schema.org/draft-04/schema")
+      assert validate(schema, %{}) == :ok
+      schema = Map.put(schema, "$schema", "https://json-schema.org/draft-04/schema")
+      assert validate(schema, %{}) == :ok
+      schema = Map.put(schema, "$schema", "https://json-schema.org/draft-04/schema#")
+      assert validate(schema, %{}) == :ok
     end
 
     test "returns an error for a wrong type", %{draft04: schema} do
@@ -55,7 +62,7 @@ defmodule Xema.SchemaTest do
     end
   end
 
-  describe "validat/2 whith schema draft06" do
+  describe "validat/2 with schema draft06" do
     setup do
       %{
         draft06:
@@ -68,6 +75,13 @@ defmodule Xema.SchemaTest do
 
     test "returns :ok for empty object", %{draft06: schema} do
       assert validate(schema, Jason.decode!("{}")) == :ok
+
+      schema = Map.put(schema, "$schema", "http://json-schema.org/draft-06/schema")
+      assert validate(schema, %{}) == :ok
+      schema = Map.put(schema, "$schema", "https://json-schema.org/draft-06/schema")
+      assert validate(schema, %{}) == :ok
+      schema = Map.put(schema, "$schema", "https://json-schema.org/draft-06/schema#")
+      assert validate(schema, %{}) == :ok
     end
 
     test "returns an error for a wrong type", %{draft06: schema} do
@@ -105,7 +119,7 @@ defmodule Xema.SchemaTest do
     end
   end
 
-  describe "validat/2 whith schema draft07" do
+  describe "validat/2 with schema draft07" do
     setup do
       %{
         draft07:
@@ -118,6 +132,13 @@ defmodule Xema.SchemaTest do
 
     test "returns :ok for empty object", %{draft07: schema} do
       assert validate(schema, Jason.decode!("{}")) == :ok
+
+      schema = Map.put(schema, "$schema", "http://json-schema.org/draft-07/schema")
+      assert validate(schema, %{}) == :ok
+      schema = Map.put(schema, "$schema", "https://json-schema.org/draft-07/schema")
+      assert validate(schema, %{}) == :ok
+      schema = Map.put(schema, "$schema", "https://json-schema.org/draft-07/schema#")
+      assert validate(schema, %{}) == :ok
     end
 
     test "returns an error for a wrong type", %{draft07: schema} do
