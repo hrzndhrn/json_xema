@@ -1,5 +1,5 @@
 [
-  version: "0.7.2",
+  version: "0.7.3",
   # Can also be set/reset with `--autocorrect`/`--no-autocorrect`.
   autocorrect: true,
   # With "--dry" no changes will be written to the files.
@@ -23,6 +23,8 @@
     {Recode.Task.EnforceLineLength, [active: false]},
     {Recode.Task.FilterCount, []},
     {Recode.Task.IOInspect, [autocorrect: false]},
+    {Recode.Task.LocalsWithoutParens, []},
+    {Recode.Task.Moduledoc, [exclude: ["test/**/*.{ex,exs}", "mix.exs"]]},
     {Recode.Task.Nesting, []},
     {Recode.Task.PipeFunOne, []},
     {Recode.Task.SinglePipe, []},
@@ -30,6 +32,7 @@
     {Recode.Task.TagFIXME, [exit_code: 2]},
     {Recode.Task.TagTODO, [exit_code: 4]},
     {Recode.Task.TestFileExt, []},
+    {Recode.Task.UnnecessaryIfUnless, []},
     {Recode.Task.UnusedVariable, [active: false]}
   ]
 ]
