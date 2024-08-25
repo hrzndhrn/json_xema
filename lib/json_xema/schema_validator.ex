@@ -296,6 +296,12 @@ defmodule JsonXema.SchemaValidator do
               ]}
            )
 
+  @schemas [
+    {~r|^http[s]?://json-schema.org/draft-04/schema[#]?|i, @draft04},
+    {~r|^http[s]?://json-schema.org/draft-06/schema[#]?|i, @draft06},
+    {~r|^http[s]?://json-schema.org/draft-07/schema[#]?|i, @draft07}
+  ]
+
   @doc """
   This function validates schemas against:
   + http://json-schema.org/draft-04/schema#
@@ -303,14 +309,16 @@ defmodule JsonXema.SchemaValidator do
   + http://json-schema.org/draft-07/schema#
   """
   @spec validate(String.t(), any) :: Xema.Validator.result()
-  def validate("http://json-schema.org/draft-04/schema#", value),
-    do: Xema.validate(@draft04, value)
+  def validate(uri, value) do
+    schema =
+      Enum.find_value(@schemas, fn {regex, schema} ->
+        if Regex.match?(regex, uri), do: schema
+      end)
 
-  def validate("http://json-schema.org/draft-06/schema#", value),
-    do: Xema.validate(@draft06, value)
-
-  def validate("http://json-schema.org/draft-07/schema#", value),
-    do: Xema.validate(@draft07, value)
-
-  def validate(uri, _value), do: raise(SchemaError, "Unknown $schema #{uri}.")
+    if schema do
+      Xema.validate(schema, value)
+    else
+      raise(SchemaError, "Unknown $schema #{uri}.")
+    end
+  end
 end

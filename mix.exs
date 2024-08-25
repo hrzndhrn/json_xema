@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.6.2",
+      version: "0.6.3",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
