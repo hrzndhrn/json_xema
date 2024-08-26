@@ -4,7 +4,7 @@ defmodule JsonXema.MixProject do
   def project do
     [
       app: :json_xema,
-      version: "0.6.3",
+      version: "0.6.4",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -65,7 +65,7 @@ defmodule JsonXema.MixProject do
       {:excoveralls, "~> 0.14", only: :test},
       {:httpoison, "~> 2.2", only: :test},
       {:jason, "~> 1.3", only: [:dev, :test]},
-      {:recode, "~> 0.7"}
+      {:recode, "~> 0.7", only: [:dev]}
     ]
   end
 
