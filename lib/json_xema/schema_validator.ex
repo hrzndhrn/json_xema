@@ -296,11 +296,15 @@ defmodule JsonXema.SchemaValidator do
               ]}
            )
 
-  @schemas [
-    {~r|^http[s]?://json-schema.org/draft-04/schema[#]?|i, @draft04},
-    {~r|^http[s]?://json-schema.org/draft-06/schema[#]?|i, @draft06},
-    {~r|^http[s]?://json-schema.org/draft-07/schema[#]?|i, @draft07}
-  ]
+  @doc false
+  @spec meta_schemas() :: [{Regex.t(), term()}]
+  defp meta_schemas do
+    [
+      {~r|^https?://json-schema\.org/draft-04/schema#?|i, @draft04},
+      {~r|^https?://json-schema\.org/draft-06/schema#?|i, @draft06},
+      {~r|^https?://json-schema\.org/draft-07/schema#?|i, @draft07}
+    ]
+  end
 
   @doc """
   This function validates schemas against:
@@ -310,15 +314,16 @@ defmodule JsonXema.SchemaValidator do
   """
   @spec validate(String.t(), any) :: Xema.Validator.result()
   def validate(uri, value) do
-    schema =
-      Enum.find_value(@schemas, fn {regex, schema} ->
-        if Regex.match?(regex, uri), do: schema
-      end)
-
-    if schema do
-      Xema.validate(schema, value)
-    else
-      raise(SchemaError, "Unknown $schema #{uri}.")
+    case find_matching_schema(uri) do
+      nil -> raise(SchemaError, "Unknown $schema #{uri}.")
+      schema -> Xema.validate(schema, value)
     end
+  end
+
+  @spec find_matching_schema(String.t()) :: term() | nil
+  defp find_matching_schema(uri) do
+    Enum.find_value(meta_schemas(), fn {regex, schema} ->
+      Regex.match?(regex, uri) && schema
+    end)
   end
 end
