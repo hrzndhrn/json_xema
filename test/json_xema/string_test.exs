@@ -78,7 +78,8 @@ defmodule JsonXema.StringTest do
 
     test "validate/2 with a none matching string", %{schema: schema} do
       assert {:error, error} = validate(schema, "a to a")
-      assert error == %ValidationError{reason: %{value: "a to a", pattern: ~r/^.+match.+$/}}
+      assert error.reason.value == "a to a"
+      assert Regex.source(error.reason.pattern) == "^.+match.+$"
 
       assert Exception.message(error) ==
                ~s|Pattern ~r/^.+match.+$/ does not match value "a to a".|
