@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.5 2025/05/30
+
++ Fix OTP 28 compatibility by converting @schemas to runtime function.
+
 ## 0.6.4 2024/08/26
 
 + Make `recode` dependency only available in `dev`.
