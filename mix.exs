@@ -62,6 +62,7 @@ defmodule JsonXema.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.28", only: :dev, runtime: false},
       {:ex_json_schema, "~> 0.9", only: :dev},
+      {:ex_jsonschema, "~> 0.1.1", only: :dev},
       {:excoveralls, "~> 0.14", only: :test},
       {:httpoison, "~> 2.2", only: :test},
       {:jason, "~> 1.3", only: [:dev, :test]},
