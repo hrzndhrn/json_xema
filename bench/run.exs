@@ -45,6 +45,11 @@ defmodule Bench do
   def ex_jsonschema_valid?(%{ex_jsonschema: schema, raw_json: json}),
     do: :ok = ExJsonschema.validate(schema, json)
 
+  @perf_opts ExJsonschema.Options.new(:performance)
+
+  def ex_jsonschema_valid_performance?(%{ex_jsonschema: schema, raw_json: json}),
+    do: :ok = ExJsonschema.validate(schema, json, @perf_opts)
+
   def run do
     inputs =
       "bench/schema"
@@ -64,7 +69,8 @@ defmodule Bench do
       %{
         "JsonXema" => &json_xema_valid?/1,
         "ExJsonSchema" => &ex_json_schema_valid?/1,
-        "ExJsonschema_RUST" => &ex_jsonschema_valid?/1
+        "ExJsonschema_RUST" => &ex_jsonschema_valid?/1,
+        "ExJsonschema_RUST-Performance Profile" => &ex_jsonschema_valid_performance?/1
       },
       time: 1,
       inputs: inputs,
