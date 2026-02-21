@@ -5,7 +5,7 @@ defmodule JsonXema.MixProject do
     [
       app: :json_xema,
       version: "0.6.5",
-      elixir: "~> 1.13",
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
@@ -14,15 +14,6 @@ defmodule JsonXema.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       test_coverage: [tool: ExCoveralls],
       source_url: "https://github.com/hrzndhrn/json_xema",
-      preferred_cli_env: [
-        carp: :test,
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.github": :test,
-        "coveralls.html": :test,
-        "gen.test_suite": :test
-      ],
       docs: [
         extras: [
           "docs/readme.md",
@@ -45,6 +36,20 @@ defmodule JsonXema.MixProject do
 
   defp description() do
     "A JSON Schema validator for draft-04, -06, and -07."
+  end
+
+  def cli do
+    [
+      preferred_envs: [
+        carp: :test,
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.github": :test,
+        "coveralls.html": :test,
+        "gen.test_suite": :test
+      ]
+    ]
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.6 2026/dev
+ 
++ Require Elixir 1.15
+
 ## 0.6.5 2025/05/30
 
 + Fix OTP 28 compatibility by converting @schemas to runtime function.
