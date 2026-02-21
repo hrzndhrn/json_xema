@@ -1,6 +1,6 @@
 Benchmark
 
-Benchmark run from 2025-10-08 23:45:54.059029Z UTC
+Benchmark run from 2026-02-21 16:20:56.153466Z UTC
 
 ## System
 
@@ -12,19 +12,19 @@ Benchmark suite executing on the following system:
     <td>macOS</td>
   </tr><tr>
     <th style="white-space: nowrap">CPU Information</th>
-    <td style="white-space: nowrap">Apple M3 Ultra</td>
+    <td style="white-space: nowrap">Apple M1</td>
   </tr><tr>
     <th style="white-space: nowrap">Number of Available Cores</th>
-    <td style="white-space: nowrap">28</td>
+    <td style="white-space: nowrap">8</td>
   </tr><tr>
     <th style="white-space: nowrap">Available Memory</th>
-    <td style="white-space: nowrap">256 GB</td>
+    <td style="white-space: nowrap">16 GB</td>
   </tr><tr>
     <th style="white-space: nowrap">Elixir Version</th>
-    <td style="white-space: nowrap">1.18.3</td>
+    <td style="white-space: nowrap">1.18.4</td>
   </tr><tr>
     <th style="white-space: nowrap">Erlang Version</th>
-    <td style="white-space: nowrap">27.3</td>
+    <td style="white-space: nowrap">28.0</td>
   </tr>
 </table>
 
@@ -64,39 +64,39 @@ Run Time
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">512.53 K</td>
-    <td style="white-space: nowrap; text-align: right">1.95 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;470.16%</td>
-    <td style="white-space: nowrap; text-align: right">1.83 &micro;s</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap; text-align: right">441.60 K</td>
+    <td style="white-space: nowrap; text-align: right">2.26 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;2074.03%</td>
     <td style="white-space: nowrap; text-align: right">2.04 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">2.25 &micro;s</td>
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">496.12 K</td>
-    <td style="white-space: nowrap; text-align: right">2.02 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;411.33%</td>
-    <td style="white-space: nowrap; text-align: right">1.92 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">2.21 &micro;s</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
+    <td style="white-space: nowrap; text-align: right">439.06 K</td>
+    <td style="white-space: nowrap; text-align: right">2.28 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;918.25%</td>
+    <td style="white-space: nowrap; text-align: right">2 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">2.38 &micro;s</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">212.36 K</td>
-    <td style="white-space: nowrap; text-align: right">4.71 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;368.77%</td>
-    <td style="white-space: nowrap; text-align: right">3.88 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">5.50 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">178.92 K</td>
+    <td style="white-space: nowrap; text-align: right">5.59 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;421.77%</td>
+    <td style="white-space: nowrap; text-align: right">4 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">9.75 &micro;s</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">78.05 K</td>
-    <td style="white-space: nowrap; text-align: right">12.81 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;193.29%</td>
-    <td style="white-space: nowrap; text-align: right">8.42 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">163.29 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">80.69 K</td>
+    <td style="white-space: nowrap; text-align: right">12.39 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;223.08%</td>
+    <td style="white-space: nowrap; text-align: right">9 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">196.72 &micro;s</td>
   </tr>
 
 </table>
@@ -110,27 +110,27 @@ Run Time Comparison
     <th style="text-align: right">IPS</th>
     <th style="text-align: right">Slower</th>
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">512.53 K</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap;text-align: right">441.60 K</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">496.12 K</td>
-    <td style="white-space: nowrap; text-align: right">1.03x</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
+    <td style="white-space: nowrap; text-align: right">439.06 K</td>
+    <td style="white-space: nowrap; text-align: right">1.01x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">212.36 K</td>
-    <td style="white-space: nowrap; text-align: right">2.41x</td>
+    <td style="white-space: nowrap; text-align: right">178.92 K</td>
+    <td style="white-space: nowrap; text-align: right">2.47x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">78.05 K</td>
-    <td style="white-space: nowrap; text-align: right">6.57x</td>
+    <td style="white-space: nowrap; text-align: right">80.69 K</td>
+    <td style="white-space: nowrap; text-align: right">5.47x</td>
   </tr>
 
 </table>
@@ -154,38 +154,38 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">2.53 M</td>
-    <td style="white-space: nowrap; text-align: right">395.06 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;2413.00%</td>
-    <td style="white-space: nowrap; text-align: right">375 ns</td>
-    <td style="white-space: nowrap; text-align: right">459 ns</td>
-  </tr>
-
-  <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.27 M</td>
-    <td style="white-space: nowrap; text-align: right">441.39 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1476.33%</td>
+    <td style="white-space: nowrap; text-align: right">2.13 M</td>
+    <td style="white-space: nowrap; text-align: right">468.72 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;2002.59%</td>
     <td style="white-space: nowrap; text-align: right">417 ns</td>
     <td style="white-space: nowrap; text-align: right">542 ns</td>
   </tr>
 
   <tr>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap; text-align: right">1.96 M</td>
+    <td style="white-space: nowrap; text-align: right">509.74 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1359.67%</td>
+    <td style="white-space: nowrap; text-align: right">459 ns</td>
+    <td style="white-space: nowrap; text-align: right">625 ns</td>
+  </tr>
+
+  <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.68 M</td>
-    <td style="white-space: nowrap; text-align: right">595.24 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1268.97%</td>
-    <td style="white-space: nowrap; text-align: right">542 ns</td>
-    <td style="white-space: nowrap; text-align: right">709 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.44 M</td>
+    <td style="white-space: nowrap; text-align: right">692.58 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1296.65%</td>
+    <td style="white-space: nowrap; text-align: right">625 ns</td>
+    <td style="white-space: nowrap; text-align: right">875 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.64 M</td>
-    <td style="white-space: nowrap; text-align: right">1561.95 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;199.95%</td>
-    <td style="white-space: nowrap; text-align: right">1458 ns</td>
-    <td style="white-space: nowrap; text-align: right">2292 ns</td>
+    <td style="white-space: nowrap; text-align: right">0.53 M</td>
+    <td style="white-space: nowrap; text-align: right">1880.36 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;137.09%</td>
+    <td style="white-space: nowrap; text-align: right">1750 ns</td>
+    <td style="white-space: nowrap; text-align: right">3459 ns</td>
   </tr>
 
 </table>
@@ -200,26 +200,26 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">2.53 M</td>
+    <td style="white-space: nowrap;text-align: right">2.13 M</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.27 M</td>
-    <td style="white-space: nowrap; text-align: right">1.12x</td>
+    <td style="white-space: nowrap; text-align: right">1.96 M</td>
+    <td style="white-space: nowrap; text-align: right">1.09x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.68 M</td>
-    <td style="white-space: nowrap; text-align: right">1.51x</td>
+    <td style="white-space: nowrap; text-align: right">1.44 M</td>
+    <td style="white-space: nowrap; text-align: right">1.48x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.64 M</td>
-    <td style="white-space: nowrap; text-align: right">3.95x</td>
+    <td style="white-space: nowrap; text-align: right">0.53 M</td>
+    <td style="white-space: nowrap; text-align: right">4.01x</td>
   </tr>
 
 </table>
@@ -242,39 +242,39 @@ Run Time
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">39.91 K</td>
-    <td style="white-space: nowrap; text-align: right">25.06 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;8.26%</td>
-    <td style="white-space: nowrap; text-align: right">24.83 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">30.29 &micro;s</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap; text-align: right">35.99 K</td>
+    <td style="white-space: nowrap; text-align: right">27.79 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;205.59%</td>
+    <td style="white-space: nowrap; text-align: right">26.71 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">38.93 &micro;s</td>
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">39.82 K</td>
-    <td style="white-space: nowrap; text-align: right">25.11 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;5.63%</td>
-    <td style="white-space: nowrap; text-align: right">25 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">28.29 &micro;s</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
+    <td style="white-space: nowrap; text-align: right">30.77 K</td>
+    <td style="white-space: nowrap; text-align: right">32.50 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1294.58%</td>
+    <td style="white-space: nowrap; text-align: right">27.67 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">83.21 &micro;s</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">11.28 K</td>
-    <td style="white-space: nowrap; text-align: right">88.68 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;4.29%</td>
-    <td style="white-space: nowrap; text-align: right">88.17 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">101.17 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">8.44 K</td>
+    <td style="white-space: nowrap; text-align: right">118.46 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;13.52%</td>
+    <td style="white-space: nowrap; text-align: right">115.95 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">160.27 &micro;s</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">6.10 K</td>
-    <td style="white-space: nowrap; text-align: right">163.99 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;5.87%</td>
-    <td style="white-space: nowrap; text-align: right">162.71 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">216.36 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">0.76 K</td>
+    <td style="white-space: nowrap; text-align: right">1316.72 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;4.98%</td>
+    <td style="white-space: nowrap; text-align: right">1294.35 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">1597.34 &micro;s</td>
   </tr>
 
 </table>
@@ -288,27 +288,27 @@ Run Time Comparison
     <th style="text-align: right">IPS</th>
     <th style="text-align: right">Slower</th>
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">39.91 K</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap;text-align: right">35.99 K</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">39.82 K</td>
-    <td style="white-space: nowrap; text-align: right">1.0x</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
+    <td style="white-space: nowrap; text-align: right">30.77 K</td>
+    <td style="white-space: nowrap; text-align: right">1.17x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">11.28 K</td>
-    <td style="white-space: nowrap; text-align: right">3.54x</td>
+    <td style="white-space: nowrap; text-align: right">8.44 K</td>
+    <td style="white-space: nowrap; text-align: right">4.26x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">6.10 K</td>
-    <td style="white-space: nowrap; text-align: right">6.54x</td>
+    <td style="white-space: nowrap; text-align: right">0.76 K</td>
+    <td style="white-space: nowrap; text-align: right">47.39x</td>
   </tr>
 
 </table>
@@ -331,39 +331,39 @@ Run Time
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">2.09 M</td>
-    <td style="white-space: nowrap; text-align: right">478.66 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1865.56%</td>
-    <td style="white-space: nowrap; text-align: right">458 ns</td>
-    <td style="white-space: nowrap; text-align: right">584 ns</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap; text-align: right">1.61 M</td>
+    <td style="white-space: nowrap; text-align: right">620.06 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;3852.22%</td>
+    <td style="white-space: nowrap; text-align: right">542 ns</td>
+    <td style="white-space: nowrap; text-align: right">750 ns</td>
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">1.98 M</td>
-    <td style="white-space: nowrap; text-align: right">504.14 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1440.37%</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
+    <td style="white-space: nowrap; text-align: right">1.49 M</td>
+    <td style="white-space: nowrap; text-align: right">671.14 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;3710.39%</td>
     <td style="white-space: nowrap; text-align: right">500 ns</td>
-    <td style="white-space: nowrap; text-align: right">625 ns</td>
+    <td style="white-space: nowrap; text-align: right">1041 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.33 M</td>
-    <td style="white-space: nowrap; text-align: right">753.82 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;940.08%</td>
-    <td style="white-space: nowrap; text-align: right">708 ns</td>
-    <td style="white-space: nowrap; text-align: right">875 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.12 M</td>
+    <td style="white-space: nowrap; text-align: right">889.76 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;2873.38%</td>
+    <td style="white-space: nowrap; text-align: right">833 ns</td>
+    <td style="white-space: nowrap; text-align: right">1042 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.69 M</td>
-    <td style="white-space: nowrap; text-align: right">1459.81 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;294.45%</td>
-    <td style="white-space: nowrap; text-align: right">1292 ns</td>
-    <td style="white-space: nowrap; text-align: right">2416 ns</td>
+    <td style="white-space: nowrap; text-align: right">0.57 M</td>
+    <td style="white-space: nowrap; text-align: right">1750.75 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;319.32%</td>
+    <td style="white-space: nowrap; text-align: right">1542 ns</td>
+    <td style="white-space: nowrap; text-align: right">3417 ns</td>
   </tr>
 
 </table>
@@ -377,27 +377,27 @@ Run Time Comparison
     <th style="text-align: right">IPS</th>
     <th style="text-align: right">Slower</th>
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">2.09 M</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap;text-align: right">1.61 M</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">1.98 M</td>
-    <td style="white-space: nowrap; text-align: right">1.05x</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
+    <td style="white-space: nowrap; text-align: right">1.49 M</td>
+    <td style="white-space: nowrap; text-align: right">1.08x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.33 M</td>
-    <td style="white-space: nowrap; text-align: right">1.57x</td>
+    <td style="white-space: nowrap; text-align: right">1.12 M</td>
+    <td style="white-space: nowrap; text-align: right">1.43x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.69 M</td>
-    <td style="white-space: nowrap; text-align: right">3.05x</td>
+    <td style="white-space: nowrap; text-align: right">0.57 M</td>
+    <td style="white-space: nowrap; text-align: right">2.82x</td>
   </tr>
 
 </table>
@@ -421,38 +421,38 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">1.59 M</td>
-    <td style="white-space: nowrap; text-align: right">0.63 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1165.96%</td>
-    <td style="white-space: nowrap; text-align: right">0.63 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">0.75 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">1.25 M</td>
+    <td style="white-space: nowrap; text-align: right">800.93 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1145.38%</td>
+    <td style="white-space: nowrap; text-align: right">708 ns</td>
+    <td style="white-space: nowrap; text-align: right">1375 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">1.47 M</td>
-    <td style="white-space: nowrap; text-align: right">0.68 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1167.52%</td>
-    <td style="white-space: nowrap; text-align: right">0.67 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">0.79 &micro;s</td>
-  </tr>
-
-  <tr>
-    <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.140 M</td>
-    <td style="white-space: nowrap; text-align: right">7.14 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;24.53%</td>
-    <td style="white-space: nowrap; text-align: right">6.92 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">12.17 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">1.20 M</td>
+    <td style="white-space: nowrap; text-align: right">831.09 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1196.57%</td>
+    <td style="white-space: nowrap; text-align: right">750 ns</td>
+    <td style="white-space: nowrap; text-align: right">959 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">0.117 M</td>
-    <td style="white-space: nowrap; text-align: right">8.51 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;17.76%</td>
-    <td style="white-space: nowrap; text-align: right">8.46 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">9.71 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">0.0256 M</td>
+    <td style="white-space: nowrap; text-align: right">39031.51 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;255.30%</td>
+    <td style="white-space: nowrap; text-align: right">36250 ns</td>
+    <td style="white-space: nowrap; text-align: right">56816.83 ns</td>
+  </tr>
+
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">0.00023 M</td>
+    <td style="white-space: nowrap; text-align: right">4385566 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;0.44%</td>
+    <td style="white-space: nowrap; text-align: right">4381187.50 ns</td>
+    <td style="white-space: nowrap; text-align: right">4442013.11 ns</td>
   </tr>
 
 </table>
@@ -467,26 +467,26 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">1.59 M</td>
+    <td style="white-space: nowrap;text-align: right">1.25 M</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">1.47 M</td>
-    <td style="white-space: nowrap; text-align: right">1.08x</td>
-  </tr>
-
-  <tr>
-    <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.140 M</td>
-    <td style="white-space: nowrap; text-align: right">11.32x</td>
+    <td style="white-space: nowrap; text-align: right">1.20 M</td>
+    <td style="white-space: nowrap; text-align: right">1.04x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">0.117 M</td>
-    <td style="white-space: nowrap; text-align: right">13.5x</td>
+    <td style="white-space: nowrap; text-align: right">0.0256 M</td>
+    <td style="white-space: nowrap; text-align: right">48.73x</td>
+  </tr>
+
+  <tr>
+    <td style="white-space: nowrap">ExJsonSchema</td>
+    <td style="white-space: nowrap; text-align: right">0.00023 M</td>
+    <td style="white-space: nowrap; text-align: right">5475.62x</td>
   </tr>
 
 </table>
@@ -510,38 +510,38 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">1.96 M</td>
-    <td style="white-space: nowrap; text-align: right">0.51 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1822.74%</td>
-    <td style="white-space: nowrap; text-align: right">0.50 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">0.63 &micro;s</td>
-  </tr>
-
-  <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">1.83 M</td>
-    <td style="white-space: nowrap; text-align: right">0.55 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1207.26%</td>
+    <td style="white-space: nowrap; text-align: right">1.61 M</td>
+    <td style="white-space: nowrap; text-align: right">0.62 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;6764.61%</td>
     <td style="white-space: nowrap; text-align: right">0.54 &micro;s</td>
     <td style="white-space: nowrap; text-align: right">0.67 &micro;s</td>
   </tr>
 
   <tr>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap; text-align: right">1.53 M</td>
+    <td style="white-space: nowrap; text-align: right">0.65 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;2420.40%</td>
+    <td style="white-space: nowrap; text-align: right">0.58 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">0.75 &micro;s</td>
+  </tr>
+
+  <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">0.66 M</td>
-    <td style="white-space: nowrap; text-align: right">1.52 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;255.56%</td>
+    <td style="white-space: nowrap; text-align: right">0.68 M</td>
+    <td style="white-space: nowrap; text-align: right">1.48 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;287.20%</td>
     <td style="white-space: nowrap; text-align: right">1.46 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">2.04 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">1.67 &micro;s</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.38 M</td>
-    <td style="white-space: nowrap; text-align: right">2.66 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;176.90%</td>
-    <td style="white-space: nowrap; text-align: right">2.25 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">11.79 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">0.30 M</td>
+    <td style="white-space: nowrap; text-align: right">3.35 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;132.39%</td>
+    <td style="white-space: nowrap; text-align: right">2.88 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">17.58 &micro;s</td>
   </tr>
 
 </table>
@@ -556,26 +556,26 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">1.96 M</td>
+    <td style="white-space: nowrap;text-align: right">1.61 M</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">1.83 M</td>
-    <td style="white-space: nowrap; text-align: right">1.07x</td>
+    <td style="white-space: nowrap; text-align: right">1.53 M</td>
+    <td style="white-space: nowrap; text-align: right">1.05x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">0.66 M</td>
-    <td style="white-space: nowrap; text-align: right">2.99x</td>
+    <td style="white-space: nowrap; text-align: right">0.68 M</td>
+    <td style="white-space: nowrap; text-align: right">2.38x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.38 M</td>
-    <td style="white-space: nowrap; text-align: right">5.23x</td>
+    <td style="white-space: nowrap; text-align: right">0.30 M</td>
+    <td style="white-space: nowrap; text-align: right">5.4x</td>
   </tr>
 
 </table>
@@ -599,38 +599,38 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">2.38 M</td>
-    <td style="white-space: nowrap; text-align: right">421.01 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1857.01%</td>
-    <td style="white-space: nowrap; text-align: right">416 ns</td>
-    <td style="white-space: nowrap; text-align: right">500 ns</td>
+    <td style="white-space: nowrap; text-align: right">2.00 M</td>
+    <td style="white-space: nowrap; text-align: right">499.56 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1419.58%</td>
+    <td style="white-space: nowrap; text-align: right">458 ns</td>
+    <td style="white-space: nowrap; text-align: right">584 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.15 M</td>
-    <td style="white-space: nowrap; text-align: right">464.90 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1307.97%</td>
-    <td style="white-space: nowrap; text-align: right">458 ns</td>
-    <td style="white-space: nowrap; text-align: right">583 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.74 M</td>
+    <td style="white-space: nowrap; text-align: right">574.13 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;2364.67%</td>
+    <td style="white-space: nowrap; text-align: right">541 ns</td>
+    <td style="white-space: nowrap; text-align: right">708 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.37 M</td>
-    <td style="white-space: nowrap; text-align: right">732.52 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;952.44%</td>
-    <td style="white-space: nowrap; text-align: right">708 ns</td>
-    <td style="white-space: nowrap; text-align: right">834 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.26 M</td>
+    <td style="white-space: nowrap; text-align: right">795.86 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;842.63%</td>
+    <td style="white-space: nowrap; text-align: right">750 ns</td>
+    <td style="white-space: nowrap; text-align: right">1000 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.49 M</td>
-    <td style="white-space: nowrap; text-align: right">2043.30 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;138.86%</td>
-    <td style="white-space: nowrap; text-align: right">1875 ns</td>
-    <td style="white-space: nowrap; text-align: right">3875 ns</td>
+    <td style="white-space: nowrap; text-align: right">0.41 M</td>
+    <td style="white-space: nowrap; text-align: right">2433.22 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;130.93%</td>
+    <td style="white-space: nowrap; text-align: right">2209 ns</td>
+    <td style="white-space: nowrap; text-align: right">5292 ns</td>
   </tr>
 
 </table>
@@ -645,26 +645,26 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">2.38 M</td>
+    <td style="white-space: nowrap;text-align: right">2.00 M</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.15 M</td>
-    <td style="white-space: nowrap; text-align: right">1.1x</td>
+    <td style="white-space: nowrap; text-align: right">1.74 M</td>
+    <td style="white-space: nowrap; text-align: right">1.15x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.37 M</td>
-    <td style="white-space: nowrap; text-align: right">1.74x</td>
+    <td style="white-space: nowrap; text-align: right">1.26 M</td>
+    <td style="white-space: nowrap; text-align: right">1.59x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.49 M</td>
-    <td style="white-space: nowrap; text-align: right">4.85x</td>
+    <td style="white-space: nowrap; text-align: right">0.41 M</td>
+    <td style="white-space: nowrap; text-align: right">4.87x</td>
   </tr>
 
 </table>
@@ -688,38 +688,38 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">2.34 M</td>
-    <td style="white-space: nowrap; text-align: right">427.18 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1641.41%</td>
-    <td style="white-space: nowrap; text-align: right">416 ns</td>
-    <td style="white-space: nowrap; text-align: right">541 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.95 M</td>
+    <td style="white-space: nowrap; text-align: right">513.66 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1479.36%</td>
+    <td style="white-space: nowrap; text-align: right">459 ns</td>
+    <td style="white-space: nowrap; text-align: right">625 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.10 M</td>
-    <td style="white-space: nowrap; text-align: right">476.31 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1242.41%</td>
-    <td style="white-space: nowrap; text-align: right">458 ns</td>
-    <td style="white-space: nowrap; text-align: right">584 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.82 M</td>
+    <td style="white-space: nowrap; text-align: right">549.84 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;933.74%</td>
+    <td style="white-space: nowrap; text-align: right">541 ns</td>
+    <td style="white-space: nowrap; text-align: right">667 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.36 M</td>
-    <td style="white-space: nowrap; text-align: right">733.29 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1058.80%</td>
-    <td style="white-space: nowrap; text-align: right">708 ns</td>
-    <td style="white-space: nowrap; text-align: right">834 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.25 M</td>
+    <td style="white-space: nowrap; text-align: right">798.81 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;799.71%</td>
+    <td style="white-space: nowrap; text-align: right">750 ns</td>
+    <td style="white-space: nowrap; text-align: right">959 ns</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.35 M</td>
-    <td style="white-space: nowrap; text-align: right">2851.98 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;95.31%</td>
-    <td style="white-space: nowrap; text-align: right">2708 ns</td>
-    <td style="white-space: nowrap; text-align: right">6084 ns</td>
+    <td style="white-space: nowrap; text-align: right">0.31 M</td>
+    <td style="white-space: nowrap; text-align: right">3213.72 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;58.53%</td>
+    <td style="white-space: nowrap; text-align: right">3084 ns</td>
+    <td style="white-space: nowrap; text-align: right">4542 ns</td>
   </tr>
 
 </table>
@@ -734,26 +734,26 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">2.34 M</td>
+    <td style="white-space: nowrap;text-align: right">1.95 M</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.10 M</td>
-    <td style="white-space: nowrap; text-align: right">1.11x</td>
+    <td style="white-space: nowrap; text-align: right">1.82 M</td>
+    <td style="white-space: nowrap; text-align: right">1.07x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.36 M</td>
-    <td style="white-space: nowrap; text-align: right">1.72x</td>
+    <td style="white-space: nowrap; text-align: right">1.25 M</td>
+    <td style="white-space: nowrap; text-align: right">1.56x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.35 M</td>
-    <td style="white-space: nowrap; text-align: right">6.68x</td>
+    <td style="white-space: nowrap; text-align: right">0.31 M</td>
+    <td style="white-space: nowrap; text-align: right">6.26x</td>
   </tr>
 
 </table>
@@ -777,38 +777,38 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">2.22 M</td>
-    <td style="white-space: nowrap; text-align: right">451.36 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1789.54%</td>
-    <td style="white-space: nowrap; text-align: right">417 ns</td>
-    <td style="white-space: nowrap; text-align: right">542 ns</td>
-  </tr>
-
-  <tr>
-    <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.01 M</td>
-    <td style="white-space: nowrap; text-align: right">497.16 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1698.97%</td>
-    <td style="white-space: nowrap; text-align: right">459 ns</td>
+    <td style="white-space: nowrap; text-align: right">1.89 M</td>
+    <td style="white-space: nowrap; text-align: right">528.81 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1862.02%</td>
+    <td style="white-space: nowrap; text-align: right">500 ns</td>
     <td style="white-space: nowrap; text-align: right">625 ns</td>
   </tr>
 
   <tr>
-    <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.80 M</td>
-    <td style="white-space: nowrap; text-align: right">555.75 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1545.28%</td>
-    <td style="white-space: nowrap; text-align: right">500 ns</td>
+    <td style="white-space: nowrap">ExJsonschema_RUST</td>
+    <td style="white-space: nowrap; text-align: right">1.75 M</td>
+    <td style="white-space: nowrap; text-align: right">569.90 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1443.91%</td>
+    <td style="white-space: nowrap; text-align: right">542 ns</td>
     <td style="white-space: nowrap; text-align: right">667 ns</td>
   </tr>
 
   <tr>
+    <td style="white-space: nowrap">JsonXema</td>
+    <td style="white-space: nowrap; text-align: right">1.60 M</td>
+    <td style="white-space: nowrap; text-align: right">625.58 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1793.77%</td>
+    <td style="white-space: nowrap; text-align: right">583 ns</td>
+    <td style="white-space: nowrap; text-align: right">792 ns</td>
+  </tr>
+
+  <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.61 M</td>
-    <td style="white-space: nowrap; text-align: right">1632.85 ns</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;205.11%</td>
-    <td style="white-space: nowrap; text-align: right">1459 ns</td>
-    <td style="white-space: nowrap; text-align: right">2875 ns</td>
+    <td style="white-space: nowrap; text-align: right">0.51 M</td>
+    <td style="white-space: nowrap; text-align: right">1958.48 ns</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;1071.96%</td>
+    <td style="white-space: nowrap; text-align: right">1750 ns</td>
+    <td style="white-space: nowrap; text-align: right">3417 ns</td>
   </tr>
 
 </table>
@@ -823,26 +823,26 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap;text-align: right">2.22 M</td>
+    <td style="white-space: nowrap;text-align: right">1.89 M</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">2.01 M</td>
-    <td style="white-space: nowrap; text-align: right">1.1x</td>
+    <td style="white-space: nowrap; text-align: right">1.75 M</td>
+    <td style="white-space: nowrap; text-align: right">1.08x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">1.80 M</td>
-    <td style="white-space: nowrap; text-align: right">1.23x</td>
+    <td style="white-space: nowrap; text-align: right">1.60 M</td>
+    <td style="white-space: nowrap; text-align: right">1.18x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">0.61 M</td>
-    <td style="white-space: nowrap; text-align: right">3.62x</td>
+    <td style="white-space: nowrap; text-align: right">0.51 M</td>
+    <td style="white-space: nowrap; text-align: right">3.7x</td>
   </tr>
 
 </table>
@@ -866,38 +866,38 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap; text-align: right">228.61</td>
-    <td style="white-space: nowrap; text-align: right">4.37 ms</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;1.04%</td>
-    <td style="white-space: nowrap; text-align: right">4.36 ms</td>
-    <td style="white-space: nowrap; text-align: right">4.53 ms</td>
+    <td style="white-space: nowrap; text-align: right">227.77</td>
+    <td style="white-space: nowrap; text-align: right">4.39 ms</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;6.10%</td>
+    <td style="white-space: nowrap; text-align: right">4.30 ms</td>
+    <td style="white-space: nowrap; text-align: right">5.35 ms</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">213.87</td>
-    <td style="white-space: nowrap; text-align: right">4.68 ms</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;5.25%</td>
-    <td style="white-space: nowrap; text-align: right">4.54 ms</td>
-    <td style="white-space: nowrap; text-align: right">5.18 ms</td>
+    <td style="white-space: nowrap; text-align: right">222.42</td>
+    <td style="white-space: nowrap; text-align: right">4.50 ms</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;21.49%</td>
+    <td style="white-space: nowrap; text-align: right">4.24 ms</td>
+    <td style="white-space: nowrap; text-align: right">7.59 ms</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">123.77</td>
-    <td style="white-space: nowrap; text-align: right">8.08 ms</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;8.75%</td>
-    <td style="white-space: nowrap; text-align: right">7.95 ms</td>
-    <td style="white-space: nowrap; text-align: right">10.18 ms</td>
+    <td style="white-space: nowrap; text-align: right">61.49</td>
+    <td style="white-space: nowrap; text-align: right">16.26 ms</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;174.13%</td>
+    <td style="white-space: nowrap; text-align: right">9.50 ms</td>
+    <td style="white-space: nowrap; text-align: right">223.98 ms</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">27.16</td>
-    <td style="white-space: nowrap; text-align: right">36.82 ms</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;22.12%</td>
-    <td style="white-space: nowrap; text-align: right">41.19 ms</td>
-    <td style="white-space: nowrap; text-align: right">42.98 ms</td>
+    <td style="white-space: nowrap; text-align: right">26.34</td>
+    <td style="white-space: nowrap; text-align: right">37.96 ms</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;18.41%</td>
+    <td style="white-space: nowrap; text-align: right">43.01 ms</td>
+    <td style="white-space: nowrap; text-align: right">44.07 ms</td>
   </tr>
 
 </table>
@@ -912,26 +912,26 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST</td>
-    <td style="white-space: nowrap;text-align: right">228.61</td>
+    <td style="white-space: nowrap;text-align: right">227.77</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonschema_RUST-Performance Profile</td>
-    <td style="white-space: nowrap; text-align: right">213.87</td>
-    <td style="white-space: nowrap; text-align: right">1.07x</td>
+    <td style="white-space: nowrap; text-align: right">222.42</td>
+    <td style="white-space: nowrap; text-align: right">1.02x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">JsonXema</td>
-    <td style="white-space: nowrap; text-align: right">123.77</td>
-    <td style="white-space: nowrap; text-align: right">1.85x</td>
+    <td style="white-space: nowrap; text-align: right">61.49</td>
+    <td style="white-space: nowrap; text-align: right">3.7x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">ExJsonSchema</td>
-    <td style="white-space: nowrap; text-align: right">27.16</td>
-    <td style="white-space: nowrap; text-align: right">8.42x</td>
+    <td style="white-space: nowrap; text-align: right">26.34</td>
+    <td style="white-space: nowrap; text-align: right">8.65x</td>
   </tr>
 
 </table>
